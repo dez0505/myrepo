@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import rootReducer from './reducers'
 import HomeCase from './containers/HomeCase'
 
+
 let store = createStore(rootReducer)
 
 ReactDOM.render(
