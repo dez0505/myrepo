@@ -21,7 +21,7 @@ class Home extends Component {
           头部
         </header>
         <section>
-          主体部分
+          主体部分 hahah
         </section>
         <footer>
           这是一个脚

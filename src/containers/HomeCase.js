@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Home from '../components/home/Home.jsx'
+import Home from '../view/home/Home.jsx'
 import { updateList } from '../actions/topLine'
 export default connect(
   (state,store) => {
