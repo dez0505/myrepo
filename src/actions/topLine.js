@@ -1,8 +1,7 @@
-export const UPDATE_LIST = "UPDATE_LIST";
-
+import { UPDATE_LIST } from './actionType.js'
 export function updateList(list) {
   return {
-    type: "UPDATE_LIST",
+    type: UPDATE_LIST,
     list
   };
 }

@@ -5,14 +5,14 @@ export default connect(
   (state,store) => {
     console.log(222,state);
     return {
-      todos: ()=> {
-        return state.todos
+      topLineListData: ()=> {
+        return state.updateList
       }
     }
   },
   dispatch => {
     return {
-      updateList: list => dispatch(updateList(list))
+      updateListEvent: list => dispatch(updateList(list))
     }
   }
 )(Home)
