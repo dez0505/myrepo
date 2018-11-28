@@ -1,16 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import * as serviceWorker from './serviceWorker';
 
 // redux
 import { createStore } from 'redux'
 import { Provider } from "react-redux";
 import rootReducer from './reducers'
 import HomeCase from './containers/HomeCase'
-
-import * as serviceWorker from './serviceWorker';
-
-import store from "./store";
 
 let store = createStore(rootReducer)
 

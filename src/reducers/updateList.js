@@ -1,6 +1,6 @@
 import {
   UPDATE_LIST,
-} from '../action/topLine.js'
+} from '../actions/topLine.js'
 
 const initialState = [
 ]

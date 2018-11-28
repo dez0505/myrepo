@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux'
-import todos from './todos'
-import doList from './doList'
+import updateList from './updateList'
 const rootReducer = combineReducers({
-  todos
+  updateList
 })
 export default rootReducer
