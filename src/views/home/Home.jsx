@@ -3,7 +3,7 @@ import './Home.scss'
 
 // subComponent
 import Header from '../../components/layout/Header'
-
+import Nav from '../../components/layout/Nav'
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -22,12 +22,12 @@ class Home extends Component {
   render() {
     return (
       <div className='home-warpper'>
-        <Header>
-        </Header>
+        <Header/>
         <section>
         </section>
         <footer>
         </footer>
+        <Nav/>
       </div>
     ) 
   }

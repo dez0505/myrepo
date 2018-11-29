@@ -6,9 +6,9 @@ import { createStore } from 'redux'
 import { Provider } from "react-redux";
 import rootReducer from './reducers'
 import HomeCase from './containers/HomeCase'
-// antd 
-import 'antd-mobile/dist/antd-mobile.css';  // or 'antd-mobile/dist/antd-mobile.less'
-import 'lib-flexible'
+import 'antd-mobile/dist/antd-mobile.css'; 
+import 'lib-flexible';
+
 
 let store = createStore(rootReducer)
 

@@ -1,0 +1,23 @@
+@import '../../styles/base.scss';
+.nav-warpper {
+    overflow: hidden;
+    .navlist {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .navlist .navitem {
+        padding:Px(30) 0;
+        width: 25%;
+        text-align: center;
+        font-size: Px(30);
+        img {
+            display: block;
+            margin: 0 auto;
+            width: Px(70);
+        }
+        div {
+            margin-top: Px(10);
+        }
+    }
+}
