@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './Home.scss'
-import { Button, WhiteSpace } from 'antd-mobile';
-import 'antd-mobile/dist/antd-mobile.css';  // or 'antd-mobile/dist/antd-mobile.less'
+import Nav from '../../components/layout/Nav'
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -20,19 +19,7 @@ class Home extends Component {
   render() {
     return (
       <div className='home-warpper'>
-        <header>
-          头部
-        </header>
-        <section>
-          主体部分 hahah
-          <Button>primary</Button><WhiteSpace />
-          <Button type="primary">primary</Button><WhiteSpace />
-          <Button loading>loading button</Button><WhiteSpace />
-          <Button icon="check-circle-o">with icon</Button><WhiteSpace />
-        </section>
-        <footer>
-          这是一个脚
-        </footer>
+        <Nav/>
       </div>
     ) 
   }
