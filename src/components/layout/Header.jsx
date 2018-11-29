@@ -20,8 +20,8 @@ class Home extends Component {
       <div className='header-box'>
         <div>客服</div>
         <div className='input-box'>
-          <input className='input'></input> 
-          <div className='search-icon'></div> 代码 / 简拼 / 常用功能
+          <input className='input' placeholder='代码 / 简拼 / 常用功能'></input> 
+          <div className='search-icon'></div> 
         </div>
         <div className='scan-icon'></div>
         <div className='message-icon'></div>

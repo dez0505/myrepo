@@ -23,10 +23,6 @@ class Home extends Component {
     return (
       <div className='home-warpper'>
         <Header/>
-        <section>
-        </section>
-        <footer>
-        </footer>
         <Nav/>
       </div>
     ) 

@@ -12,35 +12,44 @@
   justify-content: space-around;
   align-items: center;
   background: #1C2B48;
-  color: #fff;
+  color: #ddd;
   height: 48px;
   .input-box{
     position: relative;
     width: 55%;
+    box-sizing: border-box;
     border-radius: Px(5);
     height: 28px;
     border: Px(1) solid #000;
     background: #49556D;
     display: flex;
     align-items: center;
-    justify-content: center;
     font-size: Px(24);
     .input{
+      color:#ddd;
       position: absolute;
       width: 100%;
       background: none;
       border: none;
-      font-size: Px(30);
-      padding-left:Px(20);
+      font-size: Px(26);
+      box-sizing: border-box;
+      padding-left:Px(75);
       left:0;
       top:0;
       bottom:0;
       right:0;
     }
+    input::-webkit-input-placeholder {
+      color: #ddd;
+      font-size: 12px;
+      padding-left:1px;
+      text-align: left;
+    }
     .search-icon{
+      margin-left:Px(30);
       margin-right:Px(30);
-      width: Px(27);
-      height: Px(30);
+      width: Px(24);
+      height: Px(24);
       background-image: url('../../images/home/header-images/search.png');
       background-size: 100% 100%;
     }
