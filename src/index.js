@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import * as serviceWorker from './serviceWorker';
 // redux
 import { createStore } from 'redux'
 import { Provider } from "react-redux";
 import rootReducer from './reducers'
 import HomeCase from './containers/HomeCase'
-import('lib-flexible')
+// antd 
+import 'antd-mobile/dist/antd-mobile.css';  // or 'antd-mobile/dist/antd-mobile.less'
+import 'lib-flexible'
 
 let store = createStore(rootReducer)
 

@@ -1,0 +1,60 @@
+
+@import '../../styles/base.scss';
+.header-box{
+  position: fixed;
+  left:0;
+  top:0;
+  right:0;
+  display: flex;
+  font-size: Px(30);
+  padding:Px(20) Px(20);
+  box-sizing: border-box;
+  justify-content: space-around;
+  align-items: center;
+  background: #1C2B48;
+  color: #fff;
+  height: 48px;
+  .input-box{
+    position: relative;
+    width: 55%;
+    border-radius: Px(5);
+    height: 28px;
+    border: Px(1) solid #000;
+    background: #49556D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: Px(24);
+    .input{
+      position: absolute;
+      width: 100%;
+      background: none;
+      border: none;
+      font-size: Px(30);
+      padding-left:Px(20);
+      left:0;
+      top:0;
+      bottom:0;
+      right:0;
+    }
+    .search-icon{
+      margin-right:Px(30);
+      width: Px(27);
+      height: Px(30);
+      background-image: url('../../images/home/header-images/search.png');
+      background-size: 100% 100%;
+    }
+  }
+  .scan-icon{
+    width: Px(40);
+    height: Px(40);
+    background-image: url('../../images/home/header-images/scan.png');
+    background-size: 100% 100%;
+  }
+  .message-icon{
+    width: Px(44);
+    height: Px(44);
+    background-image: url('../../images/home/header-images/message.png');
+    background-size: 100% 100%;
+  }
+}
