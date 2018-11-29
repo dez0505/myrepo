@@ -1,19 +1,8 @@
 import React, { Component } from 'react';
 import './Header.scss'
-class Home extends Component {
+class Header extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      topLineList:[1,2,3,4,5]
-    }
-  }
-  componentDidMount(){
-    console.log('props', this.props)
-    // this.setState({addTodoList:this.props.todos()})
-  }
-  updateList = (val) =>{
-    this.setState({addTodoList:this.props.todos()})
-    this.props.updateList(this.state.topLineList)
   }
   render() {
     return (
@@ -29,4 +18,4 @@ class Home extends Component {
     ) 
   }
 }
-export default Home
+export default Header
