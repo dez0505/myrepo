@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import './Home.scss'
+import '../../styles/homeTheme.scss'
 
 // subComponent
 import Header from '../../components/layout/Header'
 import Nav from '../../components/layout/Nav'
+import Footer from '../../components/layout/Footer';
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -25,9 +27,10 @@ class Home extends Component {
   }
   render() {
     return (
-      <div className='home-warpper'>
+      <div className={`home-warpper ${this.props.theme==='white'?'white':'black'}`}>
         <Header mameList={this.state.topLineList}/>
         <Nav/>
+        <Footer/>
       </div>
     ) 
   }
