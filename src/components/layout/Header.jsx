@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import './Header.scss'
 class Header extends Component {
   constructor(props) {
-    super(props);
+    super(); //可以不给props
+  }
+  componentDidMount() {
+    console.log('headerProps', this.props)
   }
   render() {
     return (

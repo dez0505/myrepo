@@ -8,7 +8,11 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      topLineList:[]
+      topLineList:[
+        {name:'zuowang',age:23},
+        {name:'zhangyang',age:22},
+        {name:'chenhao',age:21},
+      ]
     }
   }
   componentDidMount(){
@@ -22,7 +26,7 @@ class Home extends Component {
   render() {
     return (
       <div className='home-warpper'>
-        <Header/>
+        <Header mameList={this.state.topLineList}/>
         <Nav/>
       </div>
     ) 
