@@ -7,19 +7,19 @@
   right:0;
   display: flex;
   font-size: Px(30);
-  padding:Px(20) Px(20);
+  padding:0 Px(20);
   box-sizing: border-box;
   justify-content: space-around;
   align-items: center;
   background: #1C2B48;
   color: #ddd;
-  height: 48px;
+  height: Px(96);
   .input-box{
     position: relative;
     width: 55%;
     box-sizing: border-box;
     border-radius: Px(5);
-    height: 28px;
+    height: 60%;
     border: Px(1) solid #000;
     background: #49556D;
     display: flex;
@@ -41,7 +41,8 @@
     }
     input::-webkit-input-placeholder {
       color: #ddd;
-      font-size: 12px;
+      font-size: Px(26);
+      line-height: 1;
       padding-left:1px;
       text-align: left;
     }
