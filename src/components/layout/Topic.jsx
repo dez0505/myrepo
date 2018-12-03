@@ -11,7 +11,7 @@ class Topic extends Component {
       }
     }
     componentDidMount() {
-        let myswiper = new Swiper('.swiper-container', {
+        let myswiper = new Swiper('.topic-container', {
             autoplay: true,//可选选项，自动滑动
         })
         this.setState({
@@ -22,7 +22,7 @@ class Topic extends Component {
       return (
         <div className='Topic-box'>
           <Title title='话题广场'/>
-          <div className="swiper-container">
+          <div className="swiper-container topic-container">
             <div className="swiper-wrapper">
                 <div className="swiper-slide topic-slide">slider1</div>
                 <div className="swiper-slide topic-slide">slider2</div>
