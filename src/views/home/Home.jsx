@@ -38,7 +38,7 @@ class Home extends Component {
     adsListData:data.FirstAppAdsJson,
     noticeListData:data.AnnounceJson,
     liveListData:data.LivePicsJson,
-    topicListData:data.topicListData
+    topicListData:data.TopicPicsJson
    })
   }
   // updateList = (val) =>{
