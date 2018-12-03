@@ -4,10 +4,8 @@
 $baseSize:Px(30);
 $bigSize:Px(36);
 $smallSize:Px(27);
-
 $warning:#FF8700;
 $primary:#2E90E5;
-
 @mixin imgBg($url) {
     background-image: $url;
     background-size: 100% 100%;

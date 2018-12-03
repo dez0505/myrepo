@@ -18,6 +18,14 @@ class Home extends Component {
   }
   componentDidMount(){
     console.log('props', this.props)
+    const random = Math.floor(Math.random()*2);
+    console.log(random)
+    if(random === 1){
+      this.props.updateTheme({theme:'white'})
+    }else{
+      this.props.updateTheme({theme:'black'})
+    }
+    console.log(this.props.theme)
     // this.setState({addTodoList:this.props.todos()})
   }
   updateList = (val) =>{
@@ -27,7 +35,7 @@ class Home extends Component {
   render() {
     return (
       <div className={`home-warpper ${this.props.theme==='white'?'white':'black'}`}>
-        <Header mameList={this.state.topLineList}/>
+        <Header/>
         <Nav/>
       </div>
     ) 
