@@ -22,7 +22,7 @@ class Nav extends Component {
     try {
       const { data } = await getIconData(param)
       let list = data.Funlist.filter((item)=>{
-        return item.IconType == 1
+        return Number(item.IconType) === 1
       })
       console.log(222,list)    
       this.setState({
