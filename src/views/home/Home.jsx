@@ -9,6 +9,7 @@ import AdsSwiper from './subComponents/AdsSwiper'
 
 // api
 import { getHomeData } from '../../api/home'
+import Topic from '../../components/layout/Topic'
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -51,6 +52,7 @@ class Home extends Component {
         <Header/>
         <Nav/>
         <AdsSwiper adsList = {this.state.adsListData}/>
+        <Topic/>
       </div>
     ) 
   }
