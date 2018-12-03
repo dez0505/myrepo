@@ -8,7 +8,7 @@ import rootReducer from './reducers'
 import HomeCase from './containers/HomeCase'
 import 'antd-mobile/dist/antd-mobile.css'; 
 import 'lib-flexible';
-
+import 'swiper/dist/css/swiper.min.css'
 
 let store = createStore(rootReducer)
 
