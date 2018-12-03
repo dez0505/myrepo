@@ -6,7 +6,10 @@
     "@babel/core": "7.1.0",
     "@svgr/webpack": "2.4.1",
     "antd-mobile": "^2.0.0",
+<<<<<<< HEAD
     "axios": "^0.18.0",
+=======
+>>>>>>> cba82787b0d5fb3e69a8321eca68ecd578f98545
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
     "babel-jest": "23.6.0",
@@ -50,6 +53,7 @@
     "redux": "^4.0.1",
     "resolve": "1.8.1",
     "style-loader": "0.23.0",
+    "swiper": "^4.4.2",
     "terser-webpack-plugin": "1.1.0",
     "url-loader": "1.1.1",
     "webpack": "4.19.1",

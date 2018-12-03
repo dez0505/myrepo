@@ -1,18 +1,18 @@
 import { connect } from 'react-redux'
 import Home from '../views/home/Home.jsx'
-import { updateList } from '../actions/topLine'
-export default connect(
-  (state,store) => {
-    console.log(222,state);
-    return {
-      topLineListData: ()=> {
-        return state.updateList
-      }
-    }
-  },
-  dispatch => {
-    return {
-      updateListEvent: list => dispatch(updateList(list))
-    }
+import { updateTheme } from '../actions/index'
+
+const mapStateToProps = (state,store) => {
+  return {
+    theme: state.pageConfig.theme
   }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    updateTheme: theme => dispatch(updateTheme(theme))
+  }
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
 )(Home)

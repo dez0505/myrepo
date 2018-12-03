@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
-import updateList from './updateList'
+// import updateList from './updateList'
+import pageConfig from './pageConfig'
 const rootReducer = combineReducers({
-  updateList
+  pageConfig
 })
 export default rootReducer
