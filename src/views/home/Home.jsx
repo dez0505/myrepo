@@ -35,12 +35,16 @@ class Home extends Component {
      version: '7.00',
      platform: 'android'
    })
+   console.log(data.FirstAppAdsJson)
    this.setState({
     adsListData:data.FirstAppAdsJson,
     noticeListData:data.AnnounceJson,
     liveListData:data.LivePicsJson,
     topicListData:data.TopicPicsJson
    })
+   setTimeout(()=>{
+    console.log(this.state)
+   },1000)
   }
   // updateList = (val) =>{
   //   this.setState({addTodoList:this.props.todos()})

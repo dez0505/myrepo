@@ -4,4 +4,8 @@
   height: Px(200);
   background: #ccc;
   border-radius: $baseRadius;
+  .swiper-slide{
+    height: Px(200);
+    border-radius: $baseRadius;
+  }
 }

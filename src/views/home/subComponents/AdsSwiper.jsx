@@ -14,7 +14,9 @@ class AdsSwiper extends Component {
     }
   }
   componentDidMount() {
+   setTimeout(()=>{
     console.log('adsSwiper', this.props)
+   },1000) 
     this.setState({ mySwiper: new Swiper('.ads-swiper', {
       autoplay: true,//可选选项，自动滑动
       loop: true,
@@ -25,9 +27,11 @@ class AdsSwiper extends Component {
       <div className="ads-box">
         <div className="swiper-container ads-swiper">
           <div className="swiper-wrapper">
-            <div className="swiper-slide" >Slide 1</div>
-            <div className="swiper-slide">Slide 2</div>
-            <div className="swiper-slide">Slide 3</div>
+            {this.props.adsList.map((item, index) => {
+              return (
+                <div className="swiper-slide" key={index} style={{backgroundImage:'url('+item.ImageUrl+')',backgroundRepeat:'no-repeat',backgroundSize:'100% 100%',backgroundPosition:'center'}}></div>
+              )
+            })}
           </div>
           <div className="swiper-pagination"></div>
         </div>
