@@ -5,6 +5,7 @@ import '../../styles/homeTheme.scss'
 // subComponent
 import Header from '../../components/layout/Header'
 import Nav from '../../components/layout/Nav'
+import Topic from '../../components/layout/Topic'
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -37,6 +38,7 @@ class Home extends Component {
       <div className={`home-warpper ${this.props.theme==='white'?'white':'black'}`}>
         <Header/>
         <Nav/>
+        <Topic/>
       </div>
     ) 
   }
