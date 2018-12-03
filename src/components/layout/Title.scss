@@ -5,16 +5,15 @@
     width: 100%;
     height: Px(65);
     line-height: Px(65);
-    color: #fff;
     img {
         display: block;
         float: left;
         width: Px(20);
+        margin-top: Px(18);
     }
     .txt {
         float: left;
         margin-left: Px(10);
-        color: #fff;
         font-size: Px(24);
     }
 }

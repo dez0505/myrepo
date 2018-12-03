@@ -6,8 +6,8 @@ class Topic extends Component {
     constructor(props) {
       super(); //可以不给props
       this.state = {
-        mySwiper: {},
-        Toplist:[]
+        topicSwiper: {}
+        // Toplist:[]
       }
     }
     componentDidMount() {
@@ -15,7 +15,7 @@ class Topic extends Component {
             autoplay: true,//可选选项，自动滑动
         })
         this.setState({
-            mySwiper: myswiper
+            topicSwiper: myswiper
         })
     }
     render() {
@@ -24,9 +24,9 @@ class Topic extends Component {
           <Title title='话题广场'/>
           <div className="swiper-container">
             <div className="swiper-wrapper">
-                <div className="swiper-slide">slider1</div>
-                <div className="swiper-slide">slider2</div>
-                <div className="swiper-slide">slider3</div>
+                <div className="swiper-slide topic-slide">slider1</div>
+                <div className="swiper-slide topic-slide">slider2</div>
+                <div className="swiper-slide topic-slide">slider3</div>
             </div>
           </div>
         </div>

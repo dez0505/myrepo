@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Title.scss'
+const topicPic = require('../../images/home/title.png')
 class Title extends Component {
     constructor(props) {
       super(); //可以不给props
@@ -10,7 +11,7 @@ class Title extends Component {
     render() {
       return (
         <div className='Title-box'>
-          <img src="../../images/home/title.png" alt=""/>
+          <img src={topicPic} alt=""/>
           <div className='txt'>{this.props.title}</div>
         </div>
       ) 
