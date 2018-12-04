@@ -28,7 +28,6 @@ class AdsSwiper extends Component {
     }
   }
   render() {
-    // console.log(1111,this.props)
     const adsList = this.props.adsList
     return (
       <div>
