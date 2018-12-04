@@ -10,7 +10,7 @@ class Nav extends Component {
     }
   }
   componentDidMount(){
-    console.log('props', this.props)
+    // console.log('props', this.props)
     this.getIconList({version:'7.00',platform:'android'})
   }
   iconFormat(){
@@ -24,7 +24,7 @@ class Nav extends Component {
       let list = data.Funlist.filter((item)=>{
         return Number(item.IconType) === 1
       })
-      console.log(222,list)    
+      // console.log(222,list)    
       this.setState({
         navList: list
       })
