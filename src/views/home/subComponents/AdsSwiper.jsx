@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 // Swiper
 import './AdsSwiper.scss'
 import Swiper from 'swiper'
-import Title from '../../../components/layout/Title'
 // api
 
 class AdsSwiper extends Component {
@@ -13,23 +12,25 @@ class AdsSwiper extends Component {
     }
   }
   componentDidMount() {
-   setTimeout(()=>{
-    console.log('adsSwiper', this.props)
-   },1000) 
-    let mySwiper = new Swiper('.ads-swiper', {
+    const mySwiper = new Swiper('.ads-swiper', {
       autoplay: true,//可选选项，自动滑动
-      loop: true
     })
     this.setState({ mySwiper: mySwiper })
   }
+  componentDidUpdate() {
+    if(this.state.mySwiper){
+      this.state.mySwiper.update()
+    }
+  }
   render() {
+    // console.log(1111,this.props)
+    const adsList = this.props.adsList
     return (
       <div>
-        <Title title='市场机会'/>
         <div className="ads-box">
           <div className="swiper-container ads-swiper">
             <div className="swiper-wrapper">
-              {this.props.adsList.map((item, index) => {
+              {adsList.map((item, index) => {
                 return (
                   <div className="swiper-slide" key={index} style={{backgroundImage:'url('+item.ImageUrl+')',backgroundRepeat:'no-repeat',backgroundSize:'100% 100%',backgroundPosition:'center'}}></div>
                 )

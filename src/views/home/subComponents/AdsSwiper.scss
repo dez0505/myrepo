@@ -2,10 +2,10 @@
 .ads-box{
   margin: Px(30);
   height: Px(200);
-  background: #ccc;
   border-radius: $baseRadius;
+  box-sizing: border-box;
+  overflow: hidden;
   .swiper-slide{
     height: Px(200);
-    border-radius: $baseRadius;
   }
 }
