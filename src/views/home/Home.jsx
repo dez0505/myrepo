@@ -53,7 +53,7 @@ class Home extends Component {
         <Header/>
         <Nav/>
         { this.state.adsListData.length>0 ? <AdsSwiper  adsList = {this.state.adsListData}/> : null }
-        <Notice/>
+        { this.state.noticeListData.length>0 ? <Notice  noticeList = {this.state.noticeListData}/> : null }
         <Topic/>
       </div>
     ) 
