@@ -57,7 +57,6 @@ class Home extends Component {
         <Nav/>
         { this.state.adsListData.length>0 ? <AdsSwiper  adsList = {this.state.adsListData}/> : null }
         { this.state.noticeListData.length>0 ? <Notice  noticeList = {this.state.noticeListData}/> : null }
-        {this.state.adsListData.length>0? <AdsSwiper adsList = {this.state.adsListData}/> : null}
         <MarketChance/>
         {this.state.adsListData.length>0? <Topic topicList = {this.state.adsListData}/> : null}
         {this.state.liveListData.length>0? <img className='livepic' src={this.state.liveListData[0].ImageUrl} alt=""/> : null}
