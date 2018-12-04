@@ -11,6 +11,7 @@ import Notice from './subComponents/Notice'
 // api
 import { getHomeData } from '../../api/home'
 import Topic from './subComponents/topicSwiper'
+import MarketChance from './subComponents/MarketMachine'
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -55,7 +56,9 @@ class Home extends Component {
         <Header/>
         <Nav/>
         {this.state.adsListData.length>0? <AdsSwiper adsList = {this.state.adsListData}/> : null}
+        <MarketChance/>
         {this.state.adsListData.length>0? <Topic topicList = {this.state.adsListData}/> : null}
+        {this.state.liveListData.length>0? <img className='livepic' src={this.state.liveListData[0].ImageUrl} alt=""/> : null}
       </div>
     ) 
   }
