@@ -9,6 +9,7 @@
     .market-list {
         margin: 0 Px(30);
         .market-item {
+            position: relative;
             padding: Px(30) Px(10);
             // border-bottom: 1px solid #ccc;
         }
@@ -18,10 +19,26 @@
         .market-item .market-title {
             font-size: Px(26);
         }
+        .market-desc-list {
+            overflow: hidden;
+        }
         .market-item .market-desc {
-            margin-top: Px(10);
+            float: left;
+            margin-right: Px(10);
+            margin-top: Px(20);
             font-size: Px(32);
+        }
+        .market-item .market-bg {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            display: block;
+            width: Px(80);
         }
     }
     
+}
+.market-box .orgcolor {
+    color: #FB8501;
 }
