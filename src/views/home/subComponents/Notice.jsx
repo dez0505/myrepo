@@ -25,9 +25,9 @@ class Notice extends Component {
     if( newList.length>0 ){
       setTimeout(() => {
         newList.push(newList[0])
-        this.setState({
-          list: newList
-        })
+        // this.setState({
+        //   list: newList
+        // })
         newList.shift()
         this.setState({
           list: newList
