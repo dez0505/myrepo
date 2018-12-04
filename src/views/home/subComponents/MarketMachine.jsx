@@ -16,6 +16,7 @@ class Topic extends Component {
     render() {
       return (
         <div className='market-box'>
+          <div className='split-line'></div>
           <Title title='市场机会'/>
           <div className="market-wrap top-border">
             <div className="market-list">
