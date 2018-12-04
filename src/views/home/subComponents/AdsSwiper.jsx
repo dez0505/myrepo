@@ -21,12 +21,6 @@ class AdsSwiper extends Component {
       }
     })
     this.setState({ mySwiper: mySwiper })
-   
-  }
-  componentDidUpdate() {
-    if(this.state.mySwiper){
-      this.state.mySwiper.update()
-    }
   }
   render() {
     // console.log(1111,this.props)
