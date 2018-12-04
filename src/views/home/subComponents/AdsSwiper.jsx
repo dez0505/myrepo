@@ -7,13 +7,18 @@ import Swiper from 'swiper'
 class AdsSwiper extends Component {
   constructor(props) {
     super(); //可以不给props
+    this.mySwiper = null
     this.state = {
       mySwiper: null
     }
   }
   componentDidMount() {
-    const mySwiper = new Swiper('.ads-swiper', {
-      autoplay: true,//可选选项，自动滑动
+    let mySwiper = new Swiper('.ads-swiper', {
+      loop: true,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      }
     })
     this.setState({ mySwiper: mySwiper })
   }

@@ -46,16 +46,12 @@ class Home extends Component {
     console.log(this.state)
    },1000)
   }
-  // updateList = (val) =>{
-  //   this.setState({addTodoList:this.props.todos()})
-  //   this.props.updateList(this.state.topLineList)
-  // }
   render() {
     return (
       <div className={`home-warpper ${this.props.theme==='white'?'white':'black'}`}>
         <Header/>
         <Nav/>
-        <AdsSwiper adsList = {this.state.adsListData}/>
+        { this.state.adsListData.length>0 ? <AdsSwiper  adsList = {this.state.adsListData}/> : null }
         <Topic/>
       </div>
     ) 
