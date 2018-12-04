@@ -55,6 +55,9 @@ class Home extends Component {
       <div className={`home-warpper ${this.props.theme==='white'?'white':'black'}`}>
         <Header/>
         <Nav/>
+        { this.state.adsListData.length>0 ? <AdsSwiper  adsList = {this.state.adsListData}/> : null }
+        { this.state.noticeListData.length>0 ? <Notice  noticeList = {this.state.noticeListData}/> : null }
+        <Topic/>
         {this.state.adsListData.length>0? <AdsSwiper adsList = {this.state.adsListData}/> : null}
         <MarketChance/>
         {this.state.adsListData.length>0? <Topic topicList = {this.state.adsListData}/> : null}

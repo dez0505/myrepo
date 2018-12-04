@@ -1,9 +1,10 @@
 @import '../../../styles/base.scss';
 .notice-box{
   display: flex;
-  padding:0 Px(30);
+  margin:0 Px(30);
   justify-content: space-between;
   align-items: center;
+  padding-top:Px(20);
   .notice-icon{
     width: Px(48);
     height: Px(40);
@@ -15,8 +16,16 @@
     @include imgBg('./homeNotice-images/right-icon-white.png');
   }
   .notice-content{
+    flex:1;
+    margin:0 Px(20);
+    height: Px(50);
+    overflow: hidden;
     .notice-item{
-      margin:Px(20) 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      height: Px(50);
+      line-height: Px(50);
     }
   }
 }

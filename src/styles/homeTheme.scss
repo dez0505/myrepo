@@ -1,4 +1,5 @@
 // 白色主题
+@import './base.scss';
 .white{
   background: #fff;
   color:#333;
@@ -11,7 +12,10 @@
   }
   // 底部边框
   .bot-border{
-    border: Px(1) solid #F1F1F1;
+    border-bottom: Px(1) solid #F1F1F1;
+  }
+  .top-border{
+    border-top: Px(1) solid #F1F1F1;
   }
 }
 // 黑色主题
@@ -24,6 +28,9 @@
   }
   // 底部边框
   .bot-border{
-    border: Px(1) solid #272D30;
+    border-bottom: Px(1) solid #272D30;
+  }
+  .top-border{
+    border-top: Px(1) solid #272D30;
   }
 }
