@@ -17,7 +17,7 @@ class Topic extends Component {
       return (
         <div className='market-box'>
           <Title title='市场机会'/>
-          <div className="market-wrap">
+          <div className="market-wrap top-border">
             <div className="market-list">
               <div className="market-item bot-border">
                 <div className="market-title">今日投资日历</div>
