@@ -9,7 +9,7 @@ import AdsSwiper from './subComponents/AdsSwiper'
 
 // api
 import { getHomeData } from '../../api/home'
-import Topic from '../../components/layout/Topic'
+import Topic from './subComponents/topicSwiper'
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +30,7 @@ class Home extends Component {
     this.getHomeDate()
   }
   async getHomeDate () {
-   const  { data }  =await getHomeData({
+   const  { data } = await getHomeData({
      theme: this.props.theme === 'white' ? 'day' : this.props.theme === 'black'? 'night' : 'red',
      version: '7.00',
      platform: 'android'
@@ -41,10 +41,12 @@ class Home extends Component {
     noticeListData:data.AnnounceJson,
     liveListData:data.LivePicsJson,
     topicListData:data.TopicPicsJson
+   },()=>{
+    console.log(333,this.state)
    })
-   setTimeout(()=>{
-    console.log(this.state)
-   },1000)
+  //  setTimeout(()=>{
+  //   console.log(this.state)
+  //  },1000)
   }
   // updateList = (val) =>{
   //   this.setState({addTodoList:this.props.todos()})
@@ -55,8 +57,8 @@ class Home extends Component {
       <div className={`home-warpper ${this.props.theme==='white'?'white':'black'}`}>
         <Header/>
         <Nav/>
-        <AdsSwiper adsList = {this.state.adsListData}/>
-        <Topic/>
+        {this.state.adsListData.length>0? <AdsSwiper adsList = {this.state.adsListData}/> : null}
+        {this.state.adsListData.length>0? <Topic topicList = {this.state.adsListData}/> : null}
       </div>
     ) 
   }

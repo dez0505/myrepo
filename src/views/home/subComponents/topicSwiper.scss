@@ -1,0 +1,17 @@
+@import '../../../styles/base.scss';
+.topic-box {
+    overflow: hidden;
+}
+.topic-wrap {
+  overflow: hidden;
+  margin: Px(30);
+  background: #ccc;
+  border-radius: $baseRadius;
+}
+.topic-container .topic-slide {
+    height: Px(200);
+    img {
+        display: block;
+        width: 100%;
+    }
+}

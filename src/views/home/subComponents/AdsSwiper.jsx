@@ -13,14 +13,14 @@ class AdsSwiper extends Component {
     }
   }
   componentDidMount() {
-   setTimeout(()=>{
-    console.log('adsSwiper', this.props)
-   },1000) 
+   console.log('adsSwiper', this.props.adsList) // []
+   
     let mySwiper = new Swiper('.ads-swiper', {
       autoplay: true,//可选选项，自动滑动
       loop: true
     })
     this.setState({ mySwiper: mySwiper })
+   
   }
   render() {
     return (
