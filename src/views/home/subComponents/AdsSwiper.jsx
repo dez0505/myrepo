@@ -13,11 +13,6 @@ class AdsSwiper extends Component {
     }
   }
   componentDidMount() {
-<<<<<<< HEAD
-   console.log('adsSwiper', this.props.adsList) // []
-   
-=======
->>>>>>> 6f07692c426a32f49ebe53c7c2c7e50c2e02e2ad
     let mySwiper = new Swiper('.ads-swiper', {
       loop: true,
       autoplay: {
