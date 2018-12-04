@@ -6,6 +6,7 @@ import '../../styles/homeTheme.scss'
 import Header from '../../components/layout/Header'
 import Nav from '../../components/layout/Nav'
 import AdsSwiper from './subComponents/AdsSwiper'
+import Notice from './subComponents/Notice'
 
 // api
 import { getHomeData } from '../../api/home'
@@ -52,6 +53,7 @@ class Home extends Component {
         <Header/>
         <Nav/>
         { this.state.adsListData.length>0 ? <AdsSwiper  adsList = {this.state.adsListData}/> : null }
+        <Notice/>
         <Topic/>
       </div>
     ) 
