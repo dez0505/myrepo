@@ -15,6 +15,10 @@
     height: Px(26);
     @include imgBg('./homeNotice-images/right-icon-white.png');
   }
+  .anim{
+    transition: all 1s linear;
+    margin-top: Px(-50);
+  } 
   .notice-content{
     flex:1;
     margin:0 Px(20);
