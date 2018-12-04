@@ -23,6 +23,7 @@ class Topic extends Component {
     render() {
       return (
         <div className='topic-box'>
+          <div className='split-line'></div>
           <Title title='话题广场'/>
           <div className='topic-wrap'>
             <div className="swiper-container topic-container">
