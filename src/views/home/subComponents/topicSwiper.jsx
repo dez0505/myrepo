@@ -13,7 +13,8 @@ class Topic extends Component {
     componentDidMount() {
         console.log('topicList:',this.props.topicList)
         let myswiper = new Swiper('.topic-container', {
-            autoplay: true,//可选选项，自动滑动
+            loop: true,
+            autoplay: true//可选选项，自动滑动
         })
         this.setState({
             topicSwiper: myswiper
