@@ -11,7 +11,7 @@ $primary:#2E90E5;
 $baseRadius: Px(15);
 
 @mixin imgBg($url) {
-    background-image: $url;
+    background-image: url($url);
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center;

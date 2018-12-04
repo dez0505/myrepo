@@ -6,6 +6,7 @@ import '../../styles/homeTheme.scss'
 import Header from '../../components/layout/Header'
 import Nav from '../../components/layout/Nav'
 import AdsSwiper from './subComponents/AdsSwiper'
+import Notice from './subComponents/Notice'
 
 // api
 import { getHomeData } from '../../api/home'
@@ -48,17 +49,19 @@ class Home extends Component {
   //   console.log(this.state)
   //  },1000)
   }
-  // updateList = (val) =>{
-  //   this.setState({addTodoList:this.props.todos()})
-  //   this.props.updateList(this.state.topLineList)
-  // }
   render() {
     return (
       <div className={`home-warpper ${this.props.theme==='white'?'white':'black'}`}>
         <Header/>
         <Nav/>
+<<<<<<< HEAD
         {this.state.adsListData.length>0? <AdsSwiper adsList = {this.state.adsListData}/> : null}
         {this.state.adsListData.length>0? <Topic topicList = {this.state.adsListData}/> : null}
+=======
+        { this.state.adsListData.length>0 ? <AdsSwiper  adsList = {this.state.adsListData}/> : null }
+        <Notice/>
+        <Topic/>
+>>>>>>> 6f07692c426a32f49ebe53c7c2c7e50c2e02e2ad
       </div>
     ) 
   }

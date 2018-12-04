@@ -1,0 +1,22 @@
+@import '../../../styles/base.scss';
+.notice-box{
+  display: flex;
+  padding:0 Px(30);
+  justify-content: space-between;
+  align-items: center;
+  .notice-icon{
+    width: Px(48);
+    height: Px(40);
+    @include imgBg('./homeNotice-images/sound_red.png');
+  }
+  .right-icon{
+    width: Px(15);
+    height: Px(26);
+    @include imgBg('./homeNotice-images/right-icon-white.png');
+  }
+  .notice-content{
+    .notice-item{
+      margin:Px(20) 0;
+    }
+  }
+}
