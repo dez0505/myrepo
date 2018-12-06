@@ -54,12 +54,11 @@ class Home extends Component {
         <Nav/>
         { this.state.adsListData.length>0 ? <AdsSwiper  adsList = {this.state.adsListData}/> : null }
         { this.state.noticeListData.length>0 ? <Notice  noticeList = {this.state.noticeListData}/> : null }
-        <div className='split-line'></div>  
         <MarketChance/>
-        <div className='split-line'></div>  
         {this.state.adsListData.length>0? <Topic topicList = {this.state.adsListData}/> : null}
         <div className='split-line'></div>  
         {this.state.liveListData.length>0? <img className='livepic' src={this.state.liveListData[0].ImageUrl} alt=""/> : null}
+        <div className='split-line'></div>  
       </div>
     ) 
   }

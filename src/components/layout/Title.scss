@@ -3,17 +3,17 @@
     overflow: hidden;
     box-sizing: border-box;
     width: 100%;
-    height: Px(65);
-    line-height: Px(65);
+    height: Px(90);
+    line-height: Px(90);
     img {
         display: block;
         float: left;
         width: Px(20);
-        margin-top: Px(18);
+        margin-top: Px(30);
     }
     .txt {
         float: left;
-        margin-left: Px(10);
-        font-size: Px(24);
+        margin-left: Px(20);
+        font-size: $baseSize;
     }
 }
