@@ -22,43 +22,43 @@ class Home extends Component {
       topicListData:[]
     }
   }
-  componentDidMount(){
+  componentDidMount(val){
     const random = Math.floor(Math.random()*2);
     if(random === 1){
       this.props.updateTheme({theme:'white'})
     }else{
       this.props.updateTheme({theme:'black'})
     }
-    this.getHomeDate()
   }
-  async getHomeDate () {
+  componentWillReceiveProps(nextProps) {
+    this.getHomeDate(nextProps.theme)
+  }
+  async getHomeDate (theme) {
    const  { data } = await getHomeData({
-     theme: this.props.theme === 'white' ? 'day' : this.props.theme === 'black'? 'night' : 'red',
+     theme: theme === 'white' ? 'day' : theme === 'black'? 'night' : 'red',
      version: '7.00',
      platform: 'android'
    })
-   console.log(data.FirstAppAdsJson)
    this.setState({
     adsListData:data.FirstAppAdsJson,
     noticeListData:data.AnnounceJson,
     liveListData:data.LivePicsJson,
     topicListData:data.TopicPicsJson
-   },()=>{
-    console.log(333,this.state)
    })
-  //  setTimeout(()=>{
-  //   console.log(this.state)
-  //  },1000)
   }
   render() {
+    console.log('render', this.props.theme)
     return (
       <div className={`home-warpper ${this.props.theme==='white'?'white':'black'}`}>
         <Header/>
         <Nav/>
         { this.state.adsListData.length>0 ? <AdsSwiper  adsList = {this.state.adsListData}/> : null }
         { this.state.noticeListData.length>0 ? <Notice  noticeList = {this.state.noticeListData}/> : null }
+        <div className='split-line'></div>  
         <MarketChance/>
+        <div className='split-line'></div>  
         {this.state.adsListData.length>0? <Topic topicList = {this.state.adsListData}/> : null}
+        <div className='split-line'></div>  
         {this.state.liveListData.length>0? <img className='livepic' src={this.state.liveListData[0].ImageUrl} alt=""/> : null}
       </div>
     ) 

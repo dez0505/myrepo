@@ -3,7 +3,7 @@ import {
 } from '../actions/actionType'
 
 const initialState = {
-  theme: 'white'
+  theme: ''
 }
 export default function todos(state = initialState, action) {
   switch (action.type) {
