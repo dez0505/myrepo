@@ -4,6 +4,7 @@ import '../../styles/homeTheme.scss'
 
 // subComponent
 import Header from '../../components/layout/Header'
+import BetterScroll from '../../components/base/BetterScroll'
 import Nav from '../../components/layout/Nav'
 import AdsSwiper from './subComponents/AdsSwiper'
 import Notice from './subComponents/Notice'
@@ -49,17 +50,19 @@ class Home extends Component {
   render() {
     console.log('render', this.props.theme)
     return (
-      <div className={`home-warpper ${this.props.theme==='white'?'white':'black'}`}>
-        <Header/>
-        <Nav/>
-        { this.state.adsListData.length>0 ? <AdsSwiper  adsList = {this.state.adsListData}/> : null }
-        { this.state.noticeListData.length>0 ? <Notice  noticeList = {this.state.noticeListData}/> : null }
-        <MarketChance/>
-        {this.state.adsListData.length>0? <Topic topicList = {this.state.adsListData}/> : null}
-        <div className='split-line'></div>  
-        {this.state.liveListData.length>0? <img className='livepic' src={this.state.liveListData[0].ImageUrl} alt=""/> : null}
-        <div className='split-line'></div>  
-      </div>
+      <BetterScroll>
+        <div className={`home-warpper ${this.props.theme==='white'?'white':'black'}`}>
+          <Header/>
+          <Nav/>
+          { this.state.adsListData.length>0 ? <AdsSwiper  adsList = {this.state.adsListData}/> : null }
+          { this.state.noticeListData.length>0 ? <Notice  noticeList = {this.state.noticeListData}/> : null }
+          <MarketChance/>
+          {this.state.adsListData.length>0? <Topic topicList = {this.state.adsListData}/> : null}
+          <div className='split-line'></div>  
+          {this.state.liveListData.length>0? <img className='livepic' src={this.state.liveListData[0].ImageUrl} alt=""/> : null}
+          <div className='split-line'></div>  
+        </div>
+      </BetterScroll>
     ) 
   }
 }
