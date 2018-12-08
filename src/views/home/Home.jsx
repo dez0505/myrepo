@@ -8,6 +8,7 @@ import BetterScroll from '../../components/base/BetterScroll'
 import Nav from '../../components/layout/Nav'
 import AdsSwiper from './subComponents/AdsSwiper'
 import Notice from './subComponents/Notice'
+import TabCase from '../../containers/TabCase'
 
 // api
 import { getHomeData } from '../../api/home'
@@ -59,7 +60,8 @@ class Home extends Component {
           {this.state.adsListData.length>0? <Topic topicList = {this.state.adsListData}/> : null}
           <div className='split-line'></div>  
           {this.state.liveListData.length>0? <img className='livepic' src={this.state.liveListData[0].ImageUrl} alt=""/> : null}
-          <div className='split-line'></div>  
+          <div className='split-line'></div>
+          <TabCase/>  
         </div>
       </BetterScroll>
     ) 

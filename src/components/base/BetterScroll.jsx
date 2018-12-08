@@ -48,7 +48,7 @@ export default class BetterScroll extends Component {
       })
     }
     this.scroll.on('refresh', () => {
-      console.log(100101010101, 'scroll刷新完成')
+      // console.log(100101010101, 'scroll刷新完成')
     })
   }
   _pullingDownUpComplete () {

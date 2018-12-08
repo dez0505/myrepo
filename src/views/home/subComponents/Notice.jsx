@@ -11,7 +11,6 @@ class Notice extends Component {
     };
   }
   componentDidMount() {
-    console.log(this.props)
     this.setState({list: this.props.noticeList.map(item => item)},()=>{
       setInterval(()=>{
         this.handleNoticeList()
@@ -19,15 +18,11 @@ class Notice extends Component {
     })
   }
   handleNoticeList() {
-    console.log(this.state)
     this.setState({isAnimate: true})
     let newList = this.state.list.map(item=>item)
     if( newList.length>0 ){
       setTimeout(() => {
         newList.push(newList[0])
-        // this.setState({
-        //   list: newList
-        // })
         newList.shift()
         this.setState({
           list: newList
