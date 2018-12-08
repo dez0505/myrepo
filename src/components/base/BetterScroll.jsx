@@ -11,8 +11,8 @@ export default class BetterScroll extends Component {
       refreshTime: '刷新时间',
       botText: '上拉加载',
       topIconDirection: 'down',
-      scroll: null
     };
+    this.scroll= null
   }
   _initScroll() {
     this.scroll = new BScroll('#wrapper',{
@@ -27,6 +27,55 @@ export default class BetterScroll extends Component {
         threshold: -20
       }
     })
+    this.scroll.on('pullingDown', () => {
+      this.$emit('refreshData')
+    })
+    this.scroll.on('pullingUp', () => {
+      this.loadeMoreList()
+    })
+    if (this.listenScroll) {
+      this.scroll.on('scroll', (pos) => {
+        console.log('scrollOffsetTop', document.querySelector('.inner-scroll-warpper').offsetTop)
+        const scrollHeight = document.querySelector('.inner-scroll-warpper').offsetTop // list元素的位置
+        this.listOffsetTop.value = scrollHeight
+        this.activeScrollValue.x = -(pos.x)
+        this.activeScrollValue.y = -(pos.y) // 滚动的距离
+        if (pos.y >= 60) {
+          this.topIconDirection = 'up'
+        } else {
+          this.topIconDirection = 'down'
+        }
+      })
+    }
+    this.scroll.on('refresh', () => {
+      console.log(100101010101, 'scroll刷新完成')
+    })
+  }
+  _pullingDownUpComplete () {
+    console.log('接口请求完毕,正在重新布置scroll')
+    this.scroll.finishPullDown()
+    this.scroll.finishPullUp()
+    this.scroll.refresh() // 重新计算元素高度
+  }
+  disable () {
+    // 代理better-scroll的disable方法
+    this.scroll && this.scroll.disable()
+  }
+  enable () {
+    // 代理better-scroll的enable方法
+    this.scroll && this.scroll.enable()
+  }
+  refresh () {
+    // 代理better-scroll的refresh方法
+    this.scroll && this.scroll.refresh()
+  }
+  scrollTo () {
+    // 代理better-scroll的scrollTo方法
+    this.scroll && this.scroll.scrollTo.apply(this.scroll, arguments)
+  }
+  scrollToElement () {
+    // 代理better-scroll的scrollToElement方法
+    this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
   }
   componentDidMount() {
     this._initScroll()

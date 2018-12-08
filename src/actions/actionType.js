@@ -1,2 +1,13 @@
 export const UPDATE_LIST = "UPDATE_LIST";
 export const UPDATE_THEME = "UPDATE_THEME";
+
+// list
+export const UPDATE_LOADING_STATE = "UPDATE_LOADING_STATE";
+export const UPDATE_DATA_STATE = "UPDATE_DATA_STATE";
+export const UPDATE_INTERFACE_STATE = "UPDATE_INTERFACE_STATE";
+export const UPDATE_LIST_DATA = "UPDATE_LIST_DATA";
+export const RESET_STATE = "RESET_STATE";
+
+// tab
+export const UPDATE_TAB_INDEX = "UPDATE_TAB_INDEX";
+

@@ -48,7 +48,6 @@ class Home extends Component {
    })
   }
   render() {
-    console.log('render', this.props.theme)
     return (
       <BetterScroll>
         <div className={`home-warpper ${this.props.theme==='white'?'white':'black'}`}>
