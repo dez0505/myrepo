@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 
-import { updateTabIndex } from '../actions/tab'
+import { updateTabIndex } from '@/actions/tab'
 
-import TabBox from '../views/home/tab/TabBox.jsx'
+import TabBox from '@/views/home/tab/TabBox.jsx'
 
 const mapStateToProps = (state,store) => {
   return {
