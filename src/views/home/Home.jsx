@@ -3,9 +3,9 @@ import './Home.scss'
 import '../../styles/homeTheme.scss'
 
 // subComponent
-import Header from '../../components/layout/Header'
-import BetterScroll from '../../components/base/BetterScroll'
-import Nav from '../../components/layout/Nav'
+import Header from '@/components/layout/Header'
+import BetterScroll from '@/components/base/BetterScroll'
+import Nav from '@/components/layout/Nav'
 import AdsSwiper from './subComponents/AdsSwiper'
 import Notice from './subComponents/Notice'
 import TabBox from './tab/TabBox'
@@ -14,6 +14,13 @@ import TabBox from './tab/TabBox'
 import { getHomeData } from '../../api/home'
 import Topic from './subComponents/topicSwiper'
 import MarketChance from './subComponents/MarketMachine'
+
+// api
+import { getHomeData, getIconData } from '@/api/home'
+// utils
+import { getQueryString } from '@/utils/common'
+
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -33,9 +40,14 @@ class Home extends Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-    this.getHomeDate(nextProps.theme)
+    this.getHomeData(nextProps.theme)
   }
-  async getHomeDate (theme) {
+  async getIconData () {
+    const { data } = await getIconData({
+    })
+    console.log('icon', data)
+  }
+  async getHomeData (theme) {
    const  { data } = await getHomeData({
      theme: theme === 'white' ? 'day' : theme === 'black'? 'night' : 'red',
      version: '7.00',

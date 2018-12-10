@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { updateTabIndex } from '../actions/tab'
+import { updateTabIndex } from '@/actions/tab'
 
 import TabHeader from '../views/home/tab/TabHeader.jsx'
 
