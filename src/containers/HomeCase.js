@@ -1,15 +1,19 @@
 import { connect } from 'react-redux'
 import Home from '../views/home/Home.jsx'
-import { updateTheme } from '../actions/index'
+import { updatePageConfig } from '../actions/index'
 
 const mapStateToProps = (state,store) => {
   return {
-    theme: state.pageConfig.theme
+    theme: state.pageConfig.theme,
+    version: state.pageConfig.version,
+    htid: state.pageConfig.htid,
+    platform: state.pageConfig.platform,
+    account: state.pageConfig.account
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
-    updateTheme: theme => dispatch(updateTheme(theme))
+    updatePageConfig: theme => dispatch(updatePageConfig(theme))
   }
 }
 export default connect(

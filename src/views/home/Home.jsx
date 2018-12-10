@@ -28,27 +28,29 @@ class Home extends Component {
       topicListData:[]
     }
   }
-  componentDidMount(val){
-    const random = Math.floor(Math.random()*2);
-    if(random === 1){
-      this.props.updateTheme({theme:'white'})
-    }else{
-      this.props.updateTheme({theme:'black'})
-    }
+
+  componentDidMount(){
+    const version = getQueryString('appversion')
+    const htid = getQueryString('htid')
+    const platform = getQueryString('platform')
+    const account = getQueryString('account')
+    const theme = getQueryString('theme')
+    this.props.updatePageConfig({theme, htid, platform, account, version})
   }
   componentWillReceiveProps(nextProps) {
-    this.getHomeData(nextProps.theme)
+    this.getHomeData(nextProps)
   }
   async getIconData () {
     const { data } = await getIconData({
     })
     console.log('icon', data)
   }
-  async getHomeData (theme) {
+  async getHomeData (params) {
+   const {theme, version, platform} = params
    const  { data } = await getHomeData({
-     theme: theme === 'white' ? 'day' : theme === 'black'? 'night' : 'red',
-     version: '7.00',
-     platform: 'android'
+     theme,
+     version,
+     platform
    })
    this.setState({
     adsListData:data.FirstAppAdsJson,
@@ -58,9 +60,10 @@ class Home extends Component {
    })
   }
   render() {
+    console.log(333, this.props)
     return (
       <BetterScroll>
-        <div className={`home-warpper ${this.props.theme==='white'?'white':'black'}`}>
+        <div className={`home-warpper ${this.props.theme==='night'?'black':'white'}`}>
           <Header/>
           <Nav/>
           { this.state.adsListData.length>0 ? <AdsSwiper  adsList = {this.state.adsListData}/> : null }

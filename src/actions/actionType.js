@@ -1,5 +1,5 @@
 export const UPDATE_LIST = "UPDATE_LIST";
-export const UPDATE_THEME = "UPDATE_THEME";
+export const UPDATE_PAGECONFIG = "UPDATE_PAGECONFIG";
 
 // list
 export const UPDATE_LOADING_STATE = "UPDATE_LOADING_STATE";

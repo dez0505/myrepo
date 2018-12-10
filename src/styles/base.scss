@@ -14,15 +14,18 @@ $grayText: #999;
 $whiteText: #FFF;
 $blackText: #333;
 // 边框色彩
-$whiteBd:#EEE;
-$blackBd:#2D3438;
+$whiteBd:#F1F1F1;
+$blackBd:#272D30;
 // 其他色
 $warning:#FF8700;
 $primary:#2E90E5;
-$error: #ea3e34;
+$error: #EA3E34;
 // 分隔线的色彩
-$blackDivision:#1b1f21;
+$blackDivision:#1B1F21;
 $whiteDivision:#F5F5F5;
+// 黑白主题背景
+$blackBg:#202528;
+$whiteBg:#FFF;
 
 @mixin imgBg($url) {
     background-image: url($url);
