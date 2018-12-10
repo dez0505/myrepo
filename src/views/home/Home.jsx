@@ -15,7 +15,7 @@ import MarketChance from './subComponents/MarketMachine'
 // api
 import { getHomeData, getIconData } from '@/api/home'
 // utils
-import { getQueryString } from '@/utils/common'
+import { getQueryString, setStore, getStore, getBase64 } from '@/utils/common'
 
 
 class Home extends Component {
@@ -25,7 +25,8 @@ class Home extends Component {
       adsListData:[],
       liveListData:[],
       noticeListData:[],
-      topicListData:[]
+      topicListData:[],
+      navMenusData:[],
     }
   }
 
@@ -39,11 +40,33 @@ class Home extends Component {
   }
   componentWillReceiveProps(nextProps) {
     this.getHomeData(nextProps)
+    this.getIconData(nextProps)
   }
-  async getIconData () {
-    const { data } = await getIconData({
-    })
-    console.log('icon', data)
+  async getIconData (params) {
+   const {version, platform} = params
+   try {
+      const { data } = await getIconData({
+        version, platform
+      }) 
+      if (data.Funlist.length === 0) return
+      Promise.all(data.Funlist.map(d => getBase64(d.ImageUrl))).then(
+        result => {
+          const navMenusData = result.map((ImageUrl, i) => ({
+            ...data.Funlist[i],
+            ImageUrl
+          }))
+          this.setState({
+            navMenusData
+          })
+          setStore('appindex.IndexMenus', navMenusData)
+        },
+        err => {
+          throw (err)
+        }
+      )
+   } catch (error) {
+      throw (error)
+   }
   }
   async getHomeData (params) {
    const {theme, version, platform} = params
@@ -65,7 +88,7 @@ class Home extends Component {
       <BetterScroll>
         <div className={`home-warpper ${this.props.theme==='night'?'black':'white'}`}>
           <Header/>
-          <Nav/>
+          <Nav navMenus={this.state.navMenusData}/>
           { this.state.adsListData.length>0 ? <AdsSwiper  adsList = {this.state.adsListData}/> : null }
           { this.state.noticeListData.length>0 ? <Notice  noticeList = {this.state.noticeListData}/> : null }
           <MarketChance/>
