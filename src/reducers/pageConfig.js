@@ -3,7 +3,11 @@ import {
 } from '../actions/actionType'
 
 const initialState = {
-  theme: ''
+  theme: '',
+  appversion: '',
+  htid: '',
+  platform: '',
+  account: ''
 }
 export default function todos(state = initialState, action) {
   console.log(11111111, action)
