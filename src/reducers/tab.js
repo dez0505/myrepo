@@ -20,14 +20,15 @@ const initialState = {
     ]
   },
   tabIndexData: {
-    activeHomeTabIndex: -1,
+    activeHomeTabIndex: 1,
     activeOptionalTabIndex: -1,
   },
 }
 export default function tab(state = initialState, action) {
   switch (action.type) {
     case UPDATE_TAB_INDEX:    // 更新loading状态
-      return  { ...state.tabIndexData, ...action.index }
+      const tabIndexData = {...state.tabIndexData,...action.index}
+      return  { ...state, tabIndexData}
     default:
       return state
   }

@@ -18,3 +18,9 @@ $baseRadius: Px(15);
     background-repeat: no-repeat;
     background-position: center;
 }
+
+@mixin cj ($type:space-between) {
+    display: flex;
+    justify-content:$type ;
+    align-items: center;
+}

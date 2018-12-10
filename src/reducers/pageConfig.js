@@ -6,7 +6,6 @@ const initialState = {
   theme: ''
 }
 export default function todos(state = initialState, action) {
-  console.log(11111111, action)
   switch (action.type) {
     case UPDATE_THEME:
       /*const mapDispatchToProps = dispatch => {
