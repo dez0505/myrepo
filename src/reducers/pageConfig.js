@@ -10,7 +10,6 @@ const initialState = {
   account: ''
 }
 export default function todos(state = initialState, action) {
-  console.log(11111111, action)
   switch (action.type) {
     case UPDATE_PAGECONFIG:
       return  { ...state, ...action.pageConfig } // ===> Object.assign({theme: ''},{theme: 'whitle'}) 

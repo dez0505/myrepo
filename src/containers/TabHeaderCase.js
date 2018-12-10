@@ -2,12 +2,14 @@ import { connect } from 'react-redux'
 
 import { updateTabIndex } from '@/actions/tab'
 
-import TabBox from '@/views/home/tab/TabBox.jsx'
+import TabHeader from '../views/home/tab/TabHeader.jsx'
 
 const mapStateToProps = (state,store) => {
   return {
     HomeTabMenuList: state.tab.tabMenuData.HomeTabMenuList,
-    optionalTabMenuList: state.tab.tabMenuData.optionalTabMenuList
+    optionalTabMenuList: state.tab.tabMenuData.optionalTabMenuList,
+    activeHomeTabIndex: state.tab.tabIndexData.activeHomeTabIndex,
+    activeOptionalTabIndex: state.tab.tabIndexData.activeOptionalTabIndex,
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -19,4 +21,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TabBox);
+)(TabHeader);

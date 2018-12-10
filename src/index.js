@@ -11,7 +11,7 @@ import 'lib-flexible';
 import 'swiper/dist/css/swiper.min.css'
 
 let store = createStore(rootReducer)
-
+console.log(store)
 ReactDOM.render(
   <Provider store={store}>
     <HomeCase />

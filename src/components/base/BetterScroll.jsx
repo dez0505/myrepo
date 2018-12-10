@@ -31,7 +31,7 @@ export default class BetterScroll extends Component {
       this.$emit('refreshData')
     })
     this.scroll.on('pullingUp', () => {
-      this.loadeMoreList()
+      // this.loadeMoreList()
     })
     if (this.listenScroll) {
       this.scroll.on('scroll', (pos) => {
