@@ -9,9 +9,6 @@ import Nav from '@/components/layout/Nav'
 import AdsSwiper from './subComponents/AdsSwiper'
 import Notice from './subComponents/Notice'
 import TabBox from './tab/TabBox'
-
-// api
-import { getHomeData } from '../../api/home'
 import Topic from './subComponents/topicSwiper'
 import MarketChance from './subComponents/MarketMachine'
 

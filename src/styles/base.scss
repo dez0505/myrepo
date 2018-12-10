@@ -33,7 +33,11 @@ $whiteBg:#FFF;
     background-repeat: no-repeat;
     background-position: center;
 }
-
+@mixin cj($type: space-between) {
+    display: flex;
+    justify-content: $type;
+    align-items: center;
+}
 
 //定位上下居中
 @mixin yCenter {
