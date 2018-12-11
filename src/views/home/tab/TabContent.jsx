@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
+
+// action
+import { updateTabIndex } from '@/actions/tab'
 // Swiper
 import './TabContent.scss'
 import Swiper from 'swiper'
 
-export default class TabContent extends Component {
+class TabContent extends Component {
   static propTypes = {
-    // prop: PropTypes
+    activeHomeTabIndex: PropTypes.number
   }
   constructor(props) {
     super(); //可以不给props
@@ -15,14 +19,25 @@ export default class TabContent extends Component {
     }
   }
   componentDidMount() {
+    console.log(333, this.props)
+    const that = this
     let mySwiper = new Swiper('.tab-swiper', {
-      loop: true,
-      autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
+      autoplay: false,
+      // threshold: 100,
+      touchMoveStopPropagation: false,
+      onSlideChangeEnd: function (swiper) {
+        console.log(swiper.activeIndex)
+        that.props.updateHomeTabIndex(swiper.activeIndex)
       }
     })
     this.setState({ mySwiper: mySwiper })
+  }
+  componentWillReceiveProps(props) {
+  }
+  componentWillUpdate(props,state) {
+    if( state.mySwiper) {
+      state.mySwiper.slideTo(props.activeHomeTabIndex, 100, false)
+    }
   }
   componentDidUpdate() {
     if(this.state.mySwiper){
@@ -43,3 +58,12 @@ export default class TabContent extends Component {
     )
   }
 }
+const mapStateToProps = (state) => ({
+  activeHomeTabIndex: state.tab.tabIndexData.activeHomeTabIndex,
+})
+
+const mapDispatchToProps = dispatch => ({
+  updateHomeTabIndex: activeHomeTabIndex => dispatch(updateTabIndex({ activeHomeTabIndex }))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(TabContent)

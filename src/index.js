@@ -8,7 +8,7 @@ import rootReducer from './reducers'
 // component
 
 import HomeCase from './containers/HomeCase'
-import TabContentCase from './containers/TabContentCase'
+// import TabContentCase from './containers/TabContentCase'
 // css
 import 'antd-mobile/dist/antd-mobile.css'; 
 import 'lib-flexible';
@@ -28,7 +28,7 @@ window._connectApp_ = ReactDOM.render(
   <Provider store={store}>
     <div>
       <HomeCase />
-      <TabContentCase></TabContentCase>
+      {/* <TabContentCase></TabContentCase> */}
     </div>
   </Provider>,
   document.getElementById('root')

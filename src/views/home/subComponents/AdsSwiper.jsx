@@ -8,22 +8,28 @@ class AdsSwiper extends Component {
   constructor(props) {
     super(); //可以不给props
     this.state = {
-      mySwiper: null
+      adsSwiper: null
     }
   }
   componentDidMount() {
-    let mySwiper = new Swiper('.ads-swiper', {
+    const that = this
+    const adsSwiper = new Swiper('.ads-swiper', {
       loop: true,
-      autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
+      autoplay:5000,
+      pagination: '.swiper-pagination',
+      onclick: function(swiper) {
+        const realIndex = swiper.realIndex
+        that.goToAds(this.props.adsList[realIndex], 'ads')
       }
     })
-    this.setState({ mySwiper: mySwiper })
+    if(adsSwiper.slides.length <= 3) {
+      adsSwiper.lockSwipes()
+    }
+    this.setState({ adsSwiper })
   }
   componentDidUpdate() {
-    if(this.state.mySwiper){
-      this.state.mySwiper.update()
+    if(this.state.adsSwiper){
+      this.state.adsSwiper.update()
     }
   }
   render() {
