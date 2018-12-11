@@ -47,6 +47,9 @@ class Topic extends Component {
             ]
         }
     }
+    goToApp() {
+        console.log(1111111111111111)
+    }
     componentDidMount() {
 
     }

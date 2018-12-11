@@ -10,7 +10,10 @@ import AdsSwiper from './subComponents/AdsSwiper'
 import Notice from './subComponents/Notice'
 import TabBox from './tab/TabBox'
 import Topic from './subComponents/topicSwiper'
-import MarketChance from './subComponents/MarketMachine'
+import MarketMachine from './subComponents/MarketMachine'
+
+// container
+
 
 // api
 import { getHomeData, getIconData } from '@/api/home'
@@ -31,12 +34,13 @@ class Home extends Component {
   }
 
   componentDidMount(){
+    const titleheight = getQueryString('titleheight')
     const version = getQueryString('appversion')
     const htid = getQueryString('htid')
     const platform = getQueryString('platform')
     const account = getQueryString('account')
     const theme = getQueryString('theme')
-    this.props.updatePageConfig({theme, htid, platform, account, version})
+    this.props.updatePageConfig({titleheight, theme, htid, platform, account, version})
   }
   componentWillReceiveProps(nextProps) {
     this.getHomeData(nextProps)
@@ -83,7 +87,6 @@ class Home extends Component {
    })
   }
   render() {
-    console.log(333, this.props)
     return (
       <BetterScroll>
         <div className={`home-warpper ${this.props.theme==='night'?'black':'white'}`}>
@@ -91,7 +94,7 @@ class Home extends Component {
           <Nav navMenus={this.state.navMenusData}/>
           { this.state.adsListData.length>0 ? <AdsSwiper  adsList = {this.state.adsListData}/> : null }
           { this.state.noticeListData.length>0 ? <Notice  noticeList = {this.state.noticeListData}/> : null }
-          <MarketChance/>
+          <MarketMachine ref='marketMachine'/>
           {this.state.adsListData.length>0? <Topic topicList = {this.state.adsListData}/> : null}
           <div className='split-line'></div>  
           {this.state.liveListData.length>0? <img className='livepic' src={this.state.liveListData[0].ImageUrl} alt=""/> : null}

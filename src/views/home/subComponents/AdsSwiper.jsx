@@ -7,7 +7,6 @@ import Swiper from 'swiper'
 class AdsSwiper extends Component {
   constructor(props) {
     super(); //可以不给props
-    this.mySwiper = null
     this.state = {
       mySwiper: null
     }

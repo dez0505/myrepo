@@ -34,13 +34,21 @@ const initialState = {
 export default function list(state = initialState, action) {
   switch (action.type) {
     case UPDATE_LOADING_STATE:    // 更新loading状态
-      return  { ...state.loadingState, ...action.loadingState }
+      const loadingState = {...state.loadingState,...action.loadingState}
+      return  { ...state, loadingState }
+
     case UPDATE_DATA_STATE:       // 更新data状态
-      return  { ...state.dataState, ...action.dataState }
+      const dataState = { ...state.dataState, ...action.dataState }
+      return  { ...state.dataState, dataState }
+
     case UPDATE_INTERFACE_STATE:  // 更新接口状态
-      return  { ...state.interfaceState, ...action.interfaceState }
+      const interfaceState = { ...state.interfaceState, ...action.interfaceState }
+      return  { ...state, interfaceState }
+
     case UPDATE_LIST_DATA:        // 更新列表数据
-      return  { ...state.listData, ...action.listData }
+      const listData = { ...state.listData, ...action.listData }
+      return  { ...state.listData, listData:listData }
+      
     case RESET_STATE:             // 重置list状态
       return  { ...state, ...initialState }
     default:

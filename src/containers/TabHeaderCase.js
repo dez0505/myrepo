@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 
 import { updateTabIndex } from '@/actions/tab'
+import { updateInterfaceState } from '@/actions/list'
 
 import TabHeader from '../views/home/tab/TabHeader.jsx'
 
@@ -15,7 +16,8 @@ const mapStateToProps = (state,store) => {
 const mapDispatchToProps = dispatch => {
   return {
     updateHomeTabIndex: activeHomeTabIndex => dispatch(updateTabIndex({ activeHomeTabIndex })),
-    updateOptionalTabIndex: activeOptionalTabIndex => dispatch(updateTabIndex({ activeOptionalTabIndex }))
+    updateOptionalTabIndex: activeOptionalTabIndex => dispatch(updateTabIndex({ activeOptionalTabIndex })),
+    updateInterfaceState: whichLoading => dispatch(updateInterfaceState({whichLoading}))
   }
 }
 export default connect(

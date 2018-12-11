@@ -39,8 +39,8 @@ export function updateListData(listData) {
 }
 
 // 重置list状态
-export function RESET_STATE() {
+export function resetState() {
   return {
-    type: UPDATE_LIST_DATA
+    type: RESET_STATE
   };
 }

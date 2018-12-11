@@ -4,11 +4,11 @@ import { updatePageConfig } from '../actions/index'
 
 const mapStateToProps = (state,store) => {
   return {
-    theme: state.pageConfig.theme,
-    version: state.pageConfig.version,
-    htid: state.pageConfig.htid,
-    platform: state.pageConfig.platform,
-    account: state.pageConfig.account
+    theme: state.pageConfig.theme,            // 主题
+    version: state.pageConfig.version,        // 版本
+    htid: state.pageConfig.htid,              // 用户id
+    platform: state.pageConfig.platform,      // 安卓或ios
+    account: state.pageConfig.account         //  account 没用到
   }
 }
 const mapDispatchToProps = dispatch => {

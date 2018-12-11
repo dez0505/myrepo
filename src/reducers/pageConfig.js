@@ -7,9 +7,11 @@ const initialState = {
   version: '',
   htid: '',
   platform: '',
-  account: ''
+  account: '',
+  titleheight: ''
 }
-export default function todos(state = initialState, action) {
+export default function pageConfig(state = initialState, action) {
+  console.log(888)
   switch (action.type) {
     case UPDATE_PAGECONFIG:
       return  { ...state, ...action.pageConfig } // ===> Object.assign({theme: ''},{theme: 'whitle'}) 
