@@ -13,13 +13,12 @@ import HomeCase from './containers/HomeCase'
 import 'antd-mobile/dist/antd-mobile.css'; 
 import 'lib-flexible';
 import 'swiper/dist/css/swiper.min.css'
+import './styles/common.scss'
 
 // action
 import { updatePageConfig } from './actions/index'
 import { updateNativeData } from './actions/nativeData'
 import { refreshListData } from './actions/fetch'
-
-
 
 
 let store = createStore(rootReducer)
@@ -54,8 +53,6 @@ window.updateShortTermElves = function (optionaChange) {
 window.refreshInfo = function () {
   store.dispatch(refreshListData())
 }
-
-
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

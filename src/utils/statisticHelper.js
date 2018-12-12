@@ -1,5 +1,5 @@
 const statisticData = {
-  '10062': { 'name': '搜索', 'clickKey': '51734', 'clickType': 'CAction' },
+  '10134': { 'name': '搜索', 'clickKey': '51734', 'clickType': 'CAction' },
   '10067': { 'name': '消息中心', 'clickKey': '51547', 'clickType': 'CAction' },
   '10203': { 'name': '智能选股3.0', 'clickKey': '51543', 'clickType': 'CSC' },
   '10034': { 'name': '限售解禁', 'clickKey': '51224', 'clickType': 'CSC' },
@@ -63,5 +63,11 @@ const statisticData = {
   '10006': { 'name': '更多-彩虹内参', 'clickKey': '51354', 'clickType': 'CAction' },
   '10038': { 'name': '更多-港股策略', 'clickKey': '51355', 'clickType': 'CAction' },
   '10114': { 'name': '更多-主编精选', 'clickKey': '51506', 'clickType': 'CAction' },
+  '10133': { 'name': 'FM', 'clickKey': '51751', 'clickType': 'CAction' },
+  'optional0': { 'name': '切换到自选-新闻', 'clickKey': '51752', 'clickType': 'CAction' },
+  'optional1': { 'name': '切换到自选-问董秘', 'clickKey': '51753', 'clickType': 'CAction' },
+  'optional2': { 'name': '切换到自选-大事件', 'clickKey': '51754', 'clickType': 'CAction' },
+  'optional3': { 'name': '切换到自选-公告', 'clickKey': '51755', 'clickType': 'CAction' },
+  'optional4': { 'name': '切换到自选-研报', 'clickKey': '51756', 'clickType': 'CAction' },
 }
 export default statisticData

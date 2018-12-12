@@ -1,94 +1,116 @@
 import React, { Component } from 'react';
 import './MarketMachine.scss'
 import Title from '../../../components/layout/Title'
-const marketPic1 = require('../../../images/machine-images/today_date.png')
-const marketPic3 = require('../../../images/machine-images/today_stop.png')
-const marketPic2 = require('../../../images/machine-images/allman_make.png')
-const marketPic4 = require('../../../images/machine-images/myself_change.png')
-class Topic extends Component {
-    constructor(props) {
-        super(); //可以不给props
-        this.state = {
-            chanceList: [
-                {
-                    title: '今日投资日历',
-                    list: [
-                        { txt: '新股', num: '1' },
-                        { txt: '新债', num: '1' },
-                        { txt: '分红转送', num: '12' },
-                        { txt: '停复牌', num: '137' }
-                    ],
-                    picUrl: marketPic1
-                },
-                {
-                    title: '大家都在用',
-                    list: [
-                        { txt: '选股策略', num: '大数据' },
-                        { txt: '股入选', num: '10' }
-                    ],
-                    picUrl: marketPic2
-                },
-                {
-                    title: '个股发生异动',
-                    list: [
-                        { txt: '火箭发射', num: '海通证券' },
-                        { txt: '涨幅', num: '9.36%' }
-                    ],
-                    picUrl: marketPic3
-                },
-                {
-                    title: '今日板块涨停',
-                    list: [
-                        { txt: '家涨停', num: '90', extra: '共' },
-                        { txt: '板块排名第一', num: '化工' }
-                    ],
-                    picUrl: marketPic4
-                }
-            ]
-        }
-    }
-    goToApp() {
-        console.log(1111111111111111)
-    }
-    componentDidMount() {
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-    }
-    render() {
-        return (
-            <div className='market-box'>
-                <div className='split-line'></div>
-                <Title title='市场机会' />
-                <div className="market-wrap top-border">
-                    <div className="market-list">
-                        {
-                            this.state.chanceList.map((item, index) => {
-                                return (
-                                    <div key={index} className="market-item bot-border">
-                                        <div className="market-title">{item.title}</div>
-                                        <div className='market-desc-list'>
-                                            {
-                                                item.list.map((desc, num) => {
-                                                    return (
-                                                        <div key={num} className='market-desc'>
-                                                            <span>{desc.extra?desc.extra:''}</span>
-                                                            {index === 0 ? desc.txt:''}
-                                                            {index === 2 && num === 1 ? desc.txt:''}
-                                                            <span className='orgcolor'>{desc.num}</span>
-                                                            {index !== 0 && (index !== 2 || num !== 1) ?desc.txt:''}
-                                                        </div>
-                                                    )
-                                                })
-                                            }
-                                        </div>
-                                        <img className='market-bg' src={item.picUrl} alt="" />
-                                    </div>
-                                )
-                            })
-                        }
-                    </div>
-                </div>
-            </div>
-        )
-    }
+// utils
+import { goToFunction } from '@/utils/common.js'
+// const marketPic1 = require('../../../images/machine-images/today_date.png')
+// const marketPic3 = require('../../../images/machine-images/today_stop.png')
+// const marketPic2 = require('../../../images/machine-images/allman_make.png')
+// const marketPic4 = require('../../../images/machine-images/myself_change.png')
+class MarketMachine extends Component {
+	static propTypes = {
+		optionaChange:PropTypes.object
+	}
+	
+	constructor(props) {
+		super(); //可以不给props
+		this.state = {
+				todayDateObj: {},
+				xunGunObj: {},
+				zhangTingObj: {
+					count: '',
+					copanyName: ''
+				},
+			}
+	}
+	componentDidMount() {
+		console.log('market', this.props)
+	}
+	handleMyGunChange (val) {
+		if (val.indexOf('%') >= 0) {
+			return `<span>涨幅<span class='list-key' style="color:#fd8c2e;">${val}</span></span>`
+		} else if (val.indexOf('手') >= 0) {
+			return `<span><span class='list-key' style="color:#fd8c2e;">${val}</span></span>`
+		} else {
+			return `<span>价格<span class='list-key' style="color:#fd8c2e;">${val}</span></span>`
+		}
+	}
+	render() {
+		return (
+			<div className='market-box'>
+				<div className='split-line'></div>
+				<Title title='市场机会' />
+				<div className="market-machine">
+				<div className="market-list-box">
+					<div className="market-list bot-border" onClick={()=>{goToFunction('10035@more')}}>
+						<div>
+							<div className="list-title">
+								今日投资日历
+							</div>
+							<div className="list-content">
+								<span className="list-label">新股<span className="list-key">{this.state.todayDateObj.newStockNum}</span></span>
+								<span className="list-label">新债<span className="list-key">{this.state.todayDateObj.newBondNum}</span></span>
+								<span className="list-label">分红送转<span className="list-key">{this.state.todayDateObj.FHNum}</span></span>
+								<span className="list-label">停复<span className="list-key">{this.state.todayDateObj.TFPNum}</span></span>
+							</div>
+						</div>
+						<div className="right-icon icon1">
+						</div>
+					</div>
+					<div className="market-list bot-border" onClick={()=>goToFunction('10203@more')}>
+						<div>
+							<div className="list-title">
+								大家都在用
+							</div>
+							<div className="list-content">
+								<span className="list-label"><span className="list-key">{this.state.xunGunObj.name}</span>选股策略</span>
+								<span className="list-label"><span className="list-key">{this.state.xunGunObj.count}</span>股入选</span>
+							</div>
+						</div>
+						<div className="'right-icon icon2">
+						</div>
+					</div>
+					<div style={{display:this.props.stockname&&this.props.signalname&&this.props.signalvalue?'block':'none'}} className="market-list bot-border" onClick={()=>goToFunction('10084')}>
+						<div>
+							<div className="list-title">
+								个股发生异动
+							</div>
+							<div className="list-content">
+								<span className="list-label"><span className="list-key">{this.props.optionaChange.stockname}</span>{this.props.optionaChange.signalname}</span>
+								<span className="list-label list-key">{this.handleMyGunChange(this.props.optionaChange.signalvalue)}</span>
+							</div>
+						</div>
+						<div className="'right-icon icon3">
+						</div>
+					</div>
+					<div className="market-list" onClick={()=>goToFunction('10127')}>
+						<div>
+							<div className="list-title">
+								今日板块涨停
+							</div>
+							<div className="list-content">
+								<span className="list-label">共<span className="list-key">{this.state.zhangTingObj.count}</span>家涨停</span>
+								<span className="list-label"><span className="list-key">{this.state.zhangTingObj.copanyName}</span>板块排名第一</span>
+							</div>
+						</div>
+						<div className="'right-icon icon4">
+						</div>
+				</div>
+			</div>
+			</div>
+			</div>
+		)
+	}
 }
-export default Topic
+const mapStateToProps = (state) => ({
+	optionaChange: state.nativeData.optionaChange
+})
+
+const mapDispatchToProps = {
+	
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MarketMachine)

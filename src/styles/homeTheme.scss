@@ -2,7 +2,7 @@
 @import './base.scss';
 .white{
   background: $whiteBg;
-  color:$blackBg;
+  color:$blackText;
   .header-box{
     background: #1C2B48;
   }
@@ -35,25 +35,4 @@
   .top-border{
     border-top: Px(1) solid $blackBd;
   }
-}
-.swiper-pagination .swiper-pagination-bullet {
-  width: 5px !important;
-  height: 5px !important;
-  border-radius: 50% !important;
-  background-color: initial !important;
-  border: 1px solid #fff !important;
-  margin-right: 0.1448rem !important;
-  margin-left: 0px !important;
-  opacity: 1 !important;
-}
-
-.swiper-pagination .swiper-pagination-bullet-active {
-  background-color: #fff !important;
-}
-
-.swiper-pagination {
-  bottom: 8px !important;
-  z-index: 2;
-  line-height: 0.213rem;
-  transform: translate3d(0px, 0px, 1px) scale(1);
 }

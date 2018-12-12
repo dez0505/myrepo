@@ -19,7 +19,7 @@ class TabContent extends Component {
     }
   }
   componentDidMount() {
-    console.log(333, this.props)
+    console.log('tabContent', this.props)
     const that = this
     let mySwiper = new Swiper('.tab-swiper', {
       autoplay: false,

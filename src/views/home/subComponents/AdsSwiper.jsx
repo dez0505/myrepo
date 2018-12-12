@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 // Swiper
 import './AdsSwiper.scss'
 import Swiper from 'swiper'
-// api
+// utils
+import { goToAPP } from '@/utils/common'
 
 class AdsSwiper extends Component {
   constructor(props) {
@@ -12,14 +13,13 @@ class AdsSwiper extends Component {
     }
   }
   componentDidMount() {
-    const that = this
     const adsSwiper = new Swiper('.ads-swiper', {
       loop: true,
       autoplay:5000,
       pagination: '.swiper-pagination',
-      onclick: function(swiper) {
+      onClick: (swiper) => {
         const realIndex = swiper.realIndex
-        that.goToAds(this.props.adsList[realIndex], 'ads')
+        goToAPP(this.props.adsList[realIndex], 'ads')
       }
     })
     if(adsSwiper.slides.length <= 3) {

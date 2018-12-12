@@ -3,14 +3,16 @@ import './Home.scss'
 import '../../styles/homeTheme.scss'
 
 // subComponent
-import Header from '@/components/layout/Header'
 import BetterScroll from '@/components/base/BetterScroll'
+import Header from '@/components/layout/Header'
 import Nav from '@/components/layout/Nav'
 import AdsSwiper from './subComponents/AdsSwiper'
 import Notice from './subComponents/Notice'
-import TabBox from './tab/TabBox'
-import Topic from './subComponents/topicSwiper'
 import MarketMachine from './subComponents/MarketMachine'
+import TopicSwiper from './subComponents/TopicSwiper'
+import LiveFM from './subComponents/LiveFM'
+import TabBox from './tab/TabBox'
+
 
 // container
 
@@ -30,6 +32,7 @@ class Home extends Component {
       noticeListData:[],
       topicListData:[],
       navMenusData:[],
+      liveFmList: [],
     }
   }
 
@@ -82,24 +85,24 @@ class Home extends Component {
    this.setState({
     adsListData:data.FirstAppAdsJson,
     noticeListData:data.AnnounceJson,
-    liveListData:data.LivePicsJson,
-    topicListData:data.TopicPicsJson
+    topicListData:data.TopicPicsJson,
+    liveFmList: data.FmLivePicsJson
    })
   }
   render() {
+    const liveFmListProps = {theme:this.props.theme, liveFmList:this.state.liveFmList}
     return (
       <BetterScroll>
         <div className={`home-warpper ${this.props.theme==='night'?'black':'white'}`}>
           <Header/>
-          <Nav navMenus={this.state.navMenusData}/>
+          <Nav navMenus={this.state.navMenusData} theme={this.props.theme}/>
           { this.state.adsListData.length>0 ? <AdsSwiper  adsList = {this.state.adsListData}/> : null }
-          { this.state.noticeListData.length>0 ? <Notice  noticeList = {this.state.noticeListData}/> : null }
-          <MarketMachine ref='marketMachine'/>
-          {this.state.adsListData.length>0? <Topic topicList = {this.state.topicListData}/> : null}
-          <div className='split-line'></div>  
-          {this.state.liveListData.length>0? <img className='livepic' src={this.state.liveListData[0].ImageUrl} alt=""/> : null}
+          { this.state.noticeListData.length>0 ? <Notice theme = {this.props.theme} noticeList = {this.state.noticeListData}/> : null }
+          <MarketMachine />
+          {this.state.adsListData.length>0? <TopicSwiper topicList = {this.state.adsListData}/> : null}
+          { this.state.liveFmList.length>0? <LiveFM {...liveFmListProps}> </LiveFM>: null }
           <div className='split-line'></div>
-          <TabBox/>  
+          <TabBox/> 
         </div>
       </BetterScroll>
     ) 

@@ -1,23 +1,29 @@
 @import '../../styles/base.scss';
+
 .nav-warpper {
-    overflow: hidden;
-    .navlist {
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
+  overflow: hidden;
+
+  .nav-list {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    .nav-item {
+      padding: Px(30) 0;
+      width: 25%;
+      text-align: center;
+      font-size: Px(30);
+
+      img {
+        display: block;
+        margin: 0 auto;
+        width: Px(96);
+        height: Px(96);
+      }
+
+      div {
+        margin-top: Px(10);
+      }
     }
-    .navlist .navitem {
-        padding:Px(30) 0;
-        width: 25%;
-        text-align: center;
-        font-size: Px(30);
-        img {
-            display: block;
-            margin: 0 auto;
-            width: Px(70);
-        }
-        div {
-            margin-top: Px(10);
-        }
-    }
+  }
 }
