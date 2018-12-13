@@ -3,9 +3,10 @@ import './MarketMachine.scss'
 import Title from '../../../components/layout/Title'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-
+// api
+import { getDateData, getMd5Data, getSelectStockData, getHardenData } from '@/api/marketMachine'
 // utils
-import { goToFunction } from '@/utils/common.js'
+import { goToFunction, sendIOSMessage, encryptByDES } from '@/utils/common.js'
 // const marketPic1 = require('../../../images/machine-images/today_date.png')
 // const marketPic3 = require('../../../images/machine-images/today_stop.png')
 // const marketPic2 = require('../../../images/machine-images/allman_make.png')
@@ -26,16 +27,91 @@ class MarketMachine extends Component {
 				},
 			}
 	}
+	async	getMarketMachineData() {
+		if (window.quote && window.quote.requestShortTermElves) {
+			window.quote.requestShortTermElves()
+		} else {
+			sendIOSMessage('requestShortTermElves', {})
+		}
+		try {
+			// 日历
+			const {
+				data: riNiData
+			} = await getDateData()
+			this.dealTodayDate(riNiData)
+			// 选股 加密
+			const { // 先要进行加密操作
+				data: mdData
+			} = await getMd5Data()
+			if (!mdData || !mdData.dateStatus) return
+			let param = encryptByDES(JSON.stringify({
+				dateStatus: mdData.dateStatus
+			}), 'e9facf+2$2d81&4243^b16a=2f45e639e53d')
+			//  选股 接口
+			const {
+				data: xunGunData
+			} = await getSelectStockData({ param })
+			this.dealXunGun(xunGunData)
+      // 涨停
+			const {
+				data: zhangTingData
+			} = await getHardenData()
+			this.dealZhangTing(zhangTingData)
+		} catch (error) {
+			console.log(error)
+		}
+	}
+	 // 处理涨停
+	 dealZhangTing (zhangTingData) {
+		 console.log('zhangTingData', zhangTingData)
+		if (zhangTingData.retCode === '0000') {
+			const count = zhangTingData.content.hardenBlockInfos.zt
+			const array = zhangTingData.content.hardenBlockInfos.blockInfos // 第一个可能为null,所以可以选择第二个
+			const zhangTingObj = {
+				count,
+				copanyName : array[0].bkmc ? array[0].bkmc : array[1].bkmc
+			}
+			this.setState({
+				zhangTingObj
+			})
+		} else {
+			console.log(zhangTingData.retMsg)
+		}
+	}
+	// 处理选股的函数
+	dealXunGun (xunGunData) {
+		if (xunGunData.retCode === '0000') {
+			let randomNum = Math.floor(Math.random() * 4)
+			const xunGunObj = xunGunData.content[randomNum]
+			this.setState({ xunGunObj })
+		} else {
+			console.log(xunGunData.retMsg)
+		}
+	}
+	// 处理今日数据
+	dealTodayDate (riNiData) {    
+		console.log(riNiData)
+		if (riNiData.code === 0) {
+			const todayDateObj = {}
+			riNiData.content.dataField.forEach((item, index) => {
+				todayDateObj[item] = riNiData.content.dataRecord[0][index]
+			})
+			this.setState({ todayDateObj })
+		} else {
+			console.log(riNiData.message)
+		}
+	}
 	componentDidMount() {
 		console.log('market', this.props)
+		this.getMarketMachineData()
 	}
 	handleMyGunChange (val) {
 		if (val.indexOf('%') >= 0) {
-			return `<span>涨幅<span class='list-key' style="color:#fd8c2e;">${val}</span></span>`
+			return <span>涨幅<span className='list-key'>{val}</span></span>
 		} else if (val.indexOf('手') >= 0) {
-			return `<span><span class='list-key' style="color:#fd8c2e;">${val}</span></span>`
+			return <span><span className='list-key'>{val}</span></span>
 		} else {
-			return `<span>价格<span class='list-key' style="color:#fd8c2e;">${val}</span></span>`
+			return <span>价格<span className='list-key'>{val}</span></span>
 		}
 	}
 	render() {
@@ -101,7 +177,7 @@ class MarketMachine extends Component {
 				</div>
 			</div>
 			</div>
-			</div>
+		</div>
 		)
 	}
 }

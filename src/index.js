@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 // redux init
-import { createStore } from 'redux'
+import { createStore, applyMiddleware  } from 'redux'
+import thunk from 'redux-thunk'
 import { Provider } from "react-redux";
 import rootReducer from './reducers'
 // component
@@ -21,7 +22,7 @@ import { updateNativeData } from './actions/nativeData'
 import { refreshListData } from './actions/fetch'
 
 
-let store = createStore(rootReducer)
+let store = createStore(rootReducer, applyMiddleware(thunk))
 console.log(store)
 window._connectApp_ = ReactDOM.render(
   <Provider store={store}>

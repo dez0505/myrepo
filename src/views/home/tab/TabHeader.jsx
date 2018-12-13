@@ -11,13 +11,16 @@ export default class TabHeader extends Component {
     type: PropTypes.string
   };
   componentDidMount() {
-    console.log(233222, this.props);
+    if (this.props.activeHomeTabIndex >= 0) {
+      this.updateWhichLoading(this.props.activeHomeTabIndex)
+    }
   }
+ 
   componentWillReceiveProps(newProps, oldProps) {
     if(newProps.type === 'home') {
-      this.updateInterfaceState(newProps.activeHomeTabIndex)
+      this.updateWhichLoading(newProps.activeHomeTabIndex)
     } else {
-      this.updateInterfaceState(newProps.activeOptionalTabIndex)
+      this.updateWhichLoading(newProps.activeOptionalTabIndex)
     }
   }
   // type='home'
@@ -27,7 +30,7 @@ export default class TabHeader extends Component {
   // activeOptionalTabIndex={this.props.activeOptionalTabIndex}
   // HomeTabMenuList={this.props.HomeTabMenuList} 
   // optionalTabMenuList = {this.props.optionalTabMenuList}
-  updateInterfaceState (activeIndex) {
+  updateWhichLoading (activeIndex) {
     if (this.props.type === 'home') {
       switch (activeIndex) {
         case 0:

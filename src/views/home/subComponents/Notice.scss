@@ -9,15 +9,15 @@
   .notice-icon{
     width: Px(48);
     height: Px(40);
-    @include imgBg('./homeNotice-images/sound.png');
+    @include imgBg('../homeNotice-images/sound.png');
     &.red{
-      @include imgBg('./homeNotice-images/sound_red.png');
+      @include imgBg('../homeNotice-images/sound_red.png');
     }
   }
   .right-icon{
     width: Px(15);
     height: Px(26);
-    @include imgBg('./homeNotice-images/right-icon-black.png');
+    @include imgBg('../homeNotice-images/right-icon-black.png');
   }
   .anim{
     transition: all 1s linear;

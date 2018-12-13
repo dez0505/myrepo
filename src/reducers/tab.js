@@ -20,7 +20,7 @@ const initialState = {
     ]
   },
   tabIndexData: {
-    activeHomeTabIndex: 1,
+    activeHomeTabIndex: 0,
     activeOptionalTabIndex: -1,
   },
 }

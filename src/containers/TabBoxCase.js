@@ -1,26 +1,15 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-// redux
 import { connect } from 'react-redux'
+
 import { updateInterfaceState, updateLoadingState, updateDataState, updateListData } from '@/actions/list'
-// api
-import { getOptionalBigEvent } from '@/api/topLine'
 
-
-class bigEventBox extends Component {
-  static propTypes = {
-    prop: PropTypes
-  }
-
-  render() {
-    return (
-      <div>
-        
-      </div>
-    )
-  }
-}
-
+import TopLineBox from './tab/TopLineCase.js'
+import CheifBox from './tab/CheifCase.js'
+import LiveBox from './tab/LiveCase.js'
+import NewsBox from './tab/NewsCase.js'
+import QusBox from './tab/QusCase.js'
+import BigEventBox from './tab/BigEventCase.js'
+import NoticeBox from './tab/NoticeCase.js'
+import ReportBox from './tab/ReportCase.js'
 
 const mapStateToProps = (state,store) => {
   return {
@@ -42,4 +31,5 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(bigEventBox);
+)(TopLineBox);
+// , CheifBox, LiveBox, NewsBox, QusBox, BigEventBox, NoticeBox, ReportBox

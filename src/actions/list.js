@@ -3,6 +3,7 @@ import {
   UPDATE_DATA_STATE,
   UPDATE_INTERFACE_STATE,
   UPDATE_LIST_DATA,
+  UPDATE_INTERFACE_PARAMS,
   RESET_STATE,
 } from './actionType'
 
@@ -35,6 +36,13 @@ export function updateListData(listData) {
   return {
     type: UPDATE_LIST_DATA,
     listData
+  };
+}
+// 更新列表数据
+export function updateInterfaceData(interfaceParams) {
+  return {
+    type: UPDATE_INTERFACE_PARAMS,
+    interfaceParams
   };
 }
 
