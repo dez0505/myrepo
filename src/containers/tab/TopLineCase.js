@@ -5,11 +5,7 @@ import { connect } from 'react-redux'
 import { getTopLineList } from '@/actions/topLine'
 // component
 import TopLine from '@/views/home/tab/subComponents/TopLine.jsx'
-// // api
-// import { getTopLineData, getZhiDinData } from '../../api/topLine'
-// // utils
-// import { getStore, setStore } from '@/utils/common'
-
+// api
 class TopLineCase extends Component {
   constructor(props) {
     super()
@@ -21,10 +17,12 @@ class TopLineCase extends Component {
     whichLoading: PropTypes.string
   }
   componentDidMount() {
-    this.props.getTopLineList()
+   
   }
   componentWillReceiveProps (props) {
-    console.log(11111, props.listData)
+      if (props.htid !== this.props.htid) { //只有htid变化时，这个才执行
+        this.props.getTopLineList('init')
+      }
   }
   render() {
     return (
@@ -35,6 +33,7 @@ class TopLineCase extends Component {
 const mapStateToProps = (state,store) => {
   return {
     listData: state.list.listData,
+    htid: state.pageConfig.htid
   }
 }
 const mapDispatchToProps = dispatch => {

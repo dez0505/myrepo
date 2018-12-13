@@ -18,6 +18,7 @@ import {
 
 export function getTopLineList(type) {
   return async (dispatch, getState) => {
+    console.log(32323, getState())
     const htid = getState().pageConfig.htid
     const whichLoading = getState().list.interfaceState.whichLoading
     const listData = getState().list.listData
@@ -49,7 +50,7 @@ export function getTopLineList(type) {
         const {
           data
         } = await getTopLineData(topLineParams)
-
+        console.log(1111, data)
         // 头条的接口逻辑
         let historyArray = []
         if (data && (data instanceof Array)) {

@@ -13,13 +13,29 @@ class TopLine extends Component {
   componentDidMount() {
     console.log(111, this.props)
   }
+  dealWithTime(pushTime) {
+    let time = pushTime
+      if (new Date(time).getDate() === new Date().getDate() && new Date(time).getMonth() === new Date().getMonth() && new Date(time).getFullYear() ===
+          new Date().getFullYear()
+      ) {
+        return time.slice(11, 16)
+      } else {
+        return time.slice(5, 10).replace('-', '月') + '日'
+      }
+  }
   isLoadStock(item){
     if(!item.Stocks.length || !item.Stocks) return
+    let stockClassName = 'key-word stock-box'
+    if(parseFloat(item.stockNum)>=0){
+      stockClassName += 'up'
+    } else if (parseFloat(item.stockNum)<0) {
+      stockClassName += 'down'
+    }
     return (
-      <div className={{'key-word':true,'up':parseFloat(item.stockNum)>=0,'down':parseFloat(item.stockNum)<0}}>
+      <div className={stockClassName}>
         <span className="up-icon"></span>
         <span>{item.Stocks[0].Name}</span>
-        <span v-show='item.stocksNum' className="rate">{item.stocksNum}
+        <span style={{display:item.stocksNum!==''?'block':'none'}} className="rate">{item.stocksNum}
         </span>
       </div>
     )
@@ -36,13 +52,11 @@ class TopLine extends Component {
                 </div>
                 <div className="content">
                   <div className="content-left">
-                    <div className="label">
+                    <div className="label" style={{display:item.Category!==''?'block':'none'}}>
                       {item.Category}
                     </div>
-                    <div className="orign">
-                      <span className="media">
-                        {item.MediaName}
-                      </span>
+                    <div className="origin">
+                      <span className="media">{item.MediaName}</span>{this.dealWithTime(item.PubDate)}
                     </div>
                   </div>
                   {

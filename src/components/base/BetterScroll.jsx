@@ -3,7 +3,12 @@ import BScroll from 'better-scroll'
 import { Icon } from 'antd-mobile';
 import Arrow from './Arrow.jsx'
 import './BetterScroll.scss'
-export default class BetterScroll extends Component {
+
+import { updateInterfaceParams } from '@/actions/list'
+import { connect } from 'react-redux'
+
+
+class BetterScroll extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,6 +18,10 @@ export default class BetterScroll extends Component {
       topIconDirection: 'down',
     };
     this.scroll= null
+  }
+  componentDidMount() {
+    this._initScroll()
+    console.log('betterscroll', this.props)
   }
   _initScroll() {
     this.scroll = new BScroll('#wrapper',{
@@ -77,9 +86,7 @@ export default class BetterScroll extends Component {
     // 代理better-scroll的scrollToElement方法
     this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
   }
-  componentDidMount() {
-    this._initScroll()
-  }
+
   render() {
     return (
       <div id="wrapper" className='scroll-wrapper'>
@@ -112,3 +119,24 @@ export default class BetterScroll extends Component {
     );
   }
 }
+
+const mapStateToProps = (state,store) => {
+  return {
+    loadLoading: state.list.loadingState.loadLoading,
+    refreshLoading: state.list.loadingState.refreshLoading,
+    isNoData: state.list.dataState.isNoData,
+    isNoMoreData: state.list.dataState.isNoMoreData,
+    whichLoading: state.list.interfaceState.whichLoading,
+    whichLoadedFail: state.list.interfaceState.whichLoadedFail,
+    listData: state.list.listData,
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    updateInterfaceParams: pageNum => dispatch(updateInterfaceParams({ pageNum })),
+  }
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BetterScroll);
