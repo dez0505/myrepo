@@ -9,12 +9,16 @@ class Nav extends Component {
       filterNavMenus: []
     }
   }
-  setFilterMenus (navMenus, theme) {
-    if (!navMenus.length || !theme) return
+  setFilterMenus (navMenus, theme = 'day') {
+    if (!navMenus.length) return
     const filterNavMenus = navMenus.filter(item => theme === 'red' ? item.IconType === '2' : item.IconType === '1')
     this.setState({
       filterNavMenus
     })
+  }
+  // 解决有默认值的情况要在mount中执行
+  componentWillMount () {
+    if (this.props.navMenus) this.setFilterMenus(this.props.navMenus)
   }
   componentWillReceiveProps(props) {
     this.setFilterMenus(props.navMenus, props.theme)

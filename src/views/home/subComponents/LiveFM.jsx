@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import './LiveFM.scss'
 export default class LiveFM extends Component {
   constructor(props) {
-    super(props);
+    super();
   }
   static propTypes = {
     liveFmList:PropTypes.array,

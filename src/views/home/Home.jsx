@@ -31,7 +31,7 @@ class Home extends Component {
       liveListData:[],
       noticeListData:[],
       topicListData:[],
-      navMenusData:[],
+      navMenusData:getStore('appindex.IndexMenus'),
       liveFmList: [],
     }
   }
