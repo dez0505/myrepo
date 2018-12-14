@@ -8,7 +8,7 @@ const initialState = {
   htid: '',
   platform: '',
   account: '',
-  titleheight: ''
+  titleheight: '',
 }
 export default function pageConfig(state = initialState, action) {
   switch (action.type) {

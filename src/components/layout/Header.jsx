@@ -6,7 +6,6 @@ class Header extends Component {
     super(); //可以不给props
   }
   componentDidMount() {
-    console.log('headerProps', this.props)
   }
   render() {
     return (

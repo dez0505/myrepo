@@ -4,24 +4,30 @@ import { Icon } from 'antd-mobile';
 import Arrow from './Arrow.jsx'
 import './BetterScroll.scss'
 
-import { updateInterfaceParams } from '@/actions/list'
+import { updateInterfaceParams, updateLoadingState, resetState } from '@/actions/list'
 import { connect } from 'react-redux'
-
 
 class BetterScroll extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      topText: '下拉刷新',
+      topText: '下拉刷新...',
       refreshTime: '刷新时间',
-      botText: '上拉加载',
+      botText: '上拉加载...',
       topIconDirection: 'down',
     };
     this.scroll= null
   }
   componentDidMount() {
     this._initScroll()
-    console.log('betterscroll', this.props)
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.initLoading !== this.props.initLoading && !nextProps.initLoading ) {
+        this._pullingDownUpComplete()
+    }
+    if(!nextProps.loadLoading && nextProps.loadLoading !== this.props.loadLoading) {
+      this._pullingDownUpComplete()
+    }
   }
   _initScroll() {
     this.scroll = new BScroll('#wrapper',{
@@ -37,27 +43,33 @@ class BetterScroll extends Component {
       }
     })
     this.scroll.on('pullingDown', () => {
-      this.$emit('refreshData')
+      this.props.resetState()
+      this.props.updateLoadingState({initLoading: true}) // 更新refreshLoading 表示要home一些数据要重新请求了
+      this.props.updateHomeContent() // 
     })
     this.scroll.on('pullingUp', () => {
-      // this.loadeMoreList()
+      if(this.props.isNoMoreData || this.props.isNoData) return  //如果当前列表没有更多数据或根据没数据就不给加载
+      this.props.updateLoadingState({loadLoading: true}) // 更新refreshLoading 表示要home一些数据要重新请求了
     })
-    if (this.listenScroll) {
+    if (true) {
       this.scroll.on('scroll', (pos) => {
-        console.log('scrollOffsetTop', document.querySelector('.inner-scroll-warpper').offsetTop)
-        const scrollHeight = document.querySelector('.inner-scroll-warpper').offsetTop // list元素的位置
-        this.listOffsetTop.value = scrollHeight
-        this.activeScrollValue.x = -(pos.x)
-        this.activeScrollValue.y = -(pos.y) // 滚动的距离
+        // console.log('scrollOffsetTop', document.querySelector('.inner-scroll-warpper').offsetTop)
+        // const scrollHeight = document.querySelector('.inner-scroll-warpper').offsetTop // list元素的位置
+        // this.listOffsetTop.value = scrollHeight
+        // this.activeScrollValue.x = -(pos.x)
+        // this.activeScrollValue.y = -(pos.y) // 滚动的距离
         if (pos.y >= 60) {
-          this.topIconDirection = 'up'
+          this.setState({
+            topIconDirection: 'up'
+          }) 
         } else {
-          this.topIconDirection = 'down'
+          this.setState({
+            topIconDirection: 'down'
+          }) 
         }
       })
     }
     this.scroll.on('refresh', () => {
-      // console.log(100101010101, 'scroll刷新完成')
     })
   }
   _pullingDownUpComplete () {
@@ -86,32 +98,34 @@ class BetterScroll extends Component {
     // 代理better-scroll的scrollToElement方法
     this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
   }
-
   render() {
+    const arrowClassName = 'arrow ' + this.state.topIconDirection 
+    const botText = this.props.loadLoading ? '疯狂加载中...' : this.props.isNoMoreData ? '没有更多的记录了...' : '上拉加载更多...'
+    const topText = this.props.initLoading ? '更新数据中...' : '下拉刷新'
     return (
-      <div id="wrapper" className='scroll-wrapper'>
+      <div id="wrapper" className='scroll-wrapper' style={{ top:this.props.titleheight+'px' }}>
         <div className="scroll-content">
         <div className="refresh-box">
           <div className="scroll-refresh">
             <div className="lf-icon">
-              <Arrow className='arrow'></Arrow> 
-              {/* <Arrow className={'arrow ' + this.state.topIconDirection}></Arrow>  */}
-              <Icon type='loading' text='loading' />
+            {
+              this.props.initLoading ? <Icon type='loading' text='loading' /> : <Arrow arrowClassName={arrowClassName}></Arrow>
+            }
             </div>
             <div className="center-text">
-              <div>{this.state.topText}</div>
-              <div>{this.state.refreshTime}</div>
+              <div>{topText}</div>
+              <div>{this.props.refreshTime}</div>
             </div>
             <div style={{width:'30px',height:'30px'}}></div>
           </div>
         </div>
         {this.props.children}
-        <div className="load-box">
+        <div className="load-box" style={{ display: this.props.isNoData || this.props.whichLoadedFail ? 'none' : null }}>
           <div className="scroll-load">
             <div className="bottom-icon">
-              <Icon type='loading' text='loading' />
+              <Icon style={{ display: this.props.isNoMoreData ? 'none' : null }} type='loading' text='loading' />
             </div>
-            <div className="bot-text">{this.state.botText}</div>
+            <div className="bot-text">{botText}</div>
           </div>
         </div>
         </div>
@@ -119,21 +133,22 @@ class BetterScroll extends Component {
     );
   }
 }
-
 const mapStateToProps = (state,store) => {
   return {
     loadLoading: state.list.loadingState.loadLoading,
-    refreshLoading: state.list.loadingState.refreshLoading,
+    initLoading: state.list.loadingState.initLoading,
     isNoData: state.list.dataState.isNoData,
     isNoMoreData: state.list.dataState.isNoMoreData,
     whichLoading: state.list.interfaceState.whichLoading,
     whichLoadedFail: state.list.interfaceState.whichLoadedFail,
-    listData: state.list.listData,
+    titleheight: state.pageConfig.titleheight
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
     updateInterfaceParams: pageNum => dispatch(updateInterfaceParams({ pageNum })),
+    updateLoadingState: loadingState => dispatch(updateLoadingState(loadingState)),
+    resetState:()=>dispatch(resetState())
   }
 }
 export default connect(

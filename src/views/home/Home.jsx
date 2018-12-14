@@ -20,7 +20,7 @@ import TabBox from './tab/TabBox'
 // api
 import { getHomeData, getIconData } from '@/api/home'
 // utils
-import { getQueryString, setStore, getStore, getBase64 } from '@/utils/common'
+import { getQueryString, setStore, getStore, getBase64, parseTime } from '@/utils/common'
 
 
 class Home extends Component {
@@ -31,12 +31,17 @@ class Home extends Component {
       liveListData:[],
       noticeListData:[],
       topicListData:[],
-      navMenusData:getStore('appindex.IndexMenus'),
+      navMenusData:getStore('appindex.IndexMenus')||[],
       liveFmList: [],
+      refreshTime: ''
     }
   }
 
   componentDidMount(){
+    this.updatePageConfig()
+  }
+  // 重置页面路由参数
+  updatePageConfig() {
     const titleheight = getQueryString('titleheight')
     const version = getQueryString('appversion')
     const htid = getQueryString('htid')
@@ -45,10 +50,13 @@ class Home extends Component {
     const theme = getQueryString('theme')
     this.props.updatePageConfig({titleheight, theme, htid, platform, account, version})
   }
+  // 执行接口
   componentWillReceiveProps(nextProps) {
-    this.getHomeData(nextProps)
-    this.getIconData(nextProps)
+    if(nextProps.theme !== this.props.theme || nextProps.version !== this.props.version || nextProps.platform !== this.props.platform) {
+      this.initHomeApi(nextProps)
+    } 
   }
+ 
   async getIconData (params) {
    const {version, platform} = params
    try {
@@ -89,22 +97,45 @@ class Home extends Component {
     liveFmList: data.FmLivePicsJson
    })
   }
+  initHomeApi(nextProps, callback) {
+    Promise.all([
+      this.getIconData(nextProps),this.getHomeData(nextProps)
+    ]).then(() => {
+      const refreshTime = parseTime(new Date())
+      this.setState({
+        refreshTime
+      })
+      if(callback){
+        callback()
+      }
+    })
+  }
+  updateHomeContent() {
+    this.initHomeApi(this.props,() => {
+      this.props.updateLoadingState({
+        refreshLoading: true
+      })
+    })//更新首页接口
+
+  }
   render() {
     const liveFmListProps = {theme:this.props.theme, liveFmList:this.state.liveFmList}
     return (
-      <BetterScroll>
-        <div className={`home-warpper ${this.props.theme==='night'?'black':'white'}`}>
-          <Header/>
-          <Nav navMenus={this.state.navMenusData} theme={this.props.theme}/>
-          { this.state.adsListData.length>0 ? <AdsSwiper  adsList = {this.state.adsListData}/> : null }
-          { this.state.noticeListData.length>0 ? <Notice theme = {this.props.theme} noticeList = {this.state.noticeListData}/> : null }
-          <MarketMachine />
-          {this.state.adsListData.length>0? <TopicSwiper topicList = {this.state.adsListData}/> : null}
-          { this.state.liveFmList.length>0? <LiveFM {...liveFmListProps}> </LiveFM>: null }
-          <div className='split-line'></div>
-          <TabBox/> 
-        </div>
-      </BetterScroll>
+      <div>
+        <Header/>
+        <BetterScroll refreshTime = {this.state.refreshTime} updateHomeContent={()=>this.updateHomeContent()}>
+          <div className={`home-warpper ${this.props.theme==='night'?'black':'white'}`}>
+            <Nav navMenus={this.state.navMenusData} theme={this.props.theme}/>
+            { this.state.adsListData.length>0 ? <AdsSwiper  adsList = {this.state.adsListData}/> : null }
+            { this.state.noticeListData.length>0 ? <Notice theme = {this.props.theme} noticeList = {this.state.noticeListData}/> : null }
+            <MarketMachine />
+            {this.state.adsListData.length>0? <TopicSwiper topicList = {this.state.adsListData}/> : null}
+            { this.state.liveFmList.length>0? <LiveFM {...liveFmListProps}> </LiveFM>: null }
+            <div className='split-line'></div>
+            <TabBox/> 
+          </div>
+        </BetterScroll>
+      </div>
     ) 
   }
 }

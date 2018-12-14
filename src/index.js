@@ -23,7 +23,6 @@ import { refreshListData } from './actions/fetch'
 
 
 let store = createStore(rootReducer, applyMiddleware(thunk))
-console.log(store)
 window._connectApp_ = ReactDOM.render(
   <Provider store={store}>
     <div>

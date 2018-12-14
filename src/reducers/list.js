@@ -6,7 +6,6 @@ import {
   RESET_STATE,
   UPDATE_INTERFACE_PARAMS
 } from '../actions/actionType'
-
 const initialState = {
   loadingState: {
     initLoading: false,           // 初始化loading 针对整个页面
@@ -64,7 +63,11 @@ export default function list(state = initialState, action) {
       // return  { ...state.listData, listData:listData }
       return  { ...state, ...action.listData }
     case RESET_STATE:             // 重置list状态
-      return  { ...state, ...initialState }
+      const whichLoading = state.interfaceState.whichLoading
+      const lastHashId = state.stockParams.lastHashId
+      const interfaceState1 = {...initialState.interfaceState, whichLoading}
+      const stockParams = {...initialState.stockParams, lastHashId}
+      return  { ...state, ...initialState, ...{interfaceState:interfaceState1} , stockParams }
     default:
       return state
   }

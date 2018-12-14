@@ -3,7 +3,8 @@ import {
   updateInterfaceState,
   updateLoadingState,
   updateDataState,
-  updateListData
+  updateListData,
+  updateInterfaceParams
 } from './list'
 // api
 import {
@@ -18,24 +19,12 @@ import {
 
 export function getTopLineList(type) {
   return async (dispatch, getState) => {
-    console.log(32323, getState())
     const htid = getState().pageConfig.htid
     const whichLoading = getState().list.interfaceState.whichLoading
     const listData = getState().list.listData
     const lastHashId = getState().list.stockParams.lastHashId
     const interfaceParams = getState().list.interfaceParams
     try {
-      if (type === 'init') {
-        // 加载中状态
-        dispatch(updateLoadingState({
-          refreshLoading: true,
-          initLoading: true
-        }))
-      } else {
-        dispatch(updateLoadingState({
-          loadLoading: true
-        }))
-      }
       if (type === 'init') {
         // 缓存没有时，也要将其设为空数组
         if (!getStore('topLineHistory.data')) {
@@ -50,11 +39,9 @@ export function getTopLineList(type) {
         const {
           data
         } = await getTopLineData(topLineParams)
-        console.log(1111, data)
         // 头条的接口逻辑
         let historyArray = []
         if (data && (data instanceof Array)) {
-          console.log('topLine', data) // 当前的数据
           const historyData = getStore('topLineHistory.data') || [] // 缓存的数据
           historyArray = [...data, ...historyData]
           // 缓存至多存200条
@@ -63,7 +50,7 @@ export function getTopLineList(type) {
           }
           setStore('topLineHistory.data', historyArray)
         }
-
+         
         // 置顶接口
         // 入参
         const stickParams = {
@@ -82,13 +69,10 @@ export function getTopLineList(type) {
             lastHashId: stickData.HashId
           })
         }
-        console.log('置顶的数据', stickData)
         // 合并头条与置顶
         const topList = getStore('topLineHistory.data')
         const stockList = getStore('topLineHistory.stickData')
         const stockTopList = [...stockList, ...topList]
-        console.log('合并后的数据', stockTopList)
-
         // 如果之间其他接口返回了，就不执行这个接口返回的任何逻辑
         if (whichLoading !== 'topLine') return
 
@@ -100,9 +84,10 @@ export function getTopLineList(type) {
         } else {
           // 取前10条数据
           dispatch(updateListData({
-            listData: stockTopList.slice(0, 10)
+            listData: stockTopList.slice(0, interfaceParams.pageSize)
           }))
         }
+       
         // 加载完成
         dispatch(updateLoadingState({
           initLoading: false,
@@ -114,7 +99,11 @@ export function getTopLineList(type) {
             isNoMoreData: true
           }))
         }
+        dispatch(updateInterfaceParams({
+          pageNum: interfaceParams.pageNum + 1
+        }))
       } else {
+
         await new Promise((resolve, reject) => {
           setTimeout(() => {
             resolve()
@@ -130,7 +119,6 @@ export function getTopLineList(type) {
         const topList = getStore('topLineHistory.data')
         const stockList = getStore('topLineHistory.stickData')
         const stockTopList = [...stockList, ...topList]
-        console.log('合并后的数据', stockTopList)
         const returnData = stockTopList.slice(params.pageNum * params.pageSize, (params.pageNum + 1) * params.pageSize) // 缓存的数据
         const {
           data
@@ -155,6 +143,10 @@ export function getTopLineList(type) {
         dispatch(updateLoadingState({
           loadLoading: false,
         }))
+        console.log(interfaceParams.pageNum)
+        dispatch(updateInterfaceParams({
+          pageNum: interfaceParams.pageNum + 1
+        }))
       }
     } catch (error) {
       dispatch(updateLoadingState({
@@ -165,6 +157,7 @@ export function getTopLineList(type) {
       dispatch(updateInterfaceState({
         whichLoadedFail: 'topLine'
       }))
+     
     }
   }
 }

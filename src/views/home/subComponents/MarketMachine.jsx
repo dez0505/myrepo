@@ -63,7 +63,6 @@ class MarketMachine extends Component {
 	}
 	 // 处理涨停
 	 dealZhangTing (zhangTingData) {
-		 console.log('zhangTingData', zhangTingData)
 		if (zhangTingData.retCode === '0000') {
 			const count = zhangTingData.content.hardenBlockInfos.zt
 			const array = zhangTingData.content.hardenBlockInfos.blockInfos // 第一个可能为null,所以可以选择第二个
@@ -90,7 +89,6 @@ class MarketMachine extends Component {
 	}
 	// 处理今日数据
 	dealTodayDate (riNiData) {    
-		console.log(riNiData)
 		if (riNiData.code === 0) {
 			const todayDateObj = {}
 			riNiData.content.dataField.forEach((item, index) => {
@@ -102,7 +100,6 @@ class MarketMachine extends Component {
 		}
 	}
 	componentDidMount() {
-		console.log('market', this.props)
 		this.getMarketMachineData()
 	}
 	handleMyGunChange (val) {

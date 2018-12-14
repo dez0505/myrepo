@@ -6,7 +6,8 @@ export default class Arrow extends Component {
       <svg
         viewBox="0 0 63.657 63.657"
         style={{'enableBackground':'new 0 0 63.657 63.657'}}
-        xmlSpace="preserve"
+        xmlSpace="preserve" 
+        className= {this.props.arrowClassName}
       >
         <g>
           <g>

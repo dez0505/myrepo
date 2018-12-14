@@ -23,13 +23,6 @@ export default class TabHeader extends Component {
       this.updateWhichLoading(newProps.activeOptionalTabIndex)
     }
   }
-  // type='home'
-  // updateHomeTabIndex={ this.props.updateHomeTabIndex } 
-  // updateOptionalTabIndex={  this.props.updateOptionalTabIndex }
-  // activeHomeTabIndex={this.props.activeHomeTabIndex} 
-  // activeOptionalTabIndex={this.props.activeOptionalTabIndex}
-  // HomeTabMenuList={this.props.HomeTabMenuList} 
-  // optionalTabMenuList = {this.props.optionalTabMenuList}
   updateWhichLoading (activeIndex) {
     if (this.props.type === 'home') {
       switch (activeIndex) {
@@ -74,7 +67,7 @@ export default class TabHeader extends Component {
     }
   }
   render() {
-    const tabClassName = this.props.type === 'home' ? 'tab-box home-tab' : 'tab-box optional-tab';
+    const tabClassName = this.props.type === 'home' ? 'tab-box home-tab bot-border' : 'tab-box optional-tab bot-border';
     const menuList = this.props.type === 'home' ? this.props.HomeTabMenuList : this.props.optionalTabMenuList;
     const activeIndex = this.props.type === 'home' ? this.props.activeHomeTabIndex : this.props.activeOptionalTabIndex;
     const updateTabIndex =  this.props.type === 'home' ? this.props.updateHomeTabIndex: this.props.updateOptionalTabIndex

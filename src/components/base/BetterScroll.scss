@@ -18,15 +18,23 @@
     display: flex;    
     justify-content: space-between;
     align-items: center;
+    color: $grayText;
+    .center-text{
+      text-align: center;
+      line-height: 1.5;
+    }
     .arrow{
       width: 20px;
       height: 20px;
-      margin:8px auto 0 auto;
       transform: translate3d(0, 0, 0) rotate(0deg);
       transition: transform .2s linear;
      &.up{
       transform: translate3d(0, 0, 0) rotate(180deg);
      }
+    //  &.down{
+    //   transform: translate3d(0, 0, 0) rotate(0deg);
+    //   transition: transform .2s linear;
+    //  }
     }
   }
 }

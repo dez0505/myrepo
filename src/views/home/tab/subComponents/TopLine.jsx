@@ -11,7 +11,6 @@ class TopLine extends Component {
     super()
   }
   componentDidMount() {
-    console.log(111, this.props)
   }
   dealWithTime(pushTime) {
     let time = pushTime
@@ -46,7 +45,7 @@ class TopLine extends Component {
         {
           this.props.topLineList.map((item, index) => {
             return (
-              <div className="list-item  bottom-border" key={index} >
+              <div className="list-item bot-border" key={index} >
                 <div className="title">
                   {item.Title}
                 </div>
@@ -56,7 +55,8 @@ class TopLine extends Component {
                       {item.Category}
                     </div>
                     <div className="origin">
-                      <span className="media">{item.MediaName}</span>{this.dealWithTime(item.PubDate)}
+                    {item.MediaName ? <span className="media">{item.MediaName}</span> : null}
+                    {this.dealWithTime(item.PubDate)}
                     </div>
                   </div>
                   {
