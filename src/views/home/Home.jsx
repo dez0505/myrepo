@@ -9,7 +9,7 @@ import Nav from '@/components/layout/Nav'
 import AdsSwiper from './subComponents/AdsSwiper'
 import Notice from './subComponents/Notice'
 import MarketMachine from './subComponents/MarketMachine'
-import TopicSwiper from './subComponents/TopicSwiper'
+import TopicSwiper from './subComponents/topicSwiper'
 import LiveFM from './subComponents/LiveFM'
 import TabBox from './tab/TabBox'
 
