@@ -101,7 +101,7 @@ class BetterScroll extends Component {
   render() {
     const arrowClassName = 'arrow ' + this.state.topIconDirection 
     const botText = this.props.loadLoading ? '疯狂加载中...' : this.props.isNoMoreData ? '没有更多的记录了...' : '上拉加载更多...'
-    const topText = this.props.initLoading ? '更新数据中...' : '下拉刷新'
+    const topText = this.props.initLoading ? '更新数据中...' : this.state.topIconDirection === 'up' ? '松手刷新' : '下拉刷新'
     return (
       <div id="wrapper" className='scroll-wrapper' style={{ top:this.props.titleheight+'px' }}>
         <div className="scroll-content">
