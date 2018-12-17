@@ -1,17 +1,13 @@
 @import '../../../styles/base.scss';
 .topic-box {
+    margin: Px(30);
+    margin-bottom:Px(40);
+    height: Px(200);
+    border-radius: $radiusSize;
+    box-sizing: border-box;
     overflow: hidden;
-    margin-top: Px(15);
-}
-.topic-wrap {
-  overflow: hidden;
-  margin: Px(30);
-  border-radius: $baseRadius;
-}
-.topic-container .topic-slide {
-    overflow: hidden;
-    img {
-        display: block;
-        width: 100%;
+    .swiper-slide{
+      height: Px(200);
     }
-}
+  }
+  

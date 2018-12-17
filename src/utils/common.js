@@ -212,3 +212,23 @@ export function encryptByDES (message, key) {
   })
   return encrypted.toString()
 }
+/*
+ * 处理字段与值分开的接口数据
+ * @param {object}  d  处理的对象
+ * @param {string}  dataParams  对象中的data数据
+ * @param {string}  fieldParams  对象中的data对应的字段
+ */
+export function handleData (d, dataParams, fieldParams) {
+  var data = dataParams || 'data'
+  var field = fieldParams || 'field'
+  if (!!d && !!d[data] && !!d[field]) {
+    d[data].forEach(function (item, i) {
+      var obj = {}
+      for (var key in d[field]) {
+        obj[d[field][key]] = item[key]
+      }
+      d[data][i] = obj
+    })
+  }
+  return d
+}

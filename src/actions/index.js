@@ -1,8 +1,9 @@
-import { UPDATE_THEME } from './actionType.js'
-export function updateTheme(theme) {
+import { UPDATE_PAGECONFIG } from './actionType.js'
+
+export function updatePageConfig(pageConfig) {
   return {
-    type: UPDATE_THEME,
-    theme
+    type: UPDATE_PAGECONFIG,
+    pageConfig
   };
 }
 // export const addTodo = text => ({

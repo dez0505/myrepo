@@ -2,6 +2,7 @@
 @import '../../styles/base.scss';
 .header-box{
   position: fixed;
+  z-index: 999;
   left:0;
   top:0;
   right:0;
@@ -16,7 +17,7 @@
   height: Px(96);
   .input-box{
     position: relative;
-    width: 55%;
+    width: 60%;
     box-sizing: border-box;
     border-radius: Px(5);
     height: 60%;
@@ -33,7 +34,7 @@
       border: none;
       font-size: Px(26);
       box-sizing: border-box;
-      padding-left:Px(75);
+      padding-left:Px(65);
       left:0;
       top:0;
       bottom:0;
@@ -47,7 +48,7 @@
       text-align: left;
     }
     .search-icon{
-      margin-left:Px(30);
+      margin-left:Px(25);
       margin-right:Px(30);
       width: Px(24);
       height: Px(24);

@@ -6,42 +6,43 @@ class Notice extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: []
+      list: [],
+      isAnimate: false
     };
   }
   componentDidMount() {
-    console.log(this.props)
     this.setState({list: this.props.noticeList.map(item => item)},()=>{
       setInterval(()=>{
         this.handleNoticeList()
-      },1500) 
+      },3000) 
     })
   }
   handleNoticeList() {
-    console.log(this.state)
-    let newList = this.state.list
+    this.setState({isAnimate: true})
+    let newList = this.state.list.map(item=>item)
     if( newList.length>0 ){
-      const popData = newList.shift()
-      newList.push(popData)
       setTimeout(() => {
+        newList.push(newList[0])
+        newList.shift()
         this.setState({
           list: newList
         })
+        this.setState({isAnimate: false})
       },1000)
     }
 
   }
   render() {
+    const noticeIconClass = this.props.theme === 'red' ? 'notice-icon red' : 'notice-icon'
     return (
       <div className='notice-box top-border'>
-        <div className='notice-icon'></div>
+        <div className={noticeIconClass}></div>
         <div className='notice-content'>
-          {this.state.list.map((item,index)=>{
-            return(<div key={index}> 
-              <div className='notice-item'>{item.Title}</div>
-              {/* <div className='notice-item'>{item.Title}</div> */}
-            </div>)
-          })}
+          <div className={this.state.isAnimate?'anim':''}>
+            {this.state.list.map((item,index)=>{
+              return( <div className='notice-item'  key={index}>{item.Title}</div> )
+            })}
+          </div>
         </div>
         <div className='right-icon'></div>
       </div> 

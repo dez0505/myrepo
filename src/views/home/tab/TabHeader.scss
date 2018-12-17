@@ -1,0 +1,24 @@
+@import '../../../styles/base.scss';
+.tab-box{
+  @include cj();
+  height: 38px;
+  .tab-item{
+    position: relative;
+    font-size: $baseSize;
+    width: 20%;
+    height: 38px;
+    line-height: 38px;
+    text-align: center;
+    &.active{
+      color:$primary;
+      .line{
+        position: absolute;
+        left:50%;
+        bottom:0;
+        width: 20%;
+        border: 1px solid $primary;
+        transform: translateX(-50%);
+      }
+    }
+  }
+}

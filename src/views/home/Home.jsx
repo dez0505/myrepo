@@ -3,15 +3,26 @@ import './Home.scss'
 import '../../styles/homeTheme.scss'
 
 // subComponent
-import Header from '../../components/layout/Header'
-import Nav from '../../components/layout/Nav'
+import BetterScroll from '@/components/base/BetterScroll'
+import Header from '@/components/layout/Header'
+import Nav from '@/components/layout/Nav'
 import AdsSwiper from './subComponents/AdsSwiper'
 import Notice from './subComponents/Notice'
+import MarketMachine from './subComponents/MarketMachine'
+import TopicSwiper from './subComponents/TopicSwiper'
+import LiveFM from './subComponents/LiveFM'
+import TabBox from './tab/TabBox'
+
+
+// container
+
 
 // api
-import { getHomeData } from '../../api/home'
-import Topic from './subComponents/topicSwiper'
-import MarketChance from './subComponents/MarketMachine'
+import { getHomeData, getIconData } from '@/api/home'
+// utils
+import { getQueryString, setStore, getStore, getBase64, parseTime } from '@/utils/common'
+
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -19,48 +30,111 @@ class Home extends Component {
       adsListData:[],
       liveListData:[],
       noticeListData:[],
-      topicListData:[]
+      topicListData:[],
+      navMenusData:getStore('appindex.IndexMenus')||[],
+      liveFmList: [],
+      refreshTime: ''
     }
   }
+
   componentDidMount(){
-    const random = Math.floor(Math.random()*2);
-    if(random === 1){
-      this.props.updateTheme({theme:'white'})
-    }else{
-      this.props.updateTheme({theme:'black'})
-    }
-    this.getHomeDate()
+    this.updatePageConfig()
   }
-  async getHomeDate () {
+  // 重置页面路由参数
+  updatePageConfig() {
+    const titleheight = getQueryString('titleheight')
+    const version = getQueryString('appversion')
+    const htid = getQueryString('htid')
+    const platform = getQueryString('platform')
+    const account = getQueryString('account')
+    const theme = getQueryString('theme')
+    this.props.updatePageConfig({titleheight, theme, htid, platform, account, version})
+  }
+  // 执行接口
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.theme !== this.props.theme || nextProps.version !== this.props.version || nextProps.platform !== this.props.platform) {
+      this.initHomeApi(nextProps)
+    } 
+  }
+ 
+  async getIconData (params) {
+   const {version, platform} = params
+   try {
+      const { data } = await getIconData({
+        version, platform
+      }) 
+      if (data.Funlist.length === 0) return
+      Promise.all(data.Funlist.map(d => getBase64(d.ImageUrl))).then(
+        result => {
+          const navMenusData = result.map((ImageUrl, i) => ({
+            ...data.Funlist[i],
+            ImageUrl
+          }))
+          this.setState({
+            navMenusData
+          })
+          setStore('appindex.IndexMenus', navMenusData)
+        },
+        err => {
+          throw (err)
+        }
+      )
+   } catch (error) {
+      throw (error)
+   }
+  }
+  async getHomeData (params) {
+   const {theme, version, platform} = params
    const  { data } = await getHomeData({
-     theme: this.props.theme === 'white' ? 'day' : this.props.theme === 'black'? 'night' : 'red',
-     version: '7.00',
-     platform: 'android'
+     theme,
+     version,
+     platform
    })
-   console.log(data.FirstAppAdsJson)
    this.setState({
     adsListData:data.FirstAppAdsJson,
     noticeListData:data.AnnounceJson,
-    liveListData:data.LivePicsJson,
-    topicListData:data.TopicPicsJson
-   },()=>{
-    console.log(333,this.state)
+    topicListData:data.TopicPicsJson,
+    liveFmList: data.FmLivePicsJson
    })
-  //  setTimeout(()=>{
-  //   console.log(this.state)
-  //  },1000)
+  }
+  initHomeApi(nextProps, callback) {
+    Promise.all([
+      this.getIconData(nextProps),this.getHomeData(nextProps)
+    ]).then(() => {
+      const refreshTime = parseTime(new Date())
+      this.setState({
+        refreshTime
+      })
+      if(callback){
+        callback()
+      }
+    })
+  }
+  updateHomeContent() {
+    this.initHomeApi(this.props,() => {
+      this.props.updateLoadingState({
+        refreshLoading: true
+      })
+    })//更新首页接口
+
   }
   render() {
+    const liveFmListProps = {theme:this.props.theme, liveFmList:this.state.liveFmList}
     return (
-      <div className={`home-warpper ${this.props.theme==='white'?'white':'black'}`}>
+      <div>
         <Header/>
-        <Nav/>
-        { this.state.adsListData.length>0 ? <AdsSwiper  adsList = {this.state.adsListData}/> : null }
-        { this.state.noticeListData.length>0 ? <Notice  noticeList = {this.state.noticeListData}/> : null }
-        {this.state.adsListData.length>0? <AdsSwiper adsList = {this.state.adsListData}/> : null}
-        <MarketChance/>
-        {this.state.adsListData.length>0? <Topic topicList = {this.state.adsListData}/> : null}
-        {this.state.liveListData.length>0? <img className='livepic' src={this.state.liveListData[0].ImageUrl} alt=""/> : null}
+        <BetterScroll refreshTime = {this.state.refreshTime} updateHomeContent={()=>this.updateHomeContent()}>
+          <div className={`home-warpper ${this.props.theme==='night'?'black':'white'}`}>
+            <Nav navMenus={this.state.navMenusData} theme={this.props.theme}/>
+            { this.state.adsListData.length>0 ? <AdsSwiper  adsList = {this.state.adsListData}/> : null }
+            { this.state.noticeListData.length>0 ? <Notice theme = {this.props.theme} noticeList = {this.state.noticeListData}/> : null }
+            <MarketMachine />
+            {this.state.adsListData.length>0? <TopicSwiper topicList = {this.state.adsListData}/> : null}
+            { this.state.liveFmList.length>0? <LiveFM {...liveFmListProps}> </LiveFM>: null }
+            <div className='split-line'></div>
+            <TabBox/> 
+          </div>
+        </BetterScroll>
       </div>
     ) 
   }

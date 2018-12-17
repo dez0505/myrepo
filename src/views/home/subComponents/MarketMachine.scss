@@ -1,27 +1,49 @@
 @import '../../../styles/base.scss';
-.market-box {
-    overflow: hidden;
-    margin-top: Px(15);
-}
-.market-wrap {
-    overflow: hidden;
-    // border-top: 1px solid #ccc;
+.market-machine {
     .market-list {
-        margin: 0 Px(30);
-        .market-item {
-            padding: Px(30) Px(10);
-            // border-bottom: 1px solid #ccc;
+      display: flex;
+      justify-content: space-between;
+      margin: 0 Px(24);
+      padding: Px(18) 0;
+      align-items: center;
+      position: relative;
+      .list-title {
+        font-size: Px(27);
+        margin-bottom: Px(7.5);
+        color: $grayText;
+      }
+      .list-content {
+        font-size: $bigerSize;
+        .list-label {
+          margin-right: Px(12);
+          .list-key {
+            color: $warning;
+          }
         }
-        .market-item:nth-last-of-type(1){
-            border: 0;
-        }
-        .market-item .market-title {
-            font-size: Px(26);
-        }
-        .market-item .market-desc {
-            margin-top: Px(10);
-            font-size: Px(32);
-        }
+      }
+      .icon1 {
+        width: Px(105);
+        height: Px(122);
+        background: url('./machine-images/today_date.png') no-repeat;
+        background-size: 100% 100%;
+      }
+      .icon2 {
+        width: Px(96);
+        height: Px(113);
+        background: url('./machine-images/allman_make.png') no-repeat;
+        background-size: 100% 100%;
+      }
+      .icon3 {
+        width: Px(89);
+        height: Px(127);
+        background: url('./machine-images/myself_change.png') no-repeat;
+        background-size: 100% 100%;
+      }
+      .icon4 {
+        width: Px(87);
+        height: Px(130);
+        background: url('./machine-images/today_stop.png') no-repeat;
+        background-size: 100% 100%;
+      }
     }
-    
-}
+  }

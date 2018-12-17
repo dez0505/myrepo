@@ -19,7 +19,7 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>海通证券</title>
   </head>
   <body>
     <noscript>
@@ -36,5 +36,13 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script src="./crypto-des-ecb.js"></script>
+    <script>
+      (function () {
+          window.production =  true; //首页生产环境地址
+          // window.prod =  'http://mnews.htsec.com:9080'; //首页生产环境地址
+          //window.test = 'http://220.248.101.92:9084';  //首页测试环境地址
+      })()
+    </script>
   </body>
 </html>

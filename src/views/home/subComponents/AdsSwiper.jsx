@@ -2,28 +2,37 @@ import React, { Component } from 'react';
 // Swiper
 import './AdsSwiper.scss'
 import Swiper from 'swiper'
-// api
+// utils
+import { goToAPP } from '@/utils/common'
 
 class AdsSwiper extends Component {
   constructor(props) {
     super(); //可以不给props
-    this.mySwiper = null
     this.state = {
-      mySwiper: null
+      adsSwiper: null
     }
   }
   componentDidMount() {
-    let mySwiper = new Swiper('.ads-swiper', {
+    const adsSwiper = new Swiper('.ads-swiper', {
       loop: true,
-      autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
+      autoplay:5000,
+      pagination: '.swiper-pagination',
+      onClick: (swiper) => {
+        const realIndex = swiper.realIndex
+        goToAPP(this.props.adsList[realIndex], 'ads')
       }
     })
-    this.setState({ mySwiper: mySwiper })
+    if(adsSwiper.slides.length <= 3) {
+      adsSwiper.lockSwipes()
+    }
+    this.setState({ adsSwiper })
+  }
+  componentDidUpdate() {
+    if(this.state.adsSwiper){
+      this.state.adsSwiper.update()
+    }
   }
   render() {
-    // console.log(1111,this.props)
     const adsList = this.props.adsList
     return (
       <div>

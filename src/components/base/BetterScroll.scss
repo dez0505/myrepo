@@ -1,0 +1,56 @@
+@import '../../styles/base.scss';
+#wrapper{
+  position: fixed;
+  top:0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.refresh-box{
+  position: absolute;
+  top: -48px;
+  left: 0;
+  right: 0;
+  .scroll-refresh{
+    position: relative;
+    padding: 0 Px(36);
+    height: 48px;
+    display: flex;    
+    justify-content: space-between;
+    align-items: center;
+    color: $grayText;
+    .center-text{
+      text-align: center;
+      line-height: 1.5;
+    }
+    .arrow{
+      width: 20px;
+      height: 20px;
+      transform: translate3d(0, 0, 0) rotate(0deg);
+      transition: transform .2s linear;
+     &.up{
+      transform: translate3d(0, 0, 0) rotate(180deg);
+     }
+    //  &.down{
+    //   transform: translate3d(0, 0, 0) rotate(0deg);
+    //   transition: transform .2s linear;
+    //  }
+    }
+  }
+}
+.load-box{
+  position: absolute;
+  bottom: -36px;
+  left: 0;
+  right: 0;
+  .scroll-load{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .bot-text{
+      margin-left: 10px;
+      font-size: $smallSize;
+      color: $grayText;
+    }
+  }
+}

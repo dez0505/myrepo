@@ -1,14 +1,19 @@
 import {
-  UPDATE_THEME,
+  UPDATE_PAGECONFIG,
 } from '../actions/actionType'
 
 const initialState = {
-  theme: 'white'
+  theme: '',
+  version: '',
+  htid: '',
+  platform: '',
+  account: '',
+  titleheight: '',
 }
-export default function todos(state = initialState, action) {
+export default function pageConfig(state = initialState, action) {
   switch (action.type) {
-    case UPDATE_THEME:
-      return  { ...state, ...action.theme } 
+    case UPDATE_PAGECONFIG:
+      return  { ...state, ...action.pageConfig } // ===> Object.assign({theme: ''},{theme: 'whitle'}) 
     default:
       return state
   }

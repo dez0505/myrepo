@@ -1,49 +1,40 @@
 import React, { Component } from 'react';
 import './Nav.scss'
-import { getIconData } from '../../api/home'
+import { goToFunction } from '@/utils/common.js'
 
 class Nav extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      navList: []
+      filterNavMenus: []
     }
   }
-  componentDidMount(){
-    // console.log('props', this.props)
-    this.getIconList({version:'7.00',platform:'android'})
-  }
-  iconFormat(){
+  setFilterMenus (navMenus, theme = 'day') {
+    if (!navMenus.length) return
+    const filterNavMenus = navMenus.filter(item => theme === 'red' ? item.IconType === '2' : item.IconType === '1')
     this.setState({
-
+      filterNavMenus
     })
   }
-  async getIconList(param){
-    try {
-      const { data } = await getIconData(param)
-      let list = data.Funlist.filter((item)=>{
-        return Number(item.IconType) === 1
-      })
-      // console.log(222,list)    
-      this.setState({
-        navList: list
-      })
-    } catch(err) {
-      console.log(err)
-    }
+  // 解决有默认值的情况要在mount中执行
+  componentWillMount () {
+    if (this.props.navMenus) this.setFilterMenus(this.props.navMenus)
+  }
+  componentWillReceiveProps(props) {
+    this.setFilterMenus(props.navMenus, props.theme)
   }
   render() {
     return (
       <div className='nav-warpper'>
-        <div className="navlist">
+        <div className="nav-list">
           {
-            this.state.navList.map((item,index)=>{
-                return(
-                    <div className="navitem" data-id={index} key={index}>
-                        <img src={item.ImageUrl} alt=""/>
-                        <div>{item.Funname}</div>
-                    </div>
-                ) 
+            this.state.filterNavMenus.map((item,index)=>{
+              return(
+                <div className="nav-item" onClick= { () => goToFunction(item.Funid) } data-id={index} key={index}>
+                  <img src={item.ImageUrl} alt=""/>
+                  <div>{item.Funname}</div>
+                </div>
+              ) 
             })
           }
         </div>
