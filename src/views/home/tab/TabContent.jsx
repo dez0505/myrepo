@@ -162,6 +162,8 @@ class TabContent extends Component {
       } else if( whichLoading === 'liveAll' ) {
         return (<NoData tabType='liveAll'></NoData>)
       }
+    } else {
+      return (<NoData tabType='liveA'></NoData>)
     }
   }
   render() {
@@ -180,7 +182,7 @@ class TabContent extends Component {
               { listData.length && whichLoading === 'cheif' ? <Cheif cheifList={listData} ></Cheif> : <NoData tabType='cheif'></NoData>}
             </div>
             <div className="swiper-slide" style={ minHeightStyle }>
-              { this.handleLiveComponent(whichLoading,listData) }
+              { this.handleLiveComponent(whichLoading, listData) }
             </div>
             <div className="swiper-slide" style={ minHeightStyle }>
               <Optional whichLoading ={ whichLoading }></Optional>

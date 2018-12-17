@@ -1,0 +1,41 @@
+@import '../../../styles/base.scss';
+  // 更多
+  .more-list {
+    line-height: 1.4;
+    .more-item {
+      padding:Px(27) 0;
+      margin:0 Px(24);
+      display: -webkit-flex;
+      -webkit-justify-content: space-between;
+    -webkit-align-items: center;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      .section-area {
+        width: Px(505);
+        .title {
+          font-size:$bigerSize;
+        }
+        .desc {
+          color: $grayText;
+          font-size: $smallSize;
+        }
+      }
+    }
+    .left-area {
+      width: Px(128);
+      height: Px(128);
+    }
+    .right-icon {
+      width: Px(15);
+      height: Px(26);
+      &.dark {
+        background: url('../homeNotice-images/right-icon-black.png') no-repeat;
+        background-size: 100% 100%;
+      }
+      &.light {
+        background: url('../homeNotice-images/right-icon-white.png') no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+  }
