@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './topicSwiper.scss';
+import './TopicSwiper.scss';
 import Swiper from 'swiper';
 // utils
 import { goToAPP } from '@/utils/common'
