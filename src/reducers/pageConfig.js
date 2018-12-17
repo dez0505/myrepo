@@ -9,6 +9,8 @@ const initialState = {
   platform: '',
   account: '',
   titleheight: '',
+  scrollHeight: '',
+  liveTabTime: ''
 }
 export default function pageConfig(state = initialState, action) {
   switch (action.type) {

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 // css
 import './TopLine.scss'
+import { goToAPP } from '../../../../utils/common';
 
 class TopLine extends Component {
   static propTypes = {
@@ -45,7 +46,7 @@ class TopLine extends Component {
         {
           this.props.topLineList.map((item, index) => {
             return (
-              <div className="list-item bot-border" key={index} >
+              <div className="list-item bot-border" onClick={()=>goToAPP(item)} key={index} >
                 <div className="title">
                   {item.Title}
                 </div>

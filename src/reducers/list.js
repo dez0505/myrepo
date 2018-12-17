@@ -26,9 +26,6 @@ const initialState = {
     pageNum: 1,
     pageCount: 0
   },
-  stockParams: {
-   lastHashId: ''
-  }
   // listData: {
   //   topLineList: [],              // 头条
   //   cheifList: [],                // 首席
@@ -64,10 +61,8 @@ export default function list(state = initialState, action) {
       return  { ...state, ...action.listData }
     case RESET_STATE:             // 重置list状态
       const whichLoading = state.interfaceState.whichLoading
-      const lastHashId = state.stockParams.lastHashId
       const interfaceState1 = {...initialState.interfaceState, whichLoading}
-      const stockParams = {...initialState.stockParams, lastHashId}
-      return  { ...state, ...initialState, ...{interfaceState:interfaceState1} , stockParams }
+      return  { ...state, ...initialState, ...{interfaceState:interfaceState1} }
     default:
       return state
   }

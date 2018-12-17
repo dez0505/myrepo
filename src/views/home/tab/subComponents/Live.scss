@@ -1,0 +1,124 @@
+@import '../../../../styles/base.scss';
+.too-long {
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.no-too-long{
+  overflow: auto;
+  text-overflow: none;
+  display: block;
+}
+
+// 直播
+.live-box {
+  .tab-title {
+    padding: Px(12) Px(27);
+    font-size: $baseSize;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    .icon {
+      display: inline-block;
+      width: Px(42);
+      margin: 0 Px(12);
+      height: Px(42);
+      background: url('../tabMenu-images/a_gun.png');
+      background-size: 100% 100%;
+    }
+    .icon.allicon {
+      background: url('../tabMenu-images/all_gun.png');
+      background-size: 100% 100%;
+    }
+    .red.icon {
+      background-image: url('../tabMenu-images/a_gun_red.png');
+      background-size: 100% 100%;
+    }
+    .allicon.red {
+      background-image: url('../tabMenu-images/all_gun_red.png');
+      background-size: 100% 100%;
+    }
+    .left-title {
+      padding: Px(24) Px(48);
+      display: -webkit-flex;
+      display: flex;
+      align-items: center;
+      -webkit-align-items: center;
+    }
+    .line {
+      display: inline-block;
+      height: Px(36);
+      border-left: 1px solid $whiteBd;
+      &.night{
+        border-left: 1px solid $blackBd;
+      }
+    }
+    .right-title {
+      padding: Px(24) Px(48);
+      display: flex;
+      align-items: center;
+    }
+  }
+  .live-list {
+    .desc {
+      font-size: $smallSize;
+      padding: 0 Px(15);
+      overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: Px(12);
+      .time {
+        text-align: center;
+      }
+      .orgin {
+          font-size: $baseSize;
+          color: #999;
+      }
+    }
+    .live-item {
+      padding: Px(24);
+      .point {
+        position: absolute;
+        left: -6px;
+        top: Px(30);
+        box-sizing: border-box;
+        width: 10px;
+        height: 10px;
+        background: #F5F7F9;
+        border-radius: 50%;
+        text-align: center;
+        box-shadow: 0px 0px 2px #ccc;
+        .inner-point {
+          position: absolute;
+          width: 6px;
+          height: 6px;
+          top:50%;
+          left:50%;
+          transform: translate(-50%,-50%);
+          display: inline-block;
+          background: $primary;
+          border-radius: 50%;
+        }
+      }
+      position: relative;
+      border-left: 1px solid $primary;
+      margin-left:Px(24);
+      .content {
+        font-size: $bigerSize;
+        line-height: 1.3;
+        .time {
+          margin-top:Px(9);
+          font-size: $smallSize;
+          color: $grayText;
+        }
+        .more {
+          padding:Px(12) 0 Px(24);
+          color: $primary;
+        }
+      }
+    }
+  }
+}

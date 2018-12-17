@@ -48,7 +48,8 @@ class Home extends Component {
     const platform = getQueryString('platform')
     const account = getQueryString('account')
     const theme = getQueryString('theme')
-    this.props.updatePageConfig({titleheight, theme, htid, platform, account, version})
+    const scrollHeight = window.innerHeight - titleheight
+    this.props.updatePageConfig({titleheight, theme, htid, platform, account, version, scrollHeight})
   }
   // 执行接口
   componentWillReceiveProps(nextProps) {

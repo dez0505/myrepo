@@ -16,14 +16,17 @@ export default class TabHeader extends Component {
     }
   }
  
-  componentWillReceiveProps(newProps, oldProps) {
-    if(newProps.type === 'home') {
-      this.updateWhichLoading(newProps.activeHomeTabIndex)
-    } else {
+  componentWillReceiveProps(newProps, newState) {
+    if(newProps.type === 'home' ) {
+      if(newProps.activeHomeTabIndex !== this.props.activeHomeTabIndex){
+        this.updateWhichLoading(newProps.activeHomeTabIndex)
+      }
+    } else if (newProps.activeOptionalTabIndex !== this.props.activeOptionalTabIndex) {
       this.updateWhichLoading(newProps.activeOptionalTabIndex)
     }
   }
   updateWhichLoading (activeIndex) {
+    this.props.resetState()
     if (this.props.type === 'home') {
       switch (activeIndex) {
         case 0:

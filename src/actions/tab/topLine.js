@@ -5,24 +5,26 @@ import {
   updateDataState,
   updateListData,
   updateInterfaceParams
-} from './list'
+} from '../list'
 // api
 import {
   getTopLineData,
   getZhiDinData
-} from '../api/topLine'
+} from '../../api/topLine'
 // utils
 import {
   getStore,
   setStore
-} from '../utils/common'
-
-export function getTopLineList(type) {
+} from '../../utils/common'
+let stockParams= {
+  lastHashId: ''
+ }
+export default function getTopLineList(type) {
   return async (dispatch, getState) => {
     const htid = getState().pageConfig.htid
     const whichLoading = getState().list.interfaceState.whichLoading
     const listData = getState().list.listData
-    const lastHashId = getState().list.stockParams.lastHashId
+    const lastHashId = stockParams.lastHashId
     const interfaceParams = getState().list.interfaceParams
     try {
       if (type === 'init') {
@@ -65,9 +67,11 @@ export function getTopLineList(type) {
         setStore('topLineHistory.stickData', [])
         if (stickData.Status === 200) {
           setStore('topLineHistory.stickData', stickData.TopNews)
-          this.setState({
-            lastHashId: stickData.HashId
-          })
+          stockParams = {
+            ...stockParams, ...{
+              lastHashId: stickData.HashId
+            }
+          }
         }
         // 合并头条与置顶
         const topList = getStore('topLineHistory.data')

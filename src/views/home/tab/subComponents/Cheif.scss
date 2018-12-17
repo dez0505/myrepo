@@ -1,0 +1,29 @@
+@import '@/styles/base.scss';
+// tab列表
+.tab-list {
+  margin: 0 Px(24);
+  .list-item {
+    padding: Px(24) 0;
+    .title {
+      font-size: $bigerSize;
+      margin: Px(12) 0;
+      line-height: 1.3;
+    }
+    .content {
+      display: flex;
+      font-size: $smallSize;
+      justify-content: space-between;
+      &-left{
+        display: flex;
+        align-items: center;
+      }
+      .origin {
+        display: inline-block;
+        color: $grayText;
+        .media {
+          margin-right: Px(10);
+        }
+      }
+    }
+  }
+}
