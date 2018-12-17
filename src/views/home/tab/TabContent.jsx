@@ -57,7 +57,9 @@ class TabContent extends Component {
   }
   // 监听refreshLoading 来调接口
   watchRefreshLoading(props) {
+    console.log( props.refreshLoading !== this.props.refreshLoading, props.refreshLoading, props.whichLoading)
     if( props.refreshLoading !== this.props.refreshLoading && props.refreshLoading && props.whichLoading) {
+      console.log(23423423, props.whichLoading)
       switch (props.whichLoading) {
         case 'topLine':
           this.props.getTopLineList('init')
@@ -129,8 +131,10 @@ class TabContent extends Component {
   }
   // 监听whichLoading使设置当前tabType,并刷新状态为true
   watchWhichLoading(props) {
+    console.log(props.whichLoading,this.props.whichLoading)
     if( props.whichLoading !== this.props.whichLoading && props.whichLoading) {
       // 由于异步的影响不能在这里设置变量tabType
+      console.log(98989, props.whichLoading)
       this.props.updateLoadingState({
         refreshLoading: true
       })
@@ -167,7 +171,7 @@ class TabContent extends Component {
     }
   }
   render() {
-    const  whichLoading = this.props.whichLoading
+    const whichLoading = this.props.whichLoading
     const listData = this.props.listData
     const minHeightStyle = {
       minHeight: this.props.scrollHeight
@@ -196,13 +200,13 @@ class TabContent extends Component {
   }
 }
 const mapStateToProps = (state) => ({
-  activeHomeTabIndex: state.tab.tabIndexData.activeHomeTabIndex,
-  listData: state.list.listData,
-  whichLoading: state.list.interfaceState.whichLoading,
-  htid: state.pageConfig.htid,
-  scrollHeight: state.pageConfig.scrollHeight,
-  refreshLoading: state.list.loadingState.refreshLoading, //根据refreshloading来进行列表刷新
-  loadLoading: state.list.loadingState.loadLoading,       //根据loadLoading来进行加载更多
+  activeHomeTabIndex: state.tab.tabIndexData.activeHomeTabIndex,            //当点击时，swiper要根据index进行滚动
+  listData: state.list.listData,                                            //判断listData是否为空数组来加载状态组件或列表组件
+  whichLoading: state.list.interfaceState.whichLoading,                     //监听tab已切换，来刷新当前列表数据 使刷新状态为true
+  htid: state.pageConfig.htid,                                              //初始化时 第一次初始化 刷新状态为true 执行topline
+  scrollHeight: state.pageConfig.scrollHeight,                              //设置最小列表的高度，来避免清空数据时，列表抖动
+  refreshLoading: state.list.loadingState.refreshLoading,                   //当refreshloading为true再根据whichLoading来判断执行哪个接口
+  loadLoading: state.list.loadingState.loadLoading,                         //根据loadLoading为true再根据whichLoading来加载更多哪个接口
 })
 
 const mapDispatchToProps = dispatch => ({

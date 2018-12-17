@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 // import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import TabHeaderCase from '../../../containers/TabHeaderCase'
 
 export class Optional extends Component {
   static propTypes = {
@@ -10,7 +11,7 @@ export class Optional extends Component {
   render() {
     return (
       <div>
-          Optional
+          <TabHeaderCase type='optional'></TabHeaderCase> 
       </div>
     )
   }

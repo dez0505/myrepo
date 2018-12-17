@@ -11,23 +11,29 @@ export default class TabHeader extends Component {
     type: PropTypes.string
   };
   componentDidMount() {
-    if (this.props.activeHomeTabIndex >= 0) {
-      this.updateWhichLoading(this.props.activeHomeTabIndex)
+    console.log(this.props)
+    if (this.props.activeHomeTabIndex >= 0 && this.props.type === 'home') {
+      this.updateHomeWhichLoading(this.props.activeHomeTabIndex)
     }
+    // } else if (this.props.activeOptionalTabIndex >= 0 && this.props.type === 'optional') {
+    //   this.updateOptionalWhichLoading(this.props.activeOptionalTabIndex)
+    // }
   }
  
   componentWillReceiveProps(newProps, newState) {
     if(newProps.type === 'home' ) {
       if(newProps.activeHomeTabIndex !== this.props.activeHomeTabIndex){
-        this.updateWhichLoading(newProps.activeHomeTabIndex)
+        this.updateHomeWhichLoading(newProps.activeHomeTabIndex)
       }
     } else if (newProps.activeOptionalTabIndex !== this.props.activeOptionalTabIndex) {
-      this.updateWhichLoading(newProps.activeOptionalTabIndex)
+      this.updateOptionalWhichLoading(newProps.activeOptionalTabIndex)
     }
   }
-  updateWhichLoading (activeIndex) {
+  updateHomeWhichLoading (activeIndex) {
     this.props.resetState()
-    if (this.props.type === 'home') {
+    this.props.updateOptionalTabIndex(-1) // 问题
+    console.log(3333, activeIndex)
+    setTimeout(() => {
       switch (activeIndex) {
         case 0:
           this.props.updateInterfaceState('topLine')
@@ -39,7 +45,8 @@ export default class TabHeader extends Component {
           this.props.updateInterfaceState('liveA')
           break;
         case 3:
-          this.props.updateInterfaceState('news')
+          // this.props.updateInterfaceState('optional')
+          this.props.updateOptionalTabIndex(0)
           break;
         case 4:
           this.props.updateInterfaceState('more')
@@ -47,26 +54,29 @@ export default class TabHeader extends Component {
         default:
           break;
       }
-    } else {
-      switch (activeIndex) {
-        case 0:
-          this.props.updateInterfaceState('news')
-          break;
-        case 1:
-          this.props.updateInterfaceState('qus')
-          break;
-        case 2:
-          this.props.updateInterfaceState('bigEvent')
-          break;
-        case 3:
-          this.props.updateInterfaceState('notice')
-          break;
-        case 4:
-          this.props.updateInterfaceState('report')
-          break;
-        default:
-          break;
-      }
+    }, 200);
+    
+  }
+  updateOptionalWhichLoading (activeIndex) {
+    this.props.resetState()
+    switch (activeIndex) {
+      case 0:
+        this.props.updateInterfaceState('news')
+        break;
+      case 1:
+        this.props.updateInterfaceState('qus')
+        break;
+      case 2:
+        this.props.updateInterfaceState('bigEvent')
+        break;
+      case 3:
+        this.props.updateInterfaceState('notice')
+        break;
+      case 4:
+        this.props.updateInterfaceState('report')
+        break;
+      default:
+        break;
     }
   }
   render() {
