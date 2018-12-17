@@ -13,7 +13,7 @@ class Header extends Component {
       height: this.props.titleheight + 'px'
     }
     return (
-      <div className='header-box' style={headerStyle}>
+      <div className='header-box'>
         <div onClick={() => goToFunction(80004)}>客服</div>
         <div className='input-box' onClick={() => goToFunction(10134)}>
           <input className='input' disabled placeholder='代码/简拼/功能/资讯/数据'></input> 
