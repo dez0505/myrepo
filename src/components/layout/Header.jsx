@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import './Header.scss'
 import { goToFunction } from '@/utils/common.js'
 class Header extends Component {
@@ -8,8 +9,11 @@ class Header extends Component {
   componentDidMount() {
   }
   render() {
+    const headerStyle = {
+      height: this.props.titleheight + 'px'
+    }
     return (
-      <div className='header-box'>
+      <div className='header-box' style={headerStyle}>
         <div onClick={() => goToFunction(80004)}>客服</div>
         <div className='input-box' onClick={() => goToFunction(10134)}>
           <input className='input' disabled placeholder='代码/简拼/功能/资讯/数据'></input> 
@@ -21,4 +25,9 @@ class Header extends Component {
     ) 
   }
 }
-export default Header
+const mapStateToProps = (state) => ({
+  titleheight: state.pageConfig.titleheight
+})
+
+
+export default connect(mapStateToProps)(Header)
