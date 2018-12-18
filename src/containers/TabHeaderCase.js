@@ -11,6 +11,8 @@ const mapStateToProps = (state,store) => {
     optionalTabMenuList: state.tab.tabMenuData.optionalTabMenuList,
     activeHomeTabIndex: state.tab.tabIndexData.activeHomeTabIndex,
     activeOptionalTabIndex: state.tab.tabIndexData.activeOptionalTabIndex,
+    theme: state.pageConfig.theme,
+    optionalTeamName: state.pageConfig.optionalTeamName
   }
 }
 const mapDispatchToProps = dispatch => {

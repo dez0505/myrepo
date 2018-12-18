@@ -72,13 +72,14 @@ export default function getNewsList (type) {
           pageNum: interfaceParams.pageNum + 1
       }))
     } catch (error) {
+      console.log(error)
       dispatch(updateLoadingState({
         loadLoading: false,
         initLoading: false,
         refreshLoading: false
       }))
       dispatch(updateInterfaceState({
-        whichLoadedFail: 'cheif'
+        whichLoadedFail: 'news'
       }))
     }
   }

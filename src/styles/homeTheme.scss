@@ -36,3 +36,12 @@
     border-top: Px(1) solid $blackBd;
   }
 }
+
+.redTheme {
+  .tab-header>.active-tab-item {
+    color: $error!important;
+  }
+  .tab-header .active-tab-item .bd-bottom {
+    border-color: $error!important;
+  }
+}

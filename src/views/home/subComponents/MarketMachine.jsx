@@ -13,7 +13,7 @@ import { goToFunction, sendIOSMessage, encryptByDES } from '@/utils/common.js'
 // const marketPic4 = require('../../../images/machine-images/myself_change.png')
 class MarketMachine extends Component {
 	static propTypes = {
-		optionaChange:PropTypes.object
+		optionalChange:PropTypes.object
 	}
 	
 	constructor(props) {
@@ -152,8 +152,8 @@ class MarketMachine extends Component {
 								个股发生异动
 							</div>
 							<div className="list-content">
-								<span className="list-label"><span className="list-key">{this.props.optionaChange.stockname}</span>{this.props.optionaChange.signalname}</span>
-								<span className="list-label list-key">{this.handleMyGunChange(this.props.optionaChange.signalvalue)}</span>
+								<span className="list-label"><span className="list-key">{this.props.optionalChange.stockname}</span>{this.props.optionalChange.signalname}</span>
+								<span className="list-label list-key">{this.handleMyGunChange(this.props.optionalChange.signalvalue)}</span>
 							</div>
 						</div>
 						<div className="'right-icon icon3">
@@ -179,7 +179,7 @@ class MarketMachine extends Component {
 	}
 }
 const mapStateToProps = (state) => ({
-	optionaChange: state.nativeData.optionaChange
+	optionalChange: state.nativeData.optionalChange
 })
 
 const mapDispatchToProps = {

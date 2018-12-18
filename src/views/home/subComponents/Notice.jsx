@@ -35,7 +35,7 @@ class Notice extends Component {
   render() {
     const noticeIconClass = this.props.theme === 'red' ? 'notice-icon red' : 'notice-icon'
     return (
-      <div className='notice-box top-border'>
+      <div className='notice-component top-border'>
         <div className={noticeIconClass}></div>
         <div className='notice-content'>
           <div className={this.state.isAnimate?'anim':''}>

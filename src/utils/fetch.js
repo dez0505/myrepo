@@ -3,8 +3,8 @@ import axios from 'axios'
 const service = axios.create({
   timeout: 10000,
   headers: {
-    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-    // 'Content-Type': 'application/json;charset=utf-8'// TYPE=2
+    // 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+    'Content-Type': 'application/json;charset=utf-8'// TYPE=2
     // 'Content-Type': 'application/x-www-form-urlencoded' TYPE=1
   }
 })

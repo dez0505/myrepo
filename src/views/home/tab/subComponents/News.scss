@@ -1,0 +1,33 @@
+@import '../../../../styles/base.scss';
+  .news-box{
+    padding: 0 Px(30);
+  }
+  .news-item{
+    padding:Px(30) 0;
+    font-size: $baseSize;
+    .item-stock{
+      font-size: $smallSize;
+      color:#777;
+      .stock-num{
+        color:$error;
+        margin-left:Px(30);
+        &.up{
+          color: $error;
+        }
+        &.down{
+          color: $success;
+        }
+      }
+    }
+    .item-title{
+      font-size:$bigerSize;
+      margin:Px(8) 0;
+    }
+    .origin{
+      margin-right:Px(30)
+    }
+    .item-desc{
+      font-size: $smallSize;
+      color:$grayText;
+    }
+  }

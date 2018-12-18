@@ -5,6 +5,7 @@ import Arrow from './Arrow.jsx'
 import './BetterScroll.scss'
 
 import { updateInterfaceParams, updateLoadingState, resetState } from '@/actions/list'
+import {updatePageConfig} from '../../actions/index'
 import { connect } from 'react-redux'
 
 class BetterScroll extends Component {
@@ -53,11 +54,13 @@ class BetterScroll extends Component {
     })
     if (true) {
       this.scroll.on('scroll', (pos) => {
-        // console.log('scrollOffsetTop', document.querySelector('.inner-scroll-warpper').offsetTop)
-        // const scrollHeight = document.querySelector('.inner-scroll-warpper').offsetTop // list元素的位置
-        // this.listOffsetTop.value = scrollHeight
-        // this.activeScrollValue.x = -(pos.x)
-        // this.activeScrollValue.y = -(pos.y) // 滚动的距离
+        const scrollHeight = document.getElementById('listContent').offsetTop // list元素的位置
+        const scrollY = -(pos.y)
+        if( scrollY>=scrollHeight ) {
+          this.props.updateTabIsFixed(true)
+        } else {
+          this.props.updateTabIsFixed(false)
+        }
         if (pos.y >= 60) {
           this.setState({
             topIconDirection: 'up'
@@ -141,13 +144,14 @@ const mapStateToProps = (state,store) => {
     isNoMoreData: state.list.dataState.isNoMoreData,
     whichLoading: state.list.interfaceState.whichLoading,
     whichLoadedFail: state.list.interfaceState.whichLoadedFail,
-    titleheight: state.pageConfig.titleheight
+    titleheight: state.pageConfig.titleheight,
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
     updateInterfaceParams: pageNum => dispatch(updateInterfaceParams({ pageNum })),
     updateLoadingState: loadingState => dispatch(updateLoadingState(loadingState)),
+    updateTabIsFixed: tabIsFixed => dispatch(updatePageConfig({tabIsFixed})),
     resetState:()=>dispatch(resetState())
   }
 }

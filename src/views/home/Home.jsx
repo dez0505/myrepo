@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './Home.scss'
 import '../../styles/homeTheme.scss'
 
 // subComponent
@@ -9,10 +8,10 @@ import Nav from '@/components/layout/Nav'
 import AdsSwiper from './subComponents/AdsSwiper'
 import Notice from './subComponents/Notice'
 import MarketMachine from './subComponents/MarketMachine'
-import TopicSwiper from './subComponents/topicSwiper'
+import TopicSwiper from './subComponents/TopicSwiper'
 import LiveFM from './subComponents/LiveFM'
 import TabBox from './tab/TabBox'
-
+import TabHeaderCase from '../../containers/TabHeaderCase'
 
 // container
 
@@ -33,7 +32,11 @@ class Home extends Component {
       topicListData:[],
       navMenusData:getStore('appindex.IndexMenus')||[],
       liveFmList: [],
-      refreshTime: ''
+      refreshTime: '',
+      isTabFixed: false,
+      activeScrollY: {
+        value: 0
+      }
     }
   }
 
@@ -57,6 +60,7 @@ class Home extends Component {
       this.initHomeApi(nextProps)
     } 
   }
+ 
  
   async getIconData (params) {
    const {version, platform} = params
@@ -119,11 +123,39 @@ class Home extends Component {
     })//更新首页接口
 
   }
+  loadFixTabMenu() {
+    const tabFixStyle={
+      position: 'fixed',
+      top: getQueryString('titleheight')+'px',
+      left: 0,
+      right: 0,
+      zIndex: 99,
+      background: this.props.theme === 'night' ? '#202528' : '#fff',
+      display: this.props.tabIsFixed? '' : 'none'
+    }
+    if(this.props.activeHomeTabIndex === 3) {
+      return (
+        <div style={tabFixStyle}>
+          <TabHeaderCase type='home'></TabHeaderCase> 
+          <TabHeaderCase type='optional'></TabHeaderCase>
+        </div>
+      )
+    } else {
+      return (
+        <div style={tabFixStyle}>
+          <TabHeaderCase type='home'></TabHeaderCase> 
+        </div>
+      )
+    }
+  }
   render() {
     const liveFmListProps = {theme:this.props.theme, liveFmList:this.state.liveFmList}
     return (
       <div>
         <Header/>
+        {
+          this.loadFixTabMenu()
+        }
         <BetterScroll refreshTime = {this.state.refreshTime} updateHomeContent={()=>this.updateHomeContent()}>
           <div className={`home-warpper ${this.props.theme==='night'?'black':'white'}`}>
             <Nav navMenus={this.state.navMenusData} theme={this.props.theme}/>

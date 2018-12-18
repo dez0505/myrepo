@@ -13,13 +13,9 @@ import NoData from './NoData'
 import getCheifList  from '../../../actions/tab/cheif'
 import getTopLineList  from '../../../actions/tab/topLine'
 import getLiveList from '../../../actions/tab/live'
-import getNewsList from '../../../actions/tab/news'
-import getQusList from '../../../actions/tab/qus'
-import getEventList from '../../../actions/tab/event'
-import getNoticeList from '../../../actions/tab/notice'
-import getReportList from '../../../actions/tab/report'
+import { getNewsList, getOptionalList } from '../../../actions/tab/optional'
 // MutationEvent
-import { updateLoadingState } from '../../../actions/list'
+import { updateLoadingState, updateListData ,resetState} from '../../../actions/list'
 import { updateTabIndex } from '@/actions/tab'
 // Swiper
 import './TabContent.scss'
@@ -51,15 +47,25 @@ class TabContent extends Component {
     this.watchWhichLoading(props)
     this.watchRefreshLoading(props)
     this.watchLoadLoading(props)
+    this.watchMarket(props)
+    this.watchListData(props)
+    this.watchOptionalCode(props)
   }
   componentWillUpdate(props,state) {
     this.watchActiveHomeIndex(props,state)
   }
+  // 监听optionCode是否改变执行相关逻辑 刷新自选列表
+  watchOptionalCode(props) {
+    if(props.activeHomeTabIndex!==3) return
+    this.props.resetState()
+    this.props.updateLoadingState({
+      refreshLoading: true
+    })
+  }
+
   // 监听refreshLoading 来调接口
   watchRefreshLoading(props) {
-    console.log( props.refreshLoading !== this.props.refreshLoading, props.refreshLoading, props.whichLoading)
     if( props.refreshLoading !== this.props.refreshLoading && props.refreshLoading && props.whichLoading) {
-      console.log(23423423, props.whichLoading)
       switch (props.whichLoading) {
         case 'topLine':
           this.props.getTopLineList('init')
@@ -77,16 +83,16 @@ class TabContent extends Component {
           this.props.getNewsList('init')
           break;
         case 'qus':
-          this.props.getQusList('init')
+          this.props.getOptionalList('init','qus')
           break;
         case 'event':
-          this.props.getEventList('init')
+          this.props.getOptionalList('init','event')
           break;
         case 'notice':
-          this.props.getNoticeList('init')
+          this.props.getOptionalList('init','notice')
           break;
         case 'report':
-          this.props.getReportList('init')
+          this.props.getOptionalList('init','report')
           break;
         default:
           break;
@@ -112,29 +118,142 @@ class TabContent extends Component {
           this.props.getNewsList('load')
           break;
         case 'qus':
-          this.props.getQusList('load')
+          this.props.getOptionalList('load','qus')
           break;
         case 'event':
-          this.props.getEventList('load')
+          this.props.getOptionalList('load','event')
           break;
         case 'notice':
-          this.props.getNoticeList('load')
+          this.props.getOptionalList('load','notice')
           break;
         case 'report':
-          this.props.getReportList('load')
+          this.props.getOptionalList('load','report')
           break;
         default:
           break;
       }
     }
-    
   }
+  // 监听列表数据变化进行发通知
+  watchListData(props) {
+    if(!props.listData.length) return
+    if(props.listData !== this.props.listData) {
+      switch (props.whichLoading) {
+        case 'topLine':
+          const hasStocksArray = props.listData.filter(
+            item => item.Stocks.length > 0
+          )
+          const scoketCodeArray = hasStocksArray.map(
+            item => item.Stocks[0].Symbol
+          )
+          if (window && window.quote && window.quote.requestQuote) {
+            window.quote.requestQuote(scoketCodeArray)
+          } else if (
+            window.webkit &&
+              window.webkit.messageHandlers &&
+              window.webkit.messageHandlers.requestQuote
+          ) {
+            window.webkit.messageHandlers.requestQuote.postMessage({
+              body: scoketCodeArray
+            })
+          }
+          break;
+        case 'news': 
+          this.sendStock(props.listData)
+          break
+        case 'qus':
+          this.sendStock(props.listData)
+          break
+        case 'event': 
+          this.sendStock(props.listData)
+          break
+        case 'notice': 
+          this.sendStock(props.listData)
+          break
+        case 'report': 
+          this.sendStock(props.listData)
+          break
+        default:
+          break;
+      }
+    }
+  }
+  sendStock (newval) {
+    if (newval.length === 0) return
+    const scoketCodeArray = newval.map(
+      item => item.tradingCode
+    )
+    const filterArray = scoketCodeArray.filter((x, index, self) => self.indexOf(x) === index)
+    if (window && window.quote && window.quote.requestQuote) {
+      window.quote.requestQuote(filterArray)
+    } else if (
+      window.webkit &&
+        window.webkit.messageHandlers &&
+        window.webkit.messageHandlers.requestQuote
+    ) {
+      window.webkit.messageHandlers.requestQuote.postMessage({
+        body: filterArray
+      })
+    }
+  }
+
+  // 监听market行情数据是否变化了。变化了就要对列表进行渲染
+  watchMarket(props) {
+    if(props.market!==this.props.market&&props.market) {
+      switch(this.props.whichLoading) {
+        case 'topLine':
+          if (!props.listData.length) return
+          const newArray = props.listData.map(item=>item)
+          let array = props.market.dataRecord
+          for(let val of newArray) {
+            if(val.Stocks.length>0) {
+              val.stocksNum = array.shift()[3]
+            }
+          }
+          this.props.updateListData({listData: newArray})
+        break;
+        case 'news':
+          this.handleStock(props.listData, props.market)
+          break
+        case 'qus':
+          this.handleStock(props.listData, props.market)
+          break
+        case 'bigEvent':
+          this.handleStock(props.listData, props.market)
+          break
+        case 'notice':
+          this.handleStock(props.listData, props.market)
+          break
+        case 'report':
+          this.handleStock(props.listData, props.market)
+          break
+        default:
+      }
+    }
+  }
+  // 根据行情处理新的数据
+  handleStock (list, market) {
+    if (!list.length) return
+    const newArray = list.map(
+      item => item
+    )
+    const array = market.dataRecord
+    for (let val of newArray) {
+      const needStock = array.filter(v => v[0] === val.tradingCode)
+      if (needStock.length > 0) {
+        val.stockNum = needStock[0][3]
+        val.stockPrice = needStock[0][2]
+      }
+    }
+    this.updateListData(newArray)
+  }
+
+
   // 监听whichLoading使设置当前tabType,并刷新状态为true
   watchWhichLoading(props) {
-    console.log(props.whichLoading,this.props.whichLoading)
     if( props.whichLoading !== this.props.whichLoading && props.whichLoading) {
       // 由于异步的影响不能在这里设置变量tabType
-      console.log(98989, props.whichLoading)
+      this.props.resetState()
       this.props.updateLoadingState({
         refreshLoading: true
       })
@@ -207,6 +326,8 @@ const mapStateToProps = (state) => ({
   scrollHeight: state.pageConfig.scrollHeight,                              //设置最小列表的高度，来避免清空数据时，列表抖动
   refreshLoading: state.list.loadingState.refreshLoading,                   //当refreshloading为true再根据whichLoading来判断执行哪个接口
   loadLoading: state.list.loadingState.loadLoading,                         //根据loadLoading为true再根据whichLoading来加载更多哪个接口
+  market: state.nativeData.market,                         //根据loadLoading为true再根据whichLoading来加载更多哪个接口
+  optionalCode: state.nativeData.optionalCode              //根据optionalCode改变来进行重新请求数据
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -215,11 +336,11 @@ const mapDispatchToProps = dispatch => ({
   getCheifList: type => dispatch(getCheifList(type)),
   getLiveList: (type,style) => dispatch(getLiveList(type,style)),
   getNewsList: type => dispatch(getNewsList(type)),
-  getQusList: type => dispatch(getQusList(type)),
-  getEventList: type => dispatch(getEventList(type)),
-  getNoticeList: type => dispatch(getNoticeList(type)),
-  getReportList: type => dispatch(getReportList(type)),
+  getOptionalList: (type,style) => dispatch(getOptionalList(type,style)),
   updateLoadingState: loadingState => dispatch(updateLoadingState(loadingState)),
+  updateListData: listData=> dispatch(updateListData(listData)),
+  resetState:()=>dispatch(resetState())
+
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TabContent)

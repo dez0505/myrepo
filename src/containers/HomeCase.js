@@ -10,7 +10,8 @@ const mapStateToProps = (state,store) => {
     htid: state.pageConfig.htid,              // 用户id
     platform: state.pageConfig.platform,      // 安卓或ios
     account: state.pageConfig.account,        // account 没用到
-    ifRefresh: state.pageConfig.ifRefresh     // 控制是否执行刷新
+    tabIsFixed: state.pageConfig.tabIsFixed,  // 控制是否显示固定头
+    activeHomeTabIndex: state.tab.tabIndexData.activeHomeTabIndex, // 控制是否显示固定optional头
   }
 }
 const mapDispatchToProps = dispatch => {

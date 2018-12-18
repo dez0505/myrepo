@@ -9,7 +9,7 @@ class TabBox extends Component {
   }
   render() {
     return (
-      <div>
+      <div id='listContent'>
         <TabHeaderCase type='home'></TabHeaderCase>
         <TabContent></TabContent>
       </div>

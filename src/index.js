@@ -42,12 +42,12 @@ window.changeTheme = function (theme) {
 }
 // 个人股与对应的分组名
 window.getOptional = function (optionalCode, optionalTeam) {
-  store.dispatch(updateNativeData({optionalCode}))
   store.dispatch(updateNativeData({optionalTeam}))
+  store.dispatch(updateNativeData({optionalCode}))
 }
 // 涨跌异动
-window.updateShortTermElves = function (optionaChange) {
-  store.dispatch(updateNativeData({optionaChange}))
+window.updateShortTermElves = function (optionalChange) {
+  store.dispatch(updateNativeData({optionalChange}))
 }
 // 刷新tab资讯
 window.refreshInfo = function () {
