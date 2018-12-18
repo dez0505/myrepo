@@ -28,6 +28,7 @@ export default function tab(state = initialState, action) {
   switch (action.type) {
     case UPDATE_TAB_INDEX:    // 更新loading状态
       const tabIndexData = {...state.tabIndexData,...action.index}
+      // console.log(tabIndexData)
       return  { ...state, tabIndexData}
     default:
       return state

@@ -11,25 +11,25 @@ export default class TabHeader extends Component {
     type: PropTypes.string
   };
   componentDidMount() {
-    if (this.props.activeHomeTabIndex >= 0 && this.props.type === 'home') {
-      this.updateHomeWhichLoading(this.props.activeHomeTabIndex)
-    } else if (this.props.activeOptionalTabIndex >= 0 && this.props.type === 'optional') {
-      this.updateOptionalWhichLoading(this.props.activeOptionalTabIndex)
-    }
+    if (this.props.activeHomeTabIndex >= 0 && this.props.type === 'home' && this.props.watch) {
+      this.updateHomeWhichLoading(this.props, this.props.activeHomeTabIndex)
+    } 
   }
  
   componentWillReceiveProps(newProps, newState) {
-    if(newProps.type === 'home' ) {
-      if(newProps.activeHomeTabIndex !== this.props.activeHomeTabIndex){
-        this.updateHomeWhichLoading(newProps.activeHomeTabIndex)
-      }
-    } else if (newProps.activeOptionalTabIndex !== this.props.activeOptionalTabIndex && newProps.activeOptionalTabIndex>=0 ) {
-      this.updateOptionalWhichLoading(newProps.activeOptionalTabIndex)
+    if(!newProps.watch) return
+    if(newProps.activeHomeTabIndex !== this.props.activeHomeTabIndex && newProps.activeHomeTabIndex>=0){
+      this.updateHomeWhichLoading(newProps, newProps.activeHomeTabIndex)
+    }
+    if (newProps.activeOptionalTabIndex !== this.props.activeOptionalTabIndex && newProps.activeOptionalTabIndex>=0) {
+      this.updateOptionalWhichLoading(newProps, newProps.activeOptionalTabIndex)
     }
   }
-  updateHomeWhichLoading (activeIndex) {
-    // this.props.resetState()
-    this.props.updateOptionalTabIndex(-1) // 问题
+  updateHomeWhichLoading (newProps, activeIndex) {
+    this.props.resetState()
+    if(newProps.activeHomeTabIndex!==3) {
+      this.props.updateOptionalTabIndex(-1) // 问题
+    }
     switch (activeIndex) {
       case 0:
         this.props.updateInterfaceState('topLine')
@@ -50,11 +50,10 @@ export default class TabHeader extends Component {
       default:
         break;
     }
-  
   }
-  updateOptionalWhichLoading (activeIndex) {
-    console.log('aaaaa')
-    // this.props.resetState()
+  updateOptionalWhichLoading (newProps, activeIndex) {
+    // if(newProps.activeHomeTabIndex === '4' && activeIndex==='0') return
+    this.props.resetState()
     switch (activeIndex) {
       case 0:
         this.props.updateInterfaceState('news')

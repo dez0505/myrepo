@@ -10,7 +10,7 @@ class TabBox extends Component {
   render() {
     return (
       <div id='listContent'>
-        <TabHeaderCase type='home'></TabHeaderCase>
+        <TabHeaderCase type='home' watch={true}></TabHeaderCase>
         <TabContent></TabContent>
       </div>
     )

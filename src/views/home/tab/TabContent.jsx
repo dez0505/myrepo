@@ -14,6 +14,7 @@ import getCheifList  from '../../../actions/tab/cheif'
 import getTopLineList  from '../../../actions/tab/topLine'
 import getLiveList from '../../../actions/tab/live'
 import { getNewsList, getOptionalList } from '../../../actions/tab/optional'
+import { updateNativeData } from '../../../actions/nativeData'
 // MutationEvent
 import { updateLoadingState, updateListData ,resetState} from '../../../actions/list'
 import { updateTabIndex } from '@/actions/tab'
@@ -57,10 +58,12 @@ class TabContent extends Component {
   // 监听optionCode是否改变执行相关逻辑 刷新自选列表
   watchOptionalCode(props) {
     if(props.activeHomeTabIndex!==3) return
-    this.props.resetState()
-    this.props.updateLoadingState({
-      refreshLoading: true
-    })
+    if(props.optionalCode!==this.props.optionalCode) {
+      this.props.resetState()
+      this.updateLoadingState({
+        refreshLoading: true
+      }) 
+    }
   }
 
   // 监听refreshLoading 来调接口
@@ -245,15 +248,14 @@ class TabContent extends Component {
         val.stockPrice = needStock[0][2]
       }
     }
-    this.updateListData(newArray)
+    this.updateListData({listData: newArray})
   }
 
 
   // 监听whichLoading使设置当前tabType,并刷新状态为true
   watchWhichLoading(props) {
-    if( props.whichLoading !== this.props.whichLoading && props.whichLoading) {
+    if( props.whichLoading !== this.props.whichLoading && props.whichLoading && props.whichLoading!=='more' ) {
       // 由于异步的影响不能在这里设置变量tabType
-      this.props.resetState()
       this.props.updateLoadingState({
         refreshLoading: true
       })
@@ -339,6 +341,7 @@ const mapDispatchToProps = dispatch => ({
   getOptionalList: (type,style) => dispatch(getOptionalList(type,style)),
   updateLoadingState: loadingState => dispatch(updateLoadingState(loadingState)),
   updateListData: listData=> dispatch(updateListData(listData)),
+  updateNativeData: nativeData => dispatch(updateNativeData(nativeData)),
   resetState:()=>dispatch(resetState())
 
 })

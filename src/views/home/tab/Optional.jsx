@@ -31,6 +31,7 @@ export class Optional extends Component {
       threshold: 100,
       touchMoveStopPropagation: false,
       onSlideChangeEnd: function (swiper) {
+        if(that.props.activeHomeTabIndex!==3)return
         that.props.updateTabIndex(swiper.activeIndex)
       }
     })
@@ -84,6 +85,7 @@ const mapStateToProps = (state) => ({
   listData: state.list.listData,                                            //判断listData是否为空数组来加载状态组件或列表组件
   whichLoading: state.list.interfaceState.whichLoading,                     //监听tab已切换，来刷新当前列表数据 使刷新状态为true
   activeOptionalTabIndex: state.tab.tabIndexData.activeOptionalTabIndex,            //当点击时，swiper要根据index进行滚动
+  activeHomeTabIndex: state.tab.tabIndexData.activeHomeTabIndex,            //当点击时，swiper要根据index进行滚动
 })
 
 const mapDispatchToProps = dispatch => {

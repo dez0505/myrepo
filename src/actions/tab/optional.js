@@ -14,7 +14,7 @@ export function getNewsList (type) {
     const whichLoading = getState().list.interfaceState.whichLoading
     const listData = getState().list.listData
     const interfaceParams = getState().list.interfaceParams
-    const TradingCode = getState().pageConfig.TradingCode
+    const TradingCode = getState().nativeData.optionalCode
     try {
       // 入参
       const {
@@ -90,7 +90,7 @@ export function getOptionalList (type, style) {
     const whichLoading = getState().list.interfaceState.whichLoading
     const listData = getState().list.listData
     const interfaceParams = getState().list.interfaceParams
-    const TradingCode = getState().pageConfig.TradingCode
+    const TradingCode = getState().nativeData.optionalCode
     try {
       // 入参
       const {

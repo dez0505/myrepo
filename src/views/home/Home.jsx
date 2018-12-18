@@ -136,14 +136,14 @@ class Home extends Component {
     if(this.props.activeHomeTabIndex === 3) {
       return (
         <div style={tabFixStyle}>
-          <TabHeaderCase type='home'></TabHeaderCase> 
+          <TabHeaderCase type='home' watch={false}></TabHeaderCase> 
           <TabHeaderCase type='optional'></TabHeaderCase>
         </div>
       )
     } else {
       return (
         <div style={tabFixStyle}>
-          <TabHeaderCase type='home'></TabHeaderCase> 
+          <TabHeaderCase type='home' watch={false}></TabHeaderCase> 
         </div>
       )
     }
