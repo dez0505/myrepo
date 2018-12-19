@@ -16,6 +16,7 @@ class TopicSwiper extends Component {
       loop: true,
       autoplay: 5000,
       pagination: '.swiper-pagination',
+      autoplayDisableOnInteraction: false,
       onClick: (swiper) => {
         const realIndex = swiper.realIndex;
         goToAPP(this.props.topicList[realIndex], 'ads');

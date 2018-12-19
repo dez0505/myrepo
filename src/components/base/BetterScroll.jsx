@@ -3,6 +3,7 @@ import BScroll from 'better-scroll'
 import { Icon } from 'antd-mobile';
 import Arrow from './Arrow.jsx'
 import './BetterScroll.scss'
+import { sendIOSMessage } from '@/utils/common'
 
 import { updateInterfaceParams, updateLoadingState, resetState } from '@/actions/list'
 import {updatePageConfig} from '../../actions/index'
@@ -16,6 +17,7 @@ class BetterScroll extends Component {
       refreshTime: '刷新时间',
       botText: '上拉加载...',
       topIconDirection: 'down',
+      tabFixed: false
     };
     this.scroll= null
   }
@@ -28,6 +30,9 @@ class BetterScroll extends Component {
     }
     if(!nextProps.loadLoading && nextProps.loadLoading !== this.props.loadLoading) {
       this._pullingDownUpComplete()
+    }
+    if(nextProps.refreshLoading && (nextProps.refreshLoading !== this.props.refreshLoading) && this.state.tabFixed) {
+      this.scrollToElement('#listContent')
     }
   }
   _initScroll() {
@@ -49,7 +54,8 @@ class BetterScroll extends Component {
       this.props.updateHomeContent() // 
     })
     this.scroll.on('pullingUp', () => {
-      if(this.props.isNoMoreData || this.props.isNoData) return  //如果当前列表没有更多数据或根据没数据就不给加载
+      if(this.props.whichLoading==='more') this.scroll.finishPullUp()
+      if(this.props.isNoMoreData || this.props.isNoData || this.props.whichLoading==='more') return  //如果当前列表没有更多数据或根据没数据就不给加载
       this.props.updateLoadingState({loadLoading: true}) // 更新refreshLoading 表示要home一些数据要重新请求了
     })
     if (true) {
@@ -57,8 +63,20 @@ class BetterScroll extends Component {
         const scrollHeight = document.getElementById('listContent').offsetTop // list元素的位置
         const scrollY = -(pos.y)
         if( scrollY>=scrollHeight ) {
+          if (window.quote && window.quote.changeHomeStatus) {
+            window.quote.changeHomeStatus(true)
+          } else {
+            sendIOSMessage('changeHomeStatus',true)
+          }
+          this.setState({tabFixed: true})
           this.props.updateTabIsFixed(true)
         } else {
+          if (window.quote && window.quote.changeHomeStatus) {
+            window.quote.changeHomeStatus(false)
+          } else {
+            sendIOSMessage('changeHomeStatus',false)
+          }
+          this.setState({tabFixed: false})
           this.props.updateTabIsFixed(false)
         }
         if (pos.y >= 60) {
@@ -123,10 +141,10 @@ class BetterScroll extends Component {
           </div>
         </div>
         {this.props.children}
-        <div className="load-box" style={{ display: this.props.isNoData || this.props.whichLoadedFail ? 'none' : null }}>
+        <div className="load-box" style={{ display: this.props.isNoData || this.props.whichLoadedFail || this.props.whichLoading==='more' ? 'none' : null }}>
           <div className="scroll-load">
             <div className="bottom-icon">
-              <Icon style={{ display: this.props.isNoMoreData ? 'none' : null }} type='loading' text='loading' />
+              <Icon style={{ display: this.props.isNoMoreData || this.props.isNoData ? 'none' : null }} type='loading' text='loading' />
             </div>
             <div className="bot-text">{botText}</div>
           </div>
@@ -142,6 +160,7 @@ const mapStateToProps = (state,store) => {
     initLoading: state.list.loadingState.initLoading,
     isNoData: state.list.dataState.isNoData,
     isNoMoreData: state.list.dataState.isNoMoreData,
+    refreshLoading: state.list.loadingState.refreshLoading,
     whichLoading: state.list.interfaceState.whichLoading,
     whichLoadedFail: state.list.interfaceState.whichLoadedFail,
     titleheight: state.pageConfig.titleheight,

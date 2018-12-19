@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './MarketMachine.scss'
-import Title from '../../../components/layout/Title'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 // api
@@ -112,10 +111,10 @@ class MarketMachine extends Component {
 		}
 	}
 	render() {
+		const { signalname, signalvalue, stockname } = this.props.optionalChange
 		return (
 			<div className='market-box'>
 				<div className='split-line'></div>
-				<Title title='市场机会' />
 				<div className="market-machine">
 				<div className="market-list-box">
 					<div className="market-list bot-border" onClick={()=>{goToFunction('10035@more')}}>
@@ -146,14 +145,14 @@ class MarketMachine extends Component {
 						<div className="'right-icon icon2">
 						</div>
 					</div>
-					<div style={{display:this.props.stockname&&this.props.signalname&&this.props.signalvalue?'block':'none'}} className="market-list bot-border" onClick={()=>goToFunction('10084')}>
+					<div style={{display:stockname&&signalname&&signalvalue?'':'none'}} className="market-list bot-border" onClick={()=>goToFunction('10084')}>
 						<div>
 							<div className="list-title">
 								个股发生异动
 							</div>
 							<div className="list-content">
-								<span className="list-label"><span className="list-key">{this.props.optionalChange.stockname}</span>{this.props.optionalChange.signalname}</span>
-								<span className="list-label list-key">{this.handleMyGunChange(this.props.optionalChange.signalvalue)}</span>
+								<span className="list-label"><span className="list-key">{stockname}</span>{signalname}</span>
+								<span className="list-label list-key">{this.handleMyGunChange(signalvalue)}</span>
 							</div>
 						</div>
 						<div className="'right-icon icon3">

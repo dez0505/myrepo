@@ -16,41 +16,30 @@
   color: #ddd;
   height: Px(96);
   .input-box{
-    position: relative;
-    width: 60%;
+    width: 65%;
     box-sizing: border-box;
     border-radius: Px(5);
-    height: 60%;
-    border: Px(1) solid #000;
-    background: #49556D;
+    height: 65%;
+    background: rgba(255,255,255,.2);
     display: flex;
     align-items: center;
     font-size: Px(24);
     .input{
+      height: 100%;
+      line-height: 1;
+      display: flex;
+      align-items: center;
       color:#ddd;
-      position: absolute;
+      margin-top:Px(3);
       width: 100%;
       background: none;
       border: none;
       font-size: Px(26);
       box-sizing: border-box;
-      padding-left:Px(65);
-      left:0;
-      top:0;
-      bottom:0;
-      right:0;
-    }
-    input::-webkit-input-placeholder {
-      color: #ddd;
-      font-size: Px(26);
-      line-height: 1;
-      padding-left:1px;
-      text-align: left;
     }
     .search-icon{
-      margin-left:Px(25);
-      margin-right:Px(30);
-      width: Px(24);
+      margin:0 Px(20) 0 Px(30);
+      width: Px(26);
       height: Px(24);
       background-image: url('../../images/home/header-images/search.png');
       background-size: 100% 100%;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // css
 import './Notice.scss'
+import { goToFunction, goToAPP } from '../../../utils/common';
 
 class Notice extends Component {
   constructor(props) {
@@ -35,12 +36,12 @@ class Notice extends Component {
   render() {
     const noticeIconClass = this.props.theme === 'red' ? 'notice-icon red' : 'notice-icon'
     return (
-      <div className='notice-component top-border'>
+      <div className='notice-component top-border' onClick={()=>goToFunction('10196')}>
         <div className={noticeIconClass}></div>
         <div className='notice-content'>
           <div className={this.state.isAnimate?'anim':''}>
             {this.state.list.map((item,index)=>{
-              return( <div className='notice-item'  key={index}>{item.Title}</div> )
+              return( <div className='notice-item' onClick={(e)=>{e.stopPropagation();goToAPP(item,'notice')}} key={index}>{item.Title}</div> )
             })}
           </div>
         </div>

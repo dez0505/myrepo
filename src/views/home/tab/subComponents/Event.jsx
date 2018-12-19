@@ -41,17 +41,19 @@ export class Event extends Component {
     })
   }
   handleDate (time) {
+    if(!time) return
     const newTime = time.replace(/-/g, '/')
     return parseTime(new Date(newTime), '{m}-{d}')
   }
   handleYear (time) {
+    if(!time) return
     const newTime = time.replace(/-/g, '/')
     return parseTime(new Date(newTime), '{y}')
   }
   render() {
-    const itemContentClassName = this.props.theme ? 'item-content' : 'item-content night'
-    const pointClassName = this.props.theme ? 'point' : 'point night'
-    const itemDateClassName = this.props.theme ? 'item-date' : 'item-date night'
+    const itemContentClassName = this.props.theme!=='night' ? 'item-content' : 'item-content night'
+    const pointClassName = this.props.theme!=='night' ? 'point' : 'point night'
+    const itemDateClassName = this.props.theme!=='night' ? 'item-date' : 'item-date night'
     return (
       <div className='event-box'>
         {this.state.eventList.map((item,index)=>{
@@ -69,11 +71,11 @@ export class Event extends Component {
                   const stockClassName = parseFloat(oneItem.stockNum)>=0 ? 'stock-num up' : 'stock-num down'
                   return(
                     <div className="one-event" key={oneIndex}>
-                      <div className="item-stock" onClick={()=>targetStock(oneItem.tradingCode)}>
+                      <div className="item-stock" onClick={(e)=>targetStock(e,oneItem.tradingCode)}>
                         <span className="stock-name">
                           {oneItem.secuAbbr + ' ' + oneItem.tradingCode.slice(2)}
                         </span>
-                        <span className={stockClassName} style={{ display: oneItem.tradingCode ? null : 'none' }}>
+                        <span className={stockClassName} style={{ display: oneItem.stockNum ? null : 'none' }}>
                             {oneItem.stockPrice + ' ' + oneItem.stockNum}
                         </span>
                       </div>

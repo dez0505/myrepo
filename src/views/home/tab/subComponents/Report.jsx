@@ -13,8 +13,8 @@ export class Report extends Component {
     goToApp('optionResearchInfo', item.id, item.reportTitle, item.url, item.date, item.secuAbbr)
   }
   handleTime (time) {
+    if(!time) return
     const newTime = time.replace(/-/g, '/')
-    console.log()
     if (new Date(newTime).getFullYear() === new Date().getFullYear()) {
       if (new Date(newTime).getHours() === 0 && new Date(newTime).getMinutes() === 0) {
         return parseTime(new Date(newTime), '{m}-{d}')
@@ -37,11 +37,11 @@ export class Report extends Component {
           const stockClassName = parseFloat(item.stockNum)>=0 ? 'stock-num up' : 'stock-num down'
           return(
             <div className="report-item bot-border" key={index} onClick={() =>{this.goToApp(item)}}>
-              <div className="item-stock" onClick={()=>targetStock(item.tradingCode)}>
+              <div className="item-stock" onClick={(e)=>targetStock(e,item.tradingCode)}>
                 <span className="stock-name">
                   {item.secuAbbr + ' ' + item.tradingCode.slice(2)}
                 </span>
-                <span className={stockClassName} style={{ display: item.tradingCode ? null : 'none' }}>
+                <span className={stockClassName} style={{ display: item.stockNum ? null : 'none' }}>
                     {item.stockPrice + ' ' + item.stockNum}
                 </span>
               </div>

@@ -3,6 +3,7 @@ export default (type, id, title, url, time, secuAbbr) => {
   console.log(href)
   window.location.href = href
 }
-export function targetStock (item) {
+export function targetStock (e,item) {
+  e.stopPropagation()
   window.location.href = '@stk=' + item
 }

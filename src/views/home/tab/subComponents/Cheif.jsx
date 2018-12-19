@@ -15,7 +15,7 @@ class Cheif extends Component {
     console.log(this.props)
   }
   dealWithTime(pushTime) {
-    console.log(pushTime)
+    if(!pushTime) return
     let time = pushTime
       if (new Date(time).getDate() === new Date().getDate() && new Date(time).getMonth() === new Date().getMonth() && new Date(time).getFullYear() ===
           new Date().getFullYear()

@@ -33,7 +33,9 @@
       border: 1px solid $warning;
       color: $warning;
       display: inline-block;
-      padding: Px(0.05) Px(6);
+      padding: 0 Px(6);
+      line-height: 1.2;
+      padding-top:Px(3);
       border-radius: Px(4);
     }
     .origin{

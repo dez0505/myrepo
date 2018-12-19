@@ -1,7 +1,7 @@
 import { UPDATE_NATIVE_DATA } from '../actions/actionType'
 
 const initialState = {
-  market: 0,                    // 行情 
+  market: {},                    // 行情 
   optionalCode: '',             // 自选股
   optionalTeam: '',             // 自选股
   optionalChange: {              // 个股异动
@@ -16,7 +16,7 @@ const initialState = {
 export default (state = initialState, { type, payload }) => {
   switch (type) {
   case UPDATE_NATIVE_DATA:
-    return { ...state, ...payload.data }
+    return { ...state, ...payload}
   default:
     return state
   }

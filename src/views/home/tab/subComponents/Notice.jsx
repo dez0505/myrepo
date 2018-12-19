@@ -13,6 +13,7 @@ export class Notice extends Component {
     goToApp('optionAnnsInfo', item.id, item.title, item.url, item.time, item.secuAbbr)
   }
   handleTime (time) {
+    if(!time) return
     const newTime = time.replace(/-/g, '/')
     if (new Date(newTime).getFullYear() === new Date().getFullYear()) {
       return parseTime(new Date(newTime), '{m}-{d} {h}:{i}')
@@ -28,11 +29,11 @@ export class Notice extends Component {
           const stockClassName = parseFloat(item.stockNum)>=0 ? 'stock-num up' : 'stock-num down'
           return(
             <div className="notice-item bot-border" key={index} onClick={() =>{this.goToApp(item)}}>
-              <div className="item-stock" onClick={()=>targetStock(item.tradingCode)}>
+              <div className="item-stock" onClick={(e)=>targetStock(e,item.tradingCode)}>
                 <span className="stock-name">
                   {item.secuAbbr + ' ' + item.tradingCode.slice(2)}
                 </span>
-                <span className={stockClassName} style={{ display: item.tradingCode ? null : 'none' }}>
+                <span className={stockClassName} style={{ display: item.stockNum ? null : 'none' }}>
                     {item.stockPrice + ' ' + item.stockNum}
                 </span>
               </div>

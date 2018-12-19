@@ -13,11 +13,11 @@ class Header extends Component {
       height: this.props.titleheight + 'px'
     }
     return (
-      <div className='header-box' style={headerStyle}>
+      <div className='header-box bot-border' style={headerStyle}>
         <div onClick={() => goToFunction(80004)}>客服</div>
         <div className='input-box' onClick={() => goToFunction(10134)}>
-          <input className='input' disabled placeholder='代码/简拼/功能/资讯/数据'></input> 
           <div className='search-icon'></div> 
+          <div className='input'>代码/简拼/功能/资讯/数据</div> 
         </div>
         <div className='scan-icon' onClick={() => goToFunction(10129)}></div>
         <div className='message-icon' onClick={() => goToFunction(10067)}></div>

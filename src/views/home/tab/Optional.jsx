@@ -49,7 +49,7 @@ export class Optional extends Component {
   }
   render() {
     const minHeightStyle = {
-      minHeight: this.props.scrollHeight - 38
+      minHeight: this.props.scrollHeight - 76
     }
     const whichLoading = this.props.whichLoading
     const listData = this.props.listData

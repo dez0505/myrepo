@@ -19,10 +19,49 @@ import './styles/common.scss'
 // action
 import { updatePageConfig } from './actions/index'
 import { updateNativeData } from './actions/nativeData'
-import { refreshListData } from './actions/fetch'
-
+import { updateLoadingState, resetState } from './actions/list'
 
 let store = createStore(rootReducer, applyMiddleware(thunk))
+
+// 行情
+const market1 = { dataRecord:[
+  ['SZ002167','fsdf','5','+0.292'],
+  ['SH601801','fsdf','5','+0.398'],
+  ['HK00001','fsdf','5','-0.420'],
+],
+dataField:['stockName','stockId','stockPrice','stockNum']
+}
+
+window.updateLinster = function (market = market1) {
+  store.dispatch(updateNativeData({market:market.dataRecord}))
+  store.dispatch(updatePageConfig({updateMarket:!store.getState().pageConfig.updateMarket}))
+}
+// 主题
+window.changeTheme = function (theme) {
+  store.dispatch(updatePageConfig({theme}))
+}
+// 改变url路由
+window.changeUrlParam = function (key, value) {
+  store.dispatch(updatePageConfig({[key]: value}))
+}
+// 个人股与对应的分组名
+window.getOptional = function (optionalCode, optionalTeam) {
+  alert(optionalCode+optionalTeam)
+  store.dispatch(updateNativeData({optionalTeam}))
+  store.dispatch(updateNativeData({optionalCode}))
+}
+// 涨跌异动
+window.updateShortTermElves = function (optionalChange) {
+  if (typeof data === 'string') {
+    optionalChange = JSON.parse(optionalChange)
+  }
+  store.dispatch(updateNativeData({optionalChange}))
+}
+// 刷新tab资讯
+window.refreshInfo = function () {
+  store.dispatch(resetState())
+  store.dispatch(updateLoadingState({refreshLoading: true}))
+}
 window._connectApp_ = ReactDOM.render(
   <Provider store={store}>
     <div>
@@ -32,27 +71,7 @@ window._connectApp_ = ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
-// 行情
-window.updateLinster = function (market) {
-  store.dispatch(updateNativeData({market}))
-}
-// 主题
-window.changeTheme = function (theme) {
-  store.dispatch(updatePageConfig({theme}))
-}
-// 个人股与对应的分组名
-window.getOptional = function (optionalCode, optionalTeam) {
-  store.dispatch(updateNativeData({optionalTeam}))
-  store.dispatch(updateNativeData({optionalCode}))
-}
-// 涨跌异动
-window.updateShortTermElves = function (optionalChange) {
-  store.dispatch(updateNativeData({optionalChange}))
-}
-// 刷新tab资讯
-window.refreshInfo = function () {
-  store.dispatch(refreshListData())
-}
+
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

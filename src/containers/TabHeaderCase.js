@@ -12,7 +12,7 @@ const mapStateToProps = (state,store) => {
     activeHomeTabIndex: state.tab.tabIndexData.activeHomeTabIndex,
     activeOptionalTabIndex: state.tab.tabIndexData.activeOptionalTabIndex,
     theme: state.pageConfig.theme,
-    optionalTeamName: state.pageConfig.optionalTeamName
+    optionalTeam: state.nativeData.optionalTeam
   }
 }
 const mapDispatchToProps = dispatch => {

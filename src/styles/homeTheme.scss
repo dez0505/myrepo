@@ -1,28 +1,34 @@
 // 白色主题
 @import './base.scss';
+// 分隔线
+.split-line {
+  background: $whiteDivision;
+  height: Px(18);
+}
+// 底部边框
+.bot-border{
+  border-bottom: Px(1) solid $whiteBd;
+}
+.top-border{
+  border-top: Px(1) solid $whiteBd;
+}
 .white{
   background: $whiteBg;
   color:$blackText;
   .header-box{
     background: #1C2B48;
   }
-  // 分隔线
-  .split-line {
-    background: $whiteDivision;
-    height: Px(18);
-  }
-  // 底部边框
-  .bot-border{
-    border-bottom: Px(1) solid $whiteBd;
-  }
-  .top-border{
-    border-top: Px(1) solid $whiteBd;
-  }
 }
 // 黑色主题
 .black{
   background: $blackBg;
   color: $whiteText;
+  //  头部
+  .header-box{
+    background: #202528;
+    .input-box{
+    }
+  }
   // 分隔线
   .split-line {
     background: $blackDivision;
@@ -37,11 +43,17 @@
   }
 }
 
-.redTheme {
-  .tab-header>.active-tab-item {
+.red {
+    background: $whiteBg;
+    .header-box{
+      background: #b51e1f;
+      .input-box{
+      }
+    }
+  .tab-box .tab-item.active {
     color: $error!important;
   }
-  .tab-header .active-tab-item .bd-bottom {
+  .tab-box .tab-item.active .line{
     border-color: $error!important;
   }
 }

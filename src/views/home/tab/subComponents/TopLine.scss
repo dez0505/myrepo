@@ -13,6 +13,7 @@
       display: flex;
       font-size: $smallSize;
       justify-content: space-between;
+      align-items: center;
       &-left{
         display: flex;
         align-items: center;
@@ -21,7 +22,9 @@
         border: 1px solid $warning;
         color: $warning;
         display: inline-block;
-        padding: Px(0.1) Px(6);
+        padding:0 Px(12);
+        padding-top:Px(3);
+        line-height: 1.2;
         border-radius: Px(4);
         margin-right: Px(12);
       }
@@ -41,15 +44,16 @@
       }
       .key-word {
         color: #ea3e34;
-        display: -webkit-flex;
         display: flex;
         align-items: center;
         .up-icon {
           background: url('../tabMenu-images/arrow-circle-up.png') no-repeat center;
           display: inline-block;
-          width: Px(28);
-          height: Px(28);
+          width: 14px;
+          height: 14px;
           margin-right:Px(10);
+          margin-bottom:Px(5);
+          line-height: 1.2;
           background-size: 100% 100%;
         }
       }

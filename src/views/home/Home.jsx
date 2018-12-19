@@ -34,25 +34,40 @@ class Home extends Component {
       liveFmList: [],
       refreshTime: '',
       isTabFixed: false,
-      activeScrollY: {
-        value: 0
-      }
+      innerHeight: 0,
     }
   }
 
   componentDidMount(){
-    this.updatePageConfig()
+    if (window.innerHeight) {
+      this.updatePageConfig()
+    } else if (window.screen.height) {
+      setTimeout(() => {
+        this.updatePageConfig()
+      }, 100)
+    }
+    
   }
   // 重置页面路由参数
   updatePageConfig() {
-    const titleheight = getQueryString('titleheight')
-    const version = getQueryString('appversion')
-    const htid = getQueryString('htid')
-    const platform = getQueryString('platform')
-    const account = getQueryString('account')
-    const theme = getQueryString('theme')
-    const scrollHeight = window.innerHeight - titleheight
-    this.props.updatePageConfig({titleheight, theme, htid, platform, account, version, scrollHeight})
+    if(window.innerHeight) {
+      this.setState({innerHeight:window.innerHeight})
+      const titleheight = getQueryString('titleheight')
+      const version = getQueryString('appversion')
+      const htid = getQueryString('htid')
+      const platform = getQueryString('platform')
+      const account = getQueryString('account')
+      const theme = getQueryString('theme')
+      const scrollHeight = window.innerHeight - titleheight
+      this.props.updatePageConfig({titleheight, theme, htid, platform, account, version, scrollHeight})
+      window.getOptional('SH601801,SZ002167,SZ000001,HK00001,HH00637,HZ00330','自选股')
+      // window.location.href = '@optional_and_team'
+    } else {
+      setTimeout(() => {
+        this.updatePageConfig()
+      }, 100)
+    }
+    
   }
   // 执行接口
   componentWillReceiveProps(nextProps) {
@@ -149,26 +164,31 @@ class Home extends Component {
     }
   }
   render() {
-    const liveFmListProps = {theme:this.props.theme, liveFmList:this.state.liveFmList}
+    const {theme} = this.props
+    const {adsListData,noticeListData,liveFmList,refreshTime,navMenusData,topicListData,innerHeight} = this.state
+    const liveFmListProps = {theme,liveFmList}
+    const themeClassName = theme === 'day' ? 'white' : theme === 'night' ? 'black' : 'red'
+
     return (
-      <div>
-        <Header/>
-        {
-          this.loadFixTabMenu()
-        }
-        <BetterScroll refreshTime = {this.state.refreshTime} updateHomeContent={()=>this.updateHomeContent()}>
-          <div className={`home-warpper ${this.props.theme==='night'?'black':'white'}`}>
-            <Nav navMenus={this.state.navMenusData} theme={this.props.theme}/>
-            { this.state.adsListData.length>0 ? <AdsSwiper  adsList = {this.state.adsListData}/> : null }
-            { this.state.noticeListData.length>0 ? <Notice theme = {this.props.theme} noticeList = {this.state.noticeListData}/> : null }
-            <MarketMachine />
-            {this.state.adsListData.length>0? <TopicSwiper topicList = {this.state.adsListData}/> : null}
-            { this.state.liveFmList.length>0? <LiveFM {...liveFmListProps}> </LiveFM>: null }
-            <div className='split-line'></div>
-            <TabBox/> 
-          </div>
-        </BetterScroll>
-      </div>
+        innerHeight ? (
+        <div className={themeClassName} style={{height:'100%'}}>
+          <Header/>
+          {
+            this.loadFixTabMenu()
+          }
+          <BetterScroll ref='betterScroll' refreshTime = {refreshTime} updateHomeContent={() =>this.updateHomeContent()}>
+            <div className={ 'home-warpper'}>
+              <Nav navMenus={navMenusData} theme={theme}/>
+              { adsListData.length>0 ? <AdsSwiper  adsList = {adsListData}/> : null }
+              { noticeListData.length>0 ? <Notice theme = {theme} noticeList = {noticeListData}/> : null }
+              <MarketMachine />
+              {topicListData.length>0? <TopicSwiper topicList = {topicListData}/> : null}
+              { liveFmList.length>0? <LiveFM {...liveFmListProps}> </LiveFM>: null }
+              <div className='split-line'></div>
+              <TabBox/> 
+            </div>
+          </BetterScroll>
+      </div>) :null
     ) 
   }
 }

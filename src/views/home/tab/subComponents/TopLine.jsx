@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 // css
 import './TopLine.scss'
-import { goToAPP } from '../../../../utils/common';
 
 class TopLine extends Component {
   static propTypes = {
@@ -13,7 +12,12 @@ class TopLine extends Component {
   }
   componentDidMount() {
   }
+  targetStock (e,item) {
+    e.stopPropagation()
+    window.location.href = '@stk=' + item
+  }
   dealWithTime(pushTime) {
+    if(!pushTime) return
     let time = pushTime
       if (new Date(time).getDate() === new Date().getDate() && new Date(time).getMonth() === new Date().getMonth() && new Date(time).getFullYear() ===
           new Date().getFullYear()
@@ -23,19 +27,25 @@ class TopLine extends Component {
         return time.slice(5, 10).replace('-', '月') + '日'
       }
   }
-  isLoadStock(item){
+  goToApp(item) {
+    let url = item.FromSource === 'SQLSERVER_HTSELFEDITNews' ? item.Url : item.DetailUrl
+    let href = `@redirect=recommendInfo&url=${encodeURIComponent(url)}&title=${item.Title}&id=${item.Id}&CreatedDate=${item.PubDate}&FrontCover=${encodeURIComponent(item.ImageUrl)}`
+    window.location.href = href
+  }
+  renderStock(item){
     if(!item.Stocks.length || !item.Stocks) return
-    let stockClassName = 'key-word stock-box'
-    if(parseFloat(item.stockNum)>=0){
+    let stockClassName = 'key-word stock-box '
+    if(parseFloat(item.stocksNum)>=0){
       stockClassName += 'up'
-    } else if (parseFloat(item.stockNum)<0) {
+    } else if (parseFloat(item.stocksNum)<0) {
       stockClassName += 'down'
     }
     return (
-      <div className={stockClassName}>
+      <div className={stockClassName} onClick={(e)=>{this.targetStock(e,item.Stocks[0].Symbol)}}>
         <span className="up-icon"></span>
-        <span>{item.Stocks[0].Name}</span>
-        <span style={{display:item.stocksNum!==''?'block':'none'}} className="rate">{item.stocksNum}
+        <span>
+          <span>{item.Stocks[0].Name}</span>
+          <span style={{display:item.stocksNum!==''?'':'none'}} className="rate">{item.stocksNum}</span>
         </span>
       </div>
     )
@@ -46,7 +56,7 @@ class TopLine extends Component {
         {
           this.props.topLineList.map((item, index) => {
             return (
-              <div className="list-item bot-border" onClick={()=>goToAPP(item)} key={index} >
+              <div className="list-item bot-border" onClick={()=>this.goToApp(item)} key={index} >
                 <div className="title">
                   {item.Title}
                 </div>
@@ -61,7 +71,7 @@ class TopLine extends Component {
                     </div>
                   </div>
                   {
-                    this.isLoadStock(item)
+                    this.renderStock(item)
                   }
                 </div>
               </div>

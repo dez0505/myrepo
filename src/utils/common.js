@@ -232,3 +232,21 @@ export function handleData (d, dataParams, fieldParams) {
   }
   return d
 }
+/*
+ * 对对象进行深层遍历
+ * @param {source}  对象变量  对象入参
+ */
+export function deepClone(source){
+  const targetObj = source.constructor === Array ? [] : {}; // 判断复制的目标是数组还是对象
+  for(let keys in source){ // 遍历目标
+    if(source.hasOwnProperty(keys)){
+      if(source[keys] && typeof source[keys] === 'object'){ // 如果值是对象，就递归一下
+        targetObj[keys] = source[keys].constructor === Array ? [] : {};
+        targetObj[keys] = deepClone(source[keys]);
+      }else{ // 如果不是，就直接赋值
+        targetObj[keys] = source[keys];
+      }
+    }
+  }
+  return targetObj;
+}

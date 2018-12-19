@@ -22,6 +22,9 @@ import { updateTabIndex } from '@/actions/tab'
 import './TabContent.scss'
 import Swiper from 'swiper'
 
+// utils
+import { deepClone } from '@/utils/common'
+
 class TabContent extends Component {
   static propTypes = {
     activeHomeTabIndex: PropTypes.number
@@ -33,6 +36,7 @@ class TabContent extends Component {
     }
   }
   componentDidMount() {
+    console.log(9999, this)
     const that = this
     let mySwiper = new Swiper('.tab-swiper', {
       autoplay: false,
@@ -48,7 +52,7 @@ class TabContent extends Component {
     this.watchWhichLoading(props)
     this.watchRefreshLoading(props)
     this.watchLoadLoading(props)
-    this.watchMarket(props)
+    this.watchUpdateMarket(props)
     this.watchListData(props)
     this.watchOptionalCode(props)
   }
@@ -59,8 +63,9 @@ class TabContent extends Component {
   watchOptionalCode(props) {
     if(props.activeHomeTabIndex!==3) return
     if(props.optionalCode!==this.props.optionalCode) {
+      alert(props.optionalCode+'____'+this.props.optionalCode)
       this.props.resetState()
-      this.updateLoadingState({
+      this.props.updateLoadingState({
         refreshLoading: true
       }) 
     }
@@ -140,7 +145,7 @@ class TabContent extends Component {
   // 监听列表数据变化进行发通知
   watchListData(props) {
     if(!props.listData.length) return
-    if(props.listData !== this.props.listData) {
+    if(props.listData.length !== this.props.listData.length) {
       switch (props.whichLoading) {
         case 'topLine':
           const hasStocksArray = props.listData.filter(
@@ -187,6 +192,7 @@ class TabContent extends Component {
       item => item.tradingCode
     )
     const filterArray = scoketCodeArray.filter((x, index, self) => self.indexOf(x) === index)
+    console.log('updateLinster')
     if (window && window.quote && window.quote.requestQuote) {
       window.quote.requestQuote(filterArray)
     } else if (
@@ -201,16 +207,19 @@ class TabContent extends Component {
   }
 
   // 监听market行情数据是否变化了。变化了就要对列表进行渲染
-  watchMarket(props) {
-    if(props.market!==this.props.market&&props.market) {
+  watchUpdateMarket(props) {
+    if(props.updateMarket!==this.props.updateMarket) {
+      console.log(11111)
       switch(this.props.whichLoading) {
         case 'topLine':
           if (!props.listData.length) return
-          const newArray = props.listData.map(item=>item)
-          let array = props.market.dataRecord
+          const newArray = deepClone(props.listData) 
+          let array = props.market.map(item=>item)
           for(let val of newArray) {
             if(val.Stocks.length>0) {
-              val.stocksNum = array.shift()[3]
+              if(array.length>0){
+                val.stocksNum = array.shift()[3]
+              }
             }
           }
           this.props.updateListData({listData: newArray})
@@ -221,7 +230,7 @@ class TabContent extends Component {
         case 'qus':
           this.handleStock(props.listData, props.market)
           break
-        case 'bigEvent':
+        case 'event':
           this.handleStock(props.listData, props.market)
           break
         case 'notice':
@@ -237,10 +246,8 @@ class TabContent extends Component {
   // 根据行情处理新的数据
   handleStock (list, market) {
     if (!list.length) return
-    const newArray = list.map(
-      item => item
-    )
-    const array = market.dataRecord
+    const newArray = deepClone(list)
+    const array = market.map(item=>item)
     for (let val of newArray) {
       const needStock = array.filter(v => v[0] === val.tradingCode)
       if (needStock.length > 0) {
@@ -248,13 +255,12 @@ class TabContent extends Component {
         val.stockPrice = needStock[0][2]
       }
     }
-    this.updateListData({listData: newArray})
+    this.props.updateListData({listData: newArray})
   }
-
-
   // 监听whichLoading使设置当前tabType,并刷新状态为true
   watchWhichLoading(props) {
     if( props.whichLoading !== this.props.whichLoading && props.whichLoading && props.whichLoading!=='more' ) {
+      this.props.updateNativeData({market:[]})
       // 由于异步的影响不能在这里设置变量tabType
       this.props.updateLoadingState({
         refreshLoading: true
@@ -274,7 +280,7 @@ class TabContent extends Component {
       this.state.mySwiper.update()
     }
   }
-  handleLiveComponent(whichLoading,listData) {
+  renderLive(whichLoading,listData) {
     if ( whichLoading === 'liveA' ) {
       if ( listData.length ) {
         return(<Live liveList={listData} ></Live> ) 
@@ -292,10 +298,9 @@ class TabContent extends Component {
     }
   }
   render() {
-    const whichLoading = this.props.whichLoading
-    const listData = this.props.listData
+    const { whichLoading, listData } = this.props
     const minHeightStyle = {
-      minHeight: this.props.scrollHeight
+      minHeight: this.props.scrollHeight - 38
     }
     return (
       <div className='swiper-container tab-swiper'>
@@ -307,7 +312,7 @@ class TabContent extends Component {
               { listData.length && whichLoading === 'cheif' ? <Cheif cheifList={listData} ></Cheif> : <NoData tabType='cheif'></NoData>}
             </div>
             <div className="swiper-slide" style={ minHeightStyle }>
-              { this.handleLiveComponent(whichLoading, listData) }
+              { this.renderLive(whichLoading, listData) }
             </div>
             <div className="swiper-slide" style={ minHeightStyle }>
               <Optional whichLoading ={ whichLoading }></Optional>
@@ -329,7 +334,8 @@ const mapStateToProps = (state) => ({
   refreshLoading: state.list.loadingState.refreshLoading,                   //当refreshloading为true再根据whichLoading来判断执行哪个接口
   loadLoading: state.list.loadingState.loadLoading,                         //根据loadLoading为true再根据whichLoading来加载更多哪个接口
   market: state.nativeData.market,                         //根据loadLoading为true再根据whichLoading来加载更多哪个接口
-  optionalCode: state.nativeData.optionalCode              //根据optionalCode改变来进行重新请求数据
+  optionalCode: state.nativeData.optionalCode,              //根据optionalCode改变来进行重新请求数据
+  updateMarket: state.pageConfig.updateMarket
 })
 
 const mapDispatchToProps = dispatch => ({

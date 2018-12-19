@@ -9,23 +9,24 @@ export class Qus extends Component {
     list: PropTypes.array
   }
   handleTime (time) {
+    if(!time) return
     const index = time.indexOf('年')
     return time.slice(index + 1)
   }
   render() {
-    const itemContentClassName = this.props.theme ? 'item-content' : 'item-content night'
+    const itemContentClassName = this.props.theme!=='night' ? 'item-content' : 'item-content night'
     return (
       <div className='qus-box'>
       {
         this.props.list.map((item,index)=>{
           const stockClassName = parseFloat(item.stockNum)>=0 ? 'stock-num up' : 'stock-num down'
           return(
-            <div className="qus-item bot-border" key={index} onClick={() =>{this.goToApp(item)}}>
-              <div className="item-stock" onClick={()=>targetStock(item.tradingCode)}>
+            <div className="qus-item bot-border" key={index}>
+              <div className="item-stock" onClick={(e)=>targetStock(e,item.tradingCode)}>
                 <span className="stock-name">
                   {item.askWho + ' ' + item.tradingCode.slice(2)}
                 </span>
-                <span className={stockClassName} style={{ display: item.tradingCode ? null : 'none' }}>
+                <span className={stockClassName} style={{ display: item.stockNum ? null : 'none' }}>
                     {item.stockPrice + ' ' + item.stockNum}
                 </span>
               </div>

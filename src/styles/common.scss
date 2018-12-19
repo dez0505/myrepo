@@ -1,5 +1,10 @@
 @import './base.scss';
-
+html,body,#root{
+  height: 100%;
+  &>div{
+    height: 100%;
+  }
+}
 .home-warpper {
   font-size: Px(30);
   line-height: 1.3;

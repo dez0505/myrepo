@@ -2,7 +2,7 @@ import { UPDATE_NATIVE_DATA } from './actionType.js'
 export function updateNativeData(data) {
   return {
     type: UPDATE_NATIVE_DATA,
-    data
+    payload: data
   };
 }
 // export const addTodo = text => ({
