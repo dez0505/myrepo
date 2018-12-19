@@ -11,7 +11,6 @@ import { handleData } from '@/utils/common'
 
 export function getNewsList (type) {
   return async (dispatch, getState) => {
-    const whichLoading = getState().list.interfaceState.whichLoading
     const listData = getState().list.listData
     const interfaceParams = getState().list.interfaceParams
     const TradingCode = getState().nativeData.optionalCode
@@ -31,6 +30,7 @@ export function getNewsList (type) {
         data
       } = await getOptionalNews(optionalParams)
       // 判断是空或没有更多
+      const whichLoading = getState().list.interfaceState.whichLoading
       if (whichLoading !== 'news') return
       const objData = data.content
       handleData(objData, 'dataRecord', 'dataField')
@@ -87,7 +87,6 @@ export function getNewsList (type) {
 }
 export function getOptionalList (type, style) {
   return async (dispatch, getState) => {
-    const whichLoading = getState().list.interfaceState.whichLoading
     const listData = getState().list.listData
     const interfaceParams = getState().list.interfaceParams
     const TradingCode = getState().nativeData.optionalCode
@@ -132,7 +131,8 @@ export function getOptionalList (type, style) {
         default:
           break;
       }
-      if (whichLoading !== style) return
+      const activeWhichLoading = getState().list.interfaceState.whichLoading
+      if (activeWhichLoading !== style) return
       // 判断是空或没有更多
       const objData = data.content
       handleData(objData, 'dataReord', 'dataField')

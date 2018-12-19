@@ -17,7 +17,6 @@ let params= {
 
 export default  function getLiveList (type, style) {
   return async (dispatch, getState) => {
-    const whichLoading = getState().list.interfaceState.whichLoading
     const listData = getState().list.listData
     const interfaceParams = getState().list.interfaceParams
     try {
@@ -46,6 +45,7 @@ export default  function getLiveList (type, style) {
         } = await getAllLiveData(liveParams)
         liveList = data
       }
+      const whichLoading = getState().list.interfaceState.whichLoading
       if(whichLoading !== 'live' + style) return
       // 判断是空或没有更多
       if (liveList.Data.length === 0) {

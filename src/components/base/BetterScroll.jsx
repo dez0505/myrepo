@@ -33,6 +33,7 @@ class BetterScroll extends Component {
     }
     if(nextProps.refreshLoading && (nextProps.refreshLoading !== this.props.refreshLoading) && this.state.tabFixed) {
       this.scrollToElement('#listContent')
+      this._pullingDownUpComplete()
     }
   }
   _initScroll() {
@@ -54,7 +55,12 @@ class BetterScroll extends Component {
       this.props.updateHomeContent() // 
     })
     this.scroll.on('pullingUp', () => {
-      if(this.props.whichLoading==='more') this.scroll.finishPullUp()
+      // 解决超过2s后没有重置的问题
+      setTimeout(()=>{
+        if(!this.scroll.pullupWatching) {
+          this.scroll.finishPullUp()
+        }
+      },2000)
       if(this.props.isNoMoreData || this.props.isNoData || this.props.whichLoading==='more') return  //如果当前列表没有更多数据或根据没数据就不给加载
       this.props.updateLoadingState({loadLoading: true}) // 更新refreshLoading 表示要home一些数据要重新请求了
     })

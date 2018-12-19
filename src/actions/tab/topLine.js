@@ -22,7 +22,6 @@ let stockParams= {
 export default function getTopLineList(type) {
   return async (dispatch, getState) => {
     const htid = getState().pageConfig.htid
-    const whichLoading = getState().list.interfaceState.whichLoading
     const listData = getState().list.listData
     const lastHashId = stockParams.lastHashId
     const interfaceParams = getState().list.interfaceParams
@@ -78,6 +77,7 @@ export default function getTopLineList(type) {
         const stockList = getStore('topLineHistory.stickData')
         const stockTopList = [...stockList, ...topList]
         // 如果之间其他接口返回了，就不执行这个接口返回的任何逻辑
+        const whichLoading = getState().list.interfaceState.whichLoading
         if (whichLoading !== 'topLine') return
 
         // 缓存头条加上置顶的都没有数据就为空
@@ -118,6 +118,7 @@ export default function getTopLineList(type) {
           pageSize: interfaceParams.pageSize
         }
         // 如果之间其他接口返回了，就不执行这个接口返回的任何逻辑
+        const whichLoading = getState().list.interfaceState.whichLoading
         if (whichLoading !== 'topLine') return
         // 合并头条与置顶
         const topList = getStore('topLineHistory.data')

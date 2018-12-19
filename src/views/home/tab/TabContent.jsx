@@ -36,13 +36,13 @@ class TabContent extends Component {
     }
   }
   componentDidMount() {
-    console.log(9999, this)
     const that = this
     let mySwiper = new Swiper('.tab-swiper', {
       autoplay: false,
       threshold: 100,
       touchMoveStopPropagation: false,
       onSlideChangeEnd: function (swiper) {
+        that.props.resetState()
         that.props.updateHomeTabIndex(swiper.activeIndex)
       }
     })

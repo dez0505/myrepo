@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 // import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { updateTabIndex } from '../../../actions/tab'
+import { resetState } from '../../../actions/list'
 
 import Swiper from 'swiper'
 // component
@@ -32,6 +33,7 @@ export class Optional extends Component {
       touchMoveStopPropagation: false,
       onSlideChangeEnd: function (swiper) {
         if(that.props.activeHomeTabIndex!==3)return
+        that.props.resetState()
         that.props.updateTabIndex(swiper.activeIndex)
       }
     })
@@ -91,6 +93,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => {
   return {
     updateTabIndex: activeOptionalTabIndex => dispatch(updateTabIndex({ activeOptionalTabIndex })),
+    resetState:()=>dispatch(resetState())
   }
 }
 

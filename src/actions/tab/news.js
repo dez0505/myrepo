@@ -13,7 +13,6 @@ const params = {
   }
 export default function getNewsList (type) {
   return async (dispatch, getState) => {
-    const whichLoading = getState().list.interfaceState.whichLoading
     const listData = getState().list.listData
     const interfaceParams = getState().list.interfaceParams
     try {
@@ -32,6 +31,7 @@ export default function getNewsList (type) {
         data
       } = await getOptionalNews(cheifParams)
       // 判断是空或没有更多
+      const whichLoading = getState().list.interfaceState.whichLoading
       if (whichLoading !== 'cheif') return
       if (data.JsonList.length === 0) {
         if (type === 'init') {
