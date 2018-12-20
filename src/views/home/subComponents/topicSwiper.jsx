@@ -12,26 +12,37 @@ class TopicSwiper extends Component {
     };
   }
   componentDidMount() {
-    const topicSwiper = new Swiper('.topic-container', {
+    this.initTopicSwiper()
+  }
+  shouldComponentUpdate(props){
+    if(props.topicList!==this.props.topicList){
+      return true
+    } else {
+      return false
+    }
+  }
+  initTopicSwiper() {
+    const adsSwiper = new Swiper('.topic-swiper', {
       loop: true,
-      autoplay: 5000,
+      autoplay:5000,
       pagination: '.swiper-pagination',
       autoplayDisableOnInteraction: false,
       onClick: (swiper) => {
-        const realIndex = swiper.realIndex;
-        goToAPP(this.props.topicList[realIndex], 'ads');
+        const realIndex = swiper.realIndex
+        goToAPP(this.props.adsList[realIndex], 'ads')
       }
-    });
-    if (topicSwiper.slides.length <= 3) {
-      topicSwiper.lockSwipes();
-    }
-    this.setState({
-      topicSwiper
     })
+    if(adsSwiper.slides.length <= 3) {
+      adsSwiper.lockSwipes()
+    } else {
+      adsSwiper.unlockSwipes()
+    }
+    this.adsSwiper = adsSwiper
   }
   componentDidUpdate() {
-    if(this.state.topicSwiper){
-      this.state.topicSwiper.update()
+    if(this.adsSwiper){
+      this.adsSwiper.destroy(false, false); 
+      this.initAdsSwiper()
     }
   }
   render() {
@@ -39,7 +50,7 @@ class TopicSwiper extends Component {
       <div>
         <div className='split-line'></div> 
         <div className='topic-box'>
-          <div className='swiper-container topic-container'>
+          <div className='swiper-container topic-swiper'>
             <div className='swiper-wrapper'>
               {this.props.topicList.map((item, index) => {
                 return (

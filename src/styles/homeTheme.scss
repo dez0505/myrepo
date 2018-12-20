@@ -1,5 +1,5 @@
-// 白色主题
 @import './base.scss';
+// 白色主题  默认的主题
 // 分隔线
 .split-line {
   background: $whiteDivision;
@@ -57,3 +57,4 @@
     border-color: $error!important;
   }
 }
+

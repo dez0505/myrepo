@@ -5,6 +5,19 @@ html,body,#root{
     height: 100%;
   }
 }
+// 刚进入页面的loading
+#root .loading-icon{
+  position: fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  display: flex;
+  margin:auto;
+  width: 36px;
+  height: 36px;
+}
+
 .home-warpper {
   font-size: Px(30);
   line-height: 1.3;

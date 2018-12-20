@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import '../../styles/homeTheme.scss'
+import { Icon } from 'antd-mobile';
+// redux
+import { connect } from 'react-redux'
+import { updatePageConfig } from '../../actions/index'
+import { updateLoadingState } from '../../actions/list'
 
 // subComponent
 import BetterScroll from '@/components/base/BetterScroll'
@@ -11,22 +16,23 @@ import MarketMachine from './subComponents/MarketMachine'
 import TopicSwiper from './subComponents/TopicSwiper'
 import LiveFM from './subComponents/LiveFM'
 import TabBox from './tab/TabBox'
-import TabHeaderCase from '../../containers/TabHeaderCase'
-
-// container
-
-
+import TabHeader from './tab/TabHeader'
 // api
 import { getHomeData, getIconData } from '@/api/home'
 // utils
 import { getQueryString, setStore, getStore, getBase64, parseTime } from '@/utils/common'
 
-
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      adsListData:[],
+      adsListData:[{
+        AdsTypeCode: '2',
+        FunctionTypeId: '1001111',
+        ImageUrl:  require('../../images/home/defaultAds.jpg'),
+        LinkTitle: '开户',
+        LinkUrl: ''
+      }],
       liveListData:[],
       noticeListData:[],
       topicListData:[],
@@ -39,16 +45,9 @@ class Home extends Component {
   }
 
   componentDidMount(){
-    if (window.innerHeight) {
-      this.updatePageConfig()
-    } else if (window.screen.height) {
-      setTimeout(() => {
-        this.updatePageConfig()
-      }, 100)
-    }
-    
+    this.updatePageConfig()
   }
-  // 重置页面路由参数
+  // 重置页面路由参数  若没获取到window.innerHeight 反复调用
   updatePageConfig() {
     if(window.innerHeight) {
       this.setState({innerHeight:window.innerHeight})
@@ -69,14 +68,13 @@ class Home extends Component {
     }
     
   }
-  // 执行接口
+  // 当主题或其他参数变化时 路由发生变化时 执行接口 
   componentWillReceiveProps(nextProps) {
     if(nextProps.theme !== this.props.theme || nextProps.version !== this.props.version || nextProps.platform !== this.props.platform) {
       this.initHomeApi(nextProps)
     } 
   }
- 
- 
+  // 获得菜单图标数据
   async getIconData (params) {
    const {version, platform} = params
    try {
@@ -103,6 +101,7 @@ class Home extends Component {
       throw (error)
    }
   }
+  // 获得首页数据
   async getHomeData (params) {
    const {theme, version, platform} = params
    const  { data } = await getHomeData({
@@ -116,7 +115,19 @@ class Home extends Component {
     topicListData:data.TopicPicsJson,
     liveFmList: data.FmLivePicsJson
    })
+   if(data.FirstAppAdsJson.length === 0) {
+    this.setState({
+      adsListData: [{
+        AdsTypeCode: '2',
+        FunctionTypeId: '1001111',
+        ImageUrl:  require('../../images/home/defaultAds.jpg'),
+        LinkTitle: '开户',
+        LinkUrl: ''
+      }]
+    }) 
+   }
   }
+  // 首页内容初始化
   initHomeApi(nextProps, callback) {
     Promise.all([
       this.getIconData(nextProps),this.getHomeData(nextProps)
@@ -130,35 +141,37 @@ class Home extends Component {
       }
     })
   }
+  // 上拉刷新首页内容
   updateHomeContent() {
     this.initHomeApi(this.props,() => {
       this.props.updateLoadingState({
         refreshLoading: true
       })
     })//更新首页接口
-
   }
-  loadFixTabMenu() {
+  // render 固定tab栏
+  renderFixTab() {
+    const {theme, tabIsFixed, activeHomeTabIndex} = this.props
     const tabFixStyle={
       position: 'fixed',
       top: getQueryString('titleheight')+'px',
       left: 0,
       right: 0,
       zIndex: 99,
-      background: this.props.theme === 'night' ? '#202528' : '#fff',
-      display: this.props.tabIsFixed? '' : 'none'
+      background: theme === 'night' ? '#202528' : '#fff',
+      display: tabIsFixed? '' : 'none'
     }
-    if(this.props.activeHomeTabIndex === 3) {
+    if(activeHomeTabIndex === 3) {
       return (
         <div style={tabFixStyle}>
-          <TabHeaderCase type='home' watch={false}></TabHeaderCase> 
-          <TabHeaderCase type='optional'></TabHeaderCase>
+          <TabHeader type='home' watch={false}></TabHeader> 
+          <TabHeader type='optional' watch={false}></TabHeader>
         </div>
       )
     } else {
       return (
         <div style={tabFixStyle}>
-          <TabHeaderCase type='home' watch={false}></TabHeaderCase> 
+          <TabHeader type='home' watch={false}></TabHeader> 
         </div>
       )
     }
@@ -168,13 +181,12 @@ class Home extends Component {
     const {adsListData,noticeListData,liveFmList,refreshTime,navMenusData,topicListData,innerHeight} = this.state
     const liveFmListProps = {theme,liveFmList}
     const themeClassName = theme === 'day' ? 'white' : theme === 'night' ? 'black' : 'red'
-
     return (
         innerHeight ? (
         <div className={themeClassName} style={{height:'100%'}}>
           <Header/>
           {
-            this.loadFixTabMenu()
+            this.renderFixTab()
           }
           <BetterScroll ref='betterScroll' refreshTime = {refreshTime} updateHomeContent={() =>this.updateHomeContent()}>
             <div className={ 'home-warpper'}>
@@ -188,8 +200,29 @@ class Home extends Component {
               <TabBox/> 
             </div>
           </BetterScroll>
-      </div>) :null
+      </div>) : <Icon className='loading-icon' type='loading' text='loading' />
     ) 
   }
 }
-export default Home
+
+const mapStateToProps = (state) => {
+  return {
+    theme: state.pageConfig.theme,            // 主题
+    version: state.pageConfig.version,        // 版本
+    htid: state.pageConfig.htid,              // 用户id
+    platform: state.pageConfig.platform,      // 安卓或ios
+    account: state.pageConfig.account,        // account 没用到
+    tabIsFixed: state.pageConfig.tabIsFixed,  // 控制是否显示固定头
+    activeHomeTabIndex: state.tab.tabIndexData.activeHomeTabIndex, // 控制是否显示固定optional头
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updatePageConfig: theme => dispatch(updatePageConfig(theme)),
+    updateLoadingState: loadingState => dispatch(updateLoadingState(loadingState))
+  }
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home)

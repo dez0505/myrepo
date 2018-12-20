@@ -7,8 +7,8 @@ import thunk from 'redux-thunk'
 import { Provider } from "react-redux";
 import rootReducer from './reducers'
 // component
-
-import HomeCase from './containers/HomeCase'
+import { getQueryString } from './utils/common'
+import Home from './views/home/Home'
 // import TabContentCase from './containers/TabContentCase'
 // css
 import 'antd-mobile/dist/antd-mobile.css'; 
@@ -46,7 +46,7 @@ window.changeUrlParam = function (key, value) {
 }
 // 个人股与对应的分组名
 window.getOptional = function (optionalCode, optionalTeam) {
-  alert(optionalCode+optionalTeam)
+  // alert(optionalCode+optionalTeam)
   store.dispatch(updateNativeData({optionalTeam}))
   store.dispatch(updateNativeData({optionalCode}))
 }
@@ -59,15 +59,15 @@ window.updateShortTermElves = function (optionalChange) {
 }
 // 刷新tab资讯
 window.refreshInfo = function () {
+  if(store.getState().list.loadingState.refreshLoading) return
   store.dispatch(resetState())
   store.dispatch(updateLoadingState({refreshLoading: true}))
 }
+const themeColor = getQueryString('theme') === 'night' ? '#202528' : '#FFF'
+document.body.style.backgroundColor = themeColor;
 window._connectApp_ = ReactDOM.render(
   <Provider store={store}>
-    <div>
-      <HomeCase />
-      {/* <TabContentCase></TabContentCase> */}
-    </div>
+      <Home/>
   </Provider>,
   document.getElementById('root')
 );

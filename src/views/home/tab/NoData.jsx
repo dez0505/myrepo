@@ -14,6 +14,7 @@ export class NoData extends Component {
   componentDidMount() {
   }
   refreshList() {
+    if(this.props.refreshLoading) return
     this.props.resetState()
     this.props.updateLoadingState({
       refreshLoading: true

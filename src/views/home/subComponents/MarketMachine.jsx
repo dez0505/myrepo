@@ -6,10 +6,6 @@ import PropTypes from 'prop-types'
 import { getDateData, getMd5Data, getSelectStockData, getHardenData } from '@/api/marketMachine'
 // utils
 import { goToFunction, sendIOSMessage, encryptByDES } from '@/utils/common.js'
-// const marketPic1 = require('../../../images/machine-images/today_date.png')
-// const marketPic3 = require('../../../images/machine-images/today_stop.png')
-// const marketPic2 = require('../../../images/machine-images/allman_make.png')
-// const marketPic4 = require('../../../images/machine-images/myself_change.png')
 class MarketMachine extends Component {
 	static propTypes = {
 		optionalChange:PropTypes.object

@@ -8,11 +8,14 @@ import { goToAPP } from '@/utils/common'
 class AdsSwiper extends Component {
   constructor(props) {
     super(); //可以不给props
+    this.adsSwiper = null
     this.state = {
-      adsSwiper: null
     }
   }
   componentDidMount() {
+    this.initAdsSwiper()
+  }
+  initAdsSwiper() {
     const adsSwiper = new Swiper('.ads-swiper', {
       loop: true,
       autoplay:5000,
@@ -25,12 +28,23 @@ class AdsSwiper extends Component {
     })
     if(adsSwiper.slides.length <= 3) {
       adsSwiper.lockSwipes()
+    } else {
+      adsSwiper.unlockSwipes()
     }
-    this.setState({ adsSwiper })
+    this.adsSwiper = adsSwiper
+  }
+  // 解决一些swiper卡顿的情况
+  shouldComponentUpdate(props,state){
+    if(props.adsList!==this.props.adsList){
+      return true
+    } else {
+      return false
+    }
   }
   componentDidUpdate() {
-    if(this.state.adsSwiper){
-      this.state.adsSwiper.update()
+    if(this.adsSwiper){
+      this.adsSwiper.destroy(false, false); 
+      this.initAdsSwiper()
     }
   }
   render() {

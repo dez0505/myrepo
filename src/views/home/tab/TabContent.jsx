@@ -14,10 +14,9 @@ import getCheifList  from '../../../actions/tab/cheif'
 import getTopLineList  from '../../../actions/tab/topLine'
 import getLiveList from '../../../actions/tab/live'
 import { getNewsList, getOptionalList } from '../../../actions/tab/optional'
-import { updateNativeData } from '../../../actions/nativeData'
+import { updatePageConfig } from '../../../actions/index'
 // MutationEvent
 import { updateLoadingState, updateListData ,resetState} from '../../../actions/list'
-import { updateTabIndex } from '@/actions/tab'
 // Swiper
 import './TabContent.scss'
 import Swiper from 'swiper'
@@ -42,8 +41,10 @@ class TabContent extends Component {
       threshold: 100,
       touchMoveStopPropagation: false,
       onSlideChangeEnd: function (swiper) {
-        that.props.resetState()
-        that.props.updateHomeTabIndex(swiper.activeIndex)
+        that.props.updatePageConfig({activeTabConfig: {
+          index: swiper.activeIndex,
+          type: 'home'
+        }})
       }
     })
     this.setState({ mySwiper: mySwiper })
@@ -63,7 +64,7 @@ class TabContent extends Component {
   watchOptionalCode(props) {
     if(props.activeHomeTabIndex!==3) return
     if(props.optionalCode!==this.props.optionalCode) {
-      alert(props.optionalCode+'____'+this.props.optionalCode)
+      // alert(props.optionalCode+'____'+this.props.optionalCode)
       this.props.resetState()
       this.props.updateLoadingState({
         refreshLoading: true
@@ -260,8 +261,8 @@ class TabContent extends Component {
   // 监听whichLoading使设置当前tabType,并刷新状态为true
   watchWhichLoading(props) {
     if( props.whichLoading !== this.props.whichLoading && props.whichLoading && props.whichLoading!=='more' ) {
-      this.props.updateNativeData({market:[]})
       // 由于异步的影响不能在这里设置变量tabType
+      if(this.props.refreshLoading) return
       this.props.updateLoadingState({
         refreshLoading: true
       })
@@ -315,10 +316,11 @@ class TabContent extends Component {
               { this.renderLive(whichLoading, listData) }
             </div>
             <div className="swiper-slide" style={ minHeightStyle }>
-              <Optional whichLoading ={ whichLoading }></Optional>
+              <Optional></Optional>
             </div>
             <div className="swiper-slide" style={ minHeightStyle }>
-              <More whichLoading ={ whichLoading }></More>
+              <More></More>  
+              {/* 慢是在切换时，动画效果慢 */}
             </div>
         </div>
       </div>
@@ -329,7 +331,6 @@ const mapStateToProps = (state) => ({
   activeHomeTabIndex: state.tab.tabIndexData.activeHomeTabIndex,            //当点击时，swiper要根据index进行滚动
   listData: state.list.listData,                                            //判断listData是否为空数组来加载状态组件或列表组件
   whichLoading: state.list.interfaceState.whichLoading,                     //监听tab已切换，来刷新当前列表数据 使刷新状态为true
-  htid: state.pageConfig.htid,                                              //初始化时 第一次初始化 刷新状态为true 执行topline
   scrollHeight: state.pageConfig.scrollHeight,                              //设置最小列表的高度，来避免清空数据时，列表抖动
   refreshLoading: state.list.loadingState.refreshLoading,                   //当refreshloading为true再根据whichLoading来判断执行哪个接口
   loadLoading: state.list.loadingState.loadLoading,                         //根据loadLoading为true再根据whichLoading来加载更多哪个接口
@@ -339,7 +340,6 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  updateHomeTabIndex: activeHomeTabIndex => dispatch(updateTabIndex({ activeHomeTabIndex })),
   getTopLineList: type => dispatch(getTopLineList(type)),
   getCheifList: type => dispatch(getCheifList(type)),
   getLiveList: (type,style) => dispatch(getLiveList(type,style)),
@@ -347,8 +347,8 @@ const mapDispatchToProps = dispatch => ({
   getOptionalList: (type,style) => dispatch(getOptionalList(type,style)),
   updateLoadingState: loadingState => dispatch(updateLoadingState(loadingState)),
   updateListData: listData=> dispatch(updateListData(listData)),
-  updateNativeData: nativeData => dispatch(updateNativeData(nativeData)),
-  resetState:()=>dispatch(resetState())
+  resetState:()=>dispatch(resetState()),
+  updatePageConfig:(activeTabConfig)=>{dispatch(updatePageConfig(activeTabConfig))}
 
 })
 

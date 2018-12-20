@@ -3,10 +3,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { updateTabIndex } from '../../../actions/tab'
 import { resetState } from '../../../actions/list'
+import { updatePageConfig } from '../../../actions/index'
 
 import Swiper from 'swiper'
 // component
-import TabHeaderCase from '../../../containers/TabHeaderCase'
+import TabHeader from './TabHeader'
 import NoData from './NoData'
 import News from './subComponents/News'
 import Qus from './subComponents/Qus'
@@ -32,9 +33,12 @@ export class Optional extends Component {
       threshold: 100,
       touchMoveStopPropagation: false,
       onSlideChangeEnd: function (swiper) {
+        // 当滚动下面的tab栏时，若滚动过后tab不为3 则不执行下面的代码
         if(that.props.activeHomeTabIndex!==3)return
-        that.props.resetState()
-        that.props.updateTabIndex(swiper.activeIndex)
+          that.props.updatePageConfig({activeTabConfig: {
+            index: swiper.activeIndex,
+            type: 'optional'
+          }})
       }
     })
     this.setState({ mySwiper: mySwiper })
@@ -57,7 +61,7 @@ export class Optional extends Component {
     const listData = this.props.listData
     return (
       <div>
-        <TabHeaderCase type='optional'></TabHeaderCase> 
+        <TabHeader type='optional' watch={true}></TabHeader> 
         <div className='swiper-container optional-swiper'>
           <div className="swiper-wrapper">
               <div className="swiper-slide" style={ minHeightStyle }>
@@ -93,7 +97,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => {
   return {
     updateTabIndex: activeOptionalTabIndex => dispatch(updateTabIndex({ activeOptionalTabIndex })),
-    resetState:()=>dispatch(resetState())
+    resetState:()=>dispatch(resetState()),
+    updatePageConfig:(activeTabConfig)=>{dispatch(updatePageConfig(activeTabConfig))}
   }
 }
 

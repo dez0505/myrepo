@@ -6,7 +6,7 @@ import './BetterScroll.scss'
 import { sendIOSMessage } from '@/utils/common'
 
 import { updateInterfaceParams, updateLoadingState, resetState } from '@/actions/list'
-import {updatePageConfig} from '../../actions/index'
+import { updatePageConfig } from '../../actions/index'
 import { connect } from 'react-redux'
 
 class BetterScroll extends Component {
@@ -16,8 +16,7 @@ class BetterScroll extends Component {
       topText: '下拉刷新...',
       refreshTime: '刷新时间',
       botText: '上拉加载...',
-      topIconDirection: 'down',
-      tabFixed: false
+      topIconDirection: 'down'
     };
     this.scroll= null
   }
@@ -31,7 +30,7 @@ class BetterScroll extends Component {
     if(!nextProps.loadLoading && nextProps.loadLoading !== this.props.loadLoading) {
       this._pullingDownUpComplete()
     }
-    if(nextProps.refreshLoading && (nextProps.refreshLoading !== this.props.refreshLoading) && this.state.tabFixed) {
+    if(nextProps.refreshLoading && (nextProps.refreshLoading !== this.props.refreshLoading) && nextProps.tabIsFixed) {
       this.scrollToElement('#listContent')
       this._pullingDownUpComplete()
     }
@@ -61,28 +60,27 @@ class BetterScroll extends Component {
           this.scroll.finishPullUp()
         }
       },2000)
-      if(this.props.isNoMoreData || this.props.isNoData || this.props.whichLoading==='more') return  //如果当前列表没有更多数据或根据没数据就不给加载
+      if(this.props.isNoMoreData || this.props.isNoData || this.props.whichLoading==='more' ||this.props.whichLoadedFail || this.props.refreshLoading ||this.props.initLoading) return  //如果当前列表没有更多数据或根据没数据就不给加载
       this.props.updateLoadingState({loadLoading: true}) // 更新refreshLoading 表示要home一些数据要重新请求了
     })
     if (true) {
       this.scroll.on('scroll', (pos) => {
         const scrollHeight = document.getElementById('listContent').offsetTop // list元素的位置
         const scrollY = -(pos.y)
-        if( scrollY>=scrollHeight ) {
+        const tabIsFixed = scrollY>=scrollHeight
+        if( tabIsFixed && this.props.tabIsFixed !== tabIsFixed) {
           if (window.quote && window.quote.changeHomeStatus) {
             window.quote.changeHomeStatus(true)
           } else {
             sendIOSMessage('changeHomeStatus',true)
           }
-          this.setState({tabFixed: true})
           this.props.updateTabIsFixed(true)
-        } else {
+        } else if (this.props.tabIsFixed !== tabIsFixed) {
           if (window.quote && window.quote.changeHomeStatus) {
             window.quote.changeHomeStatus(false)
           } else {
             sendIOSMessage('changeHomeStatus',false)
           }
-          this.setState({tabFixed: false})
           this.props.updateTabIsFixed(false)
         }
         if (pos.y >= 60) {
@@ -147,7 +145,7 @@ class BetterScroll extends Component {
           </div>
         </div>
         {this.props.children}
-        <div className="load-box" style={{ display: this.props.isNoData || this.props.whichLoadedFail || this.props.whichLoading==='more' ? 'none' : null }}>
+        <div className="load-box" style={{ display: this.props.isNoData || this.props.whichLoadedFail || this.props.whichLoading==='more' || this.props.refreshLoading? 'none' : null }}>
           <div className="scroll-load">
             <div className="bottom-icon">
               <Icon style={{ display: this.props.isNoMoreData || this.props.isNoData ? 'none' : null }} type='loading' text='loading' />
@@ -170,6 +168,7 @@ const mapStateToProps = (state,store) => {
     whichLoading: state.list.interfaceState.whichLoading,
     whichLoadedFail: state.list.interfaceState.whichLoadedFail,
     titleheight: state.pageConfig.titleheight,
+    tabIsFixed: state.pageConfig.tabIsFixed
   }
 }
 const mapDispatchToProps = dispatch => {

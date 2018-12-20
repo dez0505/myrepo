@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import TabContent from './TabContent'
-import TabHeaderCase from '../../../containers/TabHeaderCase'
+import TabHeader from './TabHeader'
 
 class TabBox extends Component {
   constructor(props) {
@@ -10,7 +10,7 @@ class TabBox extends Component {
   render() {
     return (
       <div id='listContent'>
-        <TabHeaderCase type='home' watch={true}></TabHeaderCase>
+        <TabHeader type='home' watch={true}></TabHeader>
         <TabContent></TabContent>
       </div>
     )
