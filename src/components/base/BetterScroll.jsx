@@ -24,14 +24,17 @@ class BetterScroll extends Component {
     this._initScroll()
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.initLoading !== this.props.initLoading && !nextProps.initLoading ) {
+    const { initLoading, loadLoading, whichLoading, refreshLoading } = this.props
+    if (!nextProps.initLoading && (nextProps.initLoading !==initLoading)) {
         this._pullingDownUpComplete()
     }
-    if(!nextProps.loadLoading && nextProps.loadLoading !== this.props.loadLoading) {
+    if(!nextProps.loadLoading && (nextProps.loadLoading !== loadLoading)) {
       this._pullingDownUpComplete()
     }
-    if(nextProps.refreshLoading && (nextProps.refreshLoading !== this.props.refreshLoading) && nextProps.tabIsFixed) {
+    if(nextProps.tabIsFixed && (nextProps.whichLoading !== whichLoading)) {
       this.scrollToElement('#listContent')
+    }
+    if(!nextProps.refreshLoading && (nextProps.refreshLoading !== refreshLoading)) {
       this._pullingDownUpComplete()
     }
   }
@@ -48,54 +51,60 @@ class BetterScroll extends Component {
         threshold: -20
       }
     })
+    // 下拉刷新
     this.scroll.on('pullingDown', () => {
-      this.props.resetState()
-      this.props.updateLoadingState({initLoading: true}) // 更新refreshLoading 表示要home一些数据要重新请求了
-      this.props.updateHomeContent() // 
+      // 刷新状态不加载
+      if(!this.props.initLoading) { 
+        this.props.resetState()
+        this.props.updateLoadingState({initLoading: true}) // 头部加载状态
+        this.props.updateHomeContent() // 
+      } else {
+        this.scroll.finishPullDown()
+      }
     })
+    // 上拉加载
     this.scroll.on('pullingUp', () => {
-      // 解决超过2s后没有重置的问题
-      setTimeout(()=>{
-        if(!this.scroll.pullupWatching) {
-          this.scroll.finishPullUp()
-        }
-      },2000)
-      if(this.props.isNoMoreData || this.props.isNoData || this.props.whichLoading==='more' ||this.props.whichLoadedFail || this.props.refreshLoading ||this.props.initLoading) return  //如果当前列表没有更多数据或根据没数据就不给加载
-      this.props.updateLoadingState({loadLoading: true}) // 更新refreshLoading 表示要home一些数据要重新请求了
+      const {isNoMoreData, isNoData, whichLoading, whichLoadedFail, refreshLoading, loadLoading } = this.props
+      if(!isNoMoreData && !isNoData && whichLoading!=='more' && !whichLoadedFail && !refreshLoading && !loadLoading) {
+        this.props.updateLoadingState({loadLoading: true}) // 更新refreshLoading 表示要home一些数据要重新请求了
+      } else {
+         this.scroll.finishPullUp()
+      }
+     
     })
-    if (true) {
-      this.scroll.on('scroll', (pos) => {
-        const scrollHeight = document.getElementById('listContent').offsetTop // list元素的位置
-        const scrollY = -(pos.y)
-        const tabIsFixed = scrollY>=scrollHeight
-        if( tabIsFixed && this.props.tabIsFixed !== tabIsFixed) {
-          if (window.quote && window.quote.changeHomeStatus) {
-            window.quote.changeHomeStatus(true)
-          } else {
-            sendIOSMessage('changeHomeStatus',true)
-          }
-          this.props.updateTabIsFixed(true)
-        } else if (this.props.tabIsFixed !== tabIsFixed) {
-          if (window.quote && window.quote.changeHomeStatus) {
-            window.quote.changeHomeStatus(false)
-          } else {
-            sendIOSMessage('changeHomeStatus',false)
-          }
-          this.props.updateTabIsFixed(false)
-        }
-        if (pos.y >= 60) {
-          this.setState({
-            topIconDirection: 'up'
-          }) 
+    // 监听scroll事件
+    this.scroll.on('scroll', (pos) => {
+      const scrollHeight = document.getElementById('listContent').offsetTop // list元素的位置
+      const tabIsFixed = -(pos.y)>=scrollHeight
+      // 与app交互发送刷新状态
+      if( tabIsFixed && this.props.tabIsFixed !== tabIsFixed) {
+        if (window.quote && window.quote.changeHomeStatus) {
+          window.quote.changeHomeStatus(true)
         } else {
-          this.setState({
-            topIconDirection: 'down'
-          }) 
+          sendIOSMessage('changeHomeStatus',true)
         }
-      })
-    }
-    this.scroll.on('refresh', () => {
+        this.props.updateTabIsFixed(true)
+      } else if (this.props.tabIsFixed !== tabIsFixed) {
+        if (window.quote && window.quote.changeHomeStatus) {
+          window.quote.changeHomeStatus(false)
+        } else {
+          sendIOSMessage('changeHomeStatus',false)
+        }
+        this.props.updateTabIsFixed(false)
+      }
+      // 改变下拉刷新的尖头方向
+      if (pos.y >= 60) {
+        this.setState({
+          topIconDirection: 'up'
+        }) 
+      } else {
+        this.setState({
+          topIconDirection: 'down'
+        }) 
+      }
     })
+    // this.scroll.on('refresh', () => {
+    // })
   }
   _pullingDownUpComplete () {
     console.log('接口请求完毕,正在重新布置scroll')

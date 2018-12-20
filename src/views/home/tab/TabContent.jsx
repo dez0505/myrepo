@@ -319,8 +319,8 @@ class TabContent extends Component {
               <Optional></Optional>
             </div>
             <div className="swiper-slide" style={ minHeightStyle }>
-              <More></More>  
-              {/* 慢是在切换时，动画效果慢 */}
+              {/* 切换效果慢，是因为没有将scrollElement要顶部 */}
+              {whichLoading === 'more' ?  <More  ></More> :  <NoData tabType='more'></NoData>}
             </div>
         </div>
       </div>
