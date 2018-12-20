@@ -262,7 +262,7 @@ class TabContent extends Component {
   watchWhichLoading(props) {
     if( props.whichLoading !== this.props.whichLoading && props.whichLoading && props.whichLoading!=='more' ) {
       // 由于异步的影响不能在这里设置变量tabType
-      if(this.props.refreshLoading) return
+      // if(this.props.refreshLoading) return
       this.props.updateLoadingState({
         refreshLoading: true
       })
