@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import rootReducer from './reducers'
 // component
 import { getQueryString } from './utils/common'
-import Home from './views/home/Home'
+import Home from './containers/Home'
 // import TabContentCase from './containers/TabContentCase'
 // css
 import 'antd-mobile/dist/antd-mobile.css'; 

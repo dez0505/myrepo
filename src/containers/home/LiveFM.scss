@@ -1,0 +1,22 @@
+@import '../../styles/base.scss';
+.live-fm-box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .line{
+    height: Px(150);
+    border-left: Px(1) solid $whiteBd;
+    &.night{
+       border-left: Px(1) solid $blackBd; 
+    }
+  }
+
+}
+.live-radio{
+  width: Px(374);
+  height: Px(182);
+}
+.fm-radio{
+  width: Px(374);
+  height: Px(182);
+}

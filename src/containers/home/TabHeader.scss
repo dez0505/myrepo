@@ -1,0 +1,60 @@
+@import '../../styles/base.scss';
+.tab-box{
+  @include cj();
+  height: 38px;
+  .tab-item{
+    flex: 1;
+    font-size: $baseSize;
+    height: 38px;
+    line-height: 38px;
+    text-align: center;
+    &.night{
+      color:#d8d8d8;
+    }
+    &.active{
+      color:$primary;
+      position: relative;
+      .line{
+        position: absolute;
+        left:50%;
+        bottom:0;
+        width: Px(32);
+        border: 1px solid $primary;
+        transform: translateX(-50%);
+      }
+    }
+  }
+}
+.tab-box{
+  position:relative;
+  z-index: 99;
+  padding: 0;
+ .select-type{
+   padding:0 Px(20);
+   line-height: 38px;
+   max-width: 30%;
+   font-size: $baseSize;
+   &.night{
+     color:#d8d8d8;
+   }
+   .square-icon{
+     width:0;
+     height:0;
+     position:relative;
+     span{
+       display:block;
+       width:0;
+       height:0;
+       border-width:Px(11) Px(11) 0;
+       border-style:solid;
+       border-color:#333 transparent transparent;/*黄 透明 透明 */
+       position:absolute;
+       top:Px(13);
+       left:Px(10);
+       &.night{
+         border-color:#d8d8d8 transparent transparent;/*黄 透明 透明 */
+       }
+     }
+   }
+ }
+}

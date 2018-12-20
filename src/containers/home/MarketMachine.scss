@@ -1,0 +1,49 @@
+@import '../../styles/base.scss';
+.market-machine {
+    .market-list {
+      display: flex;
+      justify-content: space-between;
+      margin: 0 Px(24);
+      padding: Px(18) 0;
+      align-items: center;
+      position: relative;
+      .list-title {
+        font-size: Px(27);
+        margin-bottom: Px(7.5);
+        color: $grayText;
+      }
+      .list-content {
+        font-size: $bigerSize;
+        .list-label {
+          margin-right: Px(12);
+          .list-key {
+            color: $warning;
+          }
+        }
+      }
+      .icon1 {
+        width: Px(105);
+        height: Px(122);
+        background: url('../../images/marketMachine-images/today_date.png') no-repeat;
+        background-size: 100% 100%;
+      }
+      .icon2 {
+        width: Px(96);
+        height: Px(113);
+        background: url('../../images/marketMachine-images/allman_make.png') no-repeat;
+        background-size: 100% 100%;
+      }
+      .icon3 {
+        width: Px(89);
+        height: Px(127);
+        background: url('../../images/marketMachine-images/myself_change.png') no-repeat;
+        background-size: 100% 100%;
+      }
+      .icon4 {
+        width: Px(87);
+        height: Px(130);
+        background: url('../../images/marketMachine-images/today_stop.png') no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+  }
