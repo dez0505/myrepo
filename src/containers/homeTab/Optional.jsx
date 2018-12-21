@@ -3,8 +3,6 @@ import Swiper from 'swiper'
 import PropTypes from 'prop-types'
 // redux
 import { connect } from 'react-redux'
-import { updateTabIndex } from '../../actions/tab'
-import { resetState } from '../../actions/list'
 import { updatePageConfig } from '../../actions/index'
 // component
 import TabHeader from '../home/TabHeader'
@@ -44,7 +42,7 @@ export class Optional extends Component {
     this.watchActiveHomeIndex(props,state)
   }
   componentDidUpdate(props, state) {
-    if(this.props.callBackHome!==props.callBackHome) {
+    if(this.props.callBackHome !== props.callBackHome || this.props.listData !== props.listData) {
       if(this.mySwiper){
         this.mySwiper.update({ updateTranslate:false })
       }
@@ -109,8 +107,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateTabIndex: activeOptionalTabIndex => dispatch(updateTabIndex({ activeOptionalTabIndex })),
-    resetState:()=>dispatch(resetState()),
     updatePageConfig:(activeTabConfig)=>{dispatch(updatePageConfig(activeTabConfig))}
   }
 }

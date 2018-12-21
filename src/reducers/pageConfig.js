@@ -13,6 +13,7 @@ const initialState = {
   liveTabTime: '',                                      //直播接口返回的时间
   tabIsFixed: false,                                    //列表与顶部的距离  用来判断tab菜单是否置顶
   updateMarket: false,                                  //控制是否更新行情
+  updateRefreshLoading: false,                          //控制是否刷新些tab列表
   activeTabConfig: {
     index: -1,
     type: ''
@@ -20,6 +21,7 @@ const initialState = {
   callBackHome: false                                   //控制是否切换了并重新回到当前页面  与changeTheem绑定
 }
 export default function pageConfig(state = initialState, action) {
+  console.log(action.type)
   switch (action.type) {
     case UPDATE_PAGECONFIG:
       console.log(action.pageConfig)

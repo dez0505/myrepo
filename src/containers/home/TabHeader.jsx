@@ -98,7 +98,6 @@ class TabHeader extends Component {
   // 改变tabIndex
   // 改变WhichLoading === tabType
   handleSwitchHomeIndex(index, addPoint = true) {
-    console.log(111111)
     const {resetState, updateHomeTabIndex} = this.props
     resetState()
     if (addPoint) {

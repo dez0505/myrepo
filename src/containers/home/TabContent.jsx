@@ -46,105 +46,83 @@ class TabContent extends Component {
   }
   componentWillReceiveProps(props) {
     this.watchWhichLoading(props)
-    this.watchRefreshLoading(props)
-    this.watchLoadLoading(props)
+    this.watchLoading(props, 'refreshLoading', 'init')
+    this.watchLoading(props, 'loadLoading', 'load')
     this.watchUpdateMarket(props)
     this.watchListData(props)
     this.watchOptionalCode(props)
+    this.watchUpdateRefreshLoading(props)
   }
   componentWillUpdate(props,state) {
     this.watchActiveHomeIndex(props,state)
   }
-  // 监听optionCode是否改变执行相关逻辑 刷新自选列表
-  watchOptionalCode(props) {
-    if(props.activeHomeTabIndex!==3) return
-    if(props.optionalCode!==this.props.optionalCode) {
-      // alert(props.optionalCode+'____'+this.props.optionalCode)
+  watchUpdateRefreshLoading(props) {
+    if(props.updateRefreshLoading !== this.props.updateRefreshLoading && !this.props.refreshLoading) {
       this.props.resetState()
       this.props.updateLoadingState({
         refreshLoading: true
       }) 
     }
   }
+  // 监听optionCode是否改变执行相关逻辑 刷新自选列表
+  watchOptionalCode(props) {
+    if(props.activeHomeTabIndex!==3) return
+    if(props.optionalCode!==this.props.optionalCode) {
+      // alert(props.optionalCode+'____'+this.props.optionalCode)
+      this.props.updatePageConfig({ updateRefreshLoading: !this.props.updateRefreshLoading })
+    }
+  }
 
-  // 监听refreshLoading 来调接口
-  watchRefreshLoading(props) {
-    if( props.refreshLoading !== this.props.refreshLoading && props.refreshLoading && props.whichLoading) {
+  // 监听 refreshLoading 与 loadLoading 来调接口
+  watchLoading(props, loadingType, type = 'init') {
+    if( props[loadingType] !== this.props[loadingType] && props[loadingType] && props.whichLoading) {
       switch (props.whichLoading) {
         case 'topLine':
-          this.props.getTopLineList('init')
+          this.props.getTopLineList(type)
           break;
         case 'cheif':
-          this.props.getCheifList('init')
+          this.props.getCheifList(type)
           break;
         case 'liveA':
-          this.props.getLiveList('init','A')
+          this.props.getLiveList(type, 'A')
           break;
         case 'liveAll':
-          this.props.getLiveList('init','All')
+          this.props.getLiveList(type, 'All')
           break;
         case 'news':
-          this.props.getNewsList('init')
+          this.props.getNewsList(type)
           break;
         case 'qus':
-          this.props.getOptionalList('init','qus')
+          this.props.getOptionalList(type, 'qus')
           break;
         case 'event':
-          this.props.getOptionalList('init','event')
+          this.props.getOptionalList(type, 'event')
           break;
         case 'notice':
-          this.props.getOptionalList('init','notice')
+          this.props.getOptionalList(type, 'notice')
           break;
         case 'report':
-          this.props.getOptionalList('init','report')
+          this.props.getOptionalList(type, 'report')
           break;
         default:
           break;
       }
     }
   }
-  watchLoadLoading(props) {
-    if( props.loadLoading !== this.props.loadLoading && props.loadLoading && props.whichLoading) {
-      switch (props.whichLoading) {
-        case 'topLine':
-          this.props.getTopLineList('load')
-          break;
-        case 'cheif':
-          this.props.getCheifList('load')
-          break;
-        case 'liveA':
-          this.props.getLiveList('load','A')
-          break;
-        case 'liveAll':
-          this.props.getLiveList('load','All')
-          break;
-        case 'news':
-          this.props.getNewsList('load')
-          break;
-        case 'qus':
-          this.props.getOptionalList('load','qus')
-          break;
-        case 'event':
-          this.props.getOptionalList('load','event')
-          break;
-        case 'notice':
-          this.props.getOptionalList('load','notice')
-          break;
-        case 'report':
-          this.props.getOptionalList('load','report')
-          break;
-        default:
-          break;
-      }
-    }
-  }
+ 
   // 监听列表数据变化进行发通知
   watchListData(props) {
-    if(!props.listData.length) return
-    if(props.listData.length !== this.props.listData.length) {
-      switch (props.whichLoading) {
+    const {whichLoading, listData} = props
+    // 切换到这此列表需要重新发通知
+    const array = ['topLine', 'news', 'qus', 'event', 'notice', 'report']
+    const isTrue = array.some((item) => {
+        return item === whichLoading
+    })
+    if( !listData.length || !isTrue ) return
+    if(listData.length !== this.props.listData.length || whichLoading !== this.props.whichLoading) {
+      switch (whichLoading) {
         case 'topLine':
-          const hasStocksArray = props.listData.filter(
+          const hasStocksArray = listData.filter(
             item => item.Stocks.length > 0
           )
           const scoketCodeArray = hasStocksArray.map(
@@ -161,56 +139,43 @@ class TabContent extends Component {
               body: scoketCodeArray
             })
           }
-          break;
-        case 'news': 
-          this.sendStock(props.listData)
-          break
-        case 'qus':
-          this.sendStock(props.listData)
-          break
-        case 'event': 
-          this.sendStock(props.listData)
-          break
-        case 'notice': 
-          this.sendStock(props.listData)
-          break
-        case 'report': 
-          this.sendStock(props.listData)
           break
         default:
+          const stockCodeArray = listData.map(
+            item => item.tradingCode
+          )
+          const filterArray = stockCodeArray.filter((x, index, self) => self.indexOf(x) === index)
+          if (window && window.quote && window.quote.requestQuote) {
+            window.quote.requestQuote(filterArray)
+          } else if (
+            window.webkit &&
+              window.webkit.messageHandlers &&
+              window.webkit.messageHandlers.requestQuote
+          ) {
+            window.webkit.messageHandlers.requestQuote.postMessage({
+              body: filterArray
+            })
+          }
           break;
       }
     }
   }
-  sendStock (newval) {
-    if (newval.length === 0) return
-    const scoketCodeArray = newval.map(
-      item => item.tradingCode
-    )
-    const filterArray = scoketCodeArray.filter((x, index, self) => self.indexOf(x) === index)
-    console.log('updateLinster')
-    if (window && window.quote && window.quote.requestQuote) {
-      window.quote.requestQuote(filterArray)
-    } else if (
-      window.webkit &&
-        window.webkit.messageHandlers &&
-        window.webkit.messageHandlers.requestQuote
-    ) {
-      window.webkit.messageHandlers.requestQuote.postMessage({
-        body: filterArray
-      })
-    }
-  }
+  
 
   // 监听market行情数据是否变化了。变化了就要对列表进行渲染
   watchUpdateMarket(props) {
-    if(props.updateMarket!==this.props.updateMarket) {
-      console.log(11111)
-      switch(this.props.whichLoading) {
+    const {whichLoading, listData, updateMarket, market} = props
+    // 切换到这此列表需要重新发通知
+    const array = ['topLine', 'news', 'qus', 'event', 'notice', 'report']
+    const isTrue = array.some((item) => {
+        return item === whichLoading
+    })
+    if (!listData.length || !isTrue) return
+    if (updateMarket !== this.props.updateMarket) {
+      const newArray = deepClone(listData) 
+      const array = market.map(item=>item)
+      switch(whichLoading) {
         case 'topLine':
-          if (!props.listData.length) return
-          const newArray = deepClone(props.listData) 
-          let array = props.market.map(item=>item)
           for(let val of newArray) {
             if(val.Stocks.length>0) {
               if(array.length>0){
@@ -218,40 +183,18 @@ class TabContent extends Component {
               }
             }
           }
-          this.props.updateListData({listData: newArray})
         break;
-        case 'news':
-          this.handleStock(props.listData, props.market)
-          break
-        case 'qus':
-          this.handleStock(props.listData, props.market)
-          break
-        case 'event':
-          this.handleStock(props.listData, props.market)
-          break
-        case 'notice':
-          this.handleStock(props.listData, props.market)
-          break
-        case 'report':
-          this.handleStock(props.listData, props.market)
-          break
         default:
+          for (let val of newArray) {
+            const needStock = array.filter(v => v[0] === val.tradingCode)
+            if (needStock.length > 0) {
+              val.stockNum = needStock[0][3]
+              val.stockPrice = needStock[0][2]
+            }
+          }
       }
+      this.props.updateListData({listData: newArray})
     }
-  }
-  // 根据行情处理新的数据
-  handleStock (list, market) {
-    if (!list.length) return
-    const newArray = deepClone(list)
-    const array = market.map(item=>item)
-    for (let val of newArray) {
-      const needStock = array.filter(v => v[0] === val.tradingCode)
-      if (needStock.length > 0) {
-        val.stockNum = needStock[0][3]
-        val.stockPrice = needStock[0][2]
-      }
-    }
-    this.props.updateListData({listData: newArray})
   }
   // 监听whichLoading使设置当前tabType,并刷新状态为true
   watchWhichLoading(props) {
@@ -271,6 +214,7 @@ class TabContent extends Component {
       }
     }
   }
+  // 处理切换回首页swiper出现的问题
   componentDidUpdate(props) {
     if(this.props.callBackHome!==props.callBackHome) {
       if(this.mySwiper){
@@ -348,7 +292,8 @@ const mapStateToProps = (state) => ({
   market: state.nativeData.market,                         //根据loadLoading为true再根据whichLoading来加载更多哪个接口
   optionalCode: state.nativeData.optionalCode,              //根据optionalCode改变来进行重新请求数据
   updateMarket: state.pageConfig.updateMarket,
-  callBackHome: state.pageConfig.callBackHome
+  callBackHome: state.pageConfig.callBackHome,
+  updateRefreshLoading: state.pageConfig.updateRefreshLoading
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -360,7 +305,7 @@ const mapDispatchToProps = dispatch => ({
   updateLoadingState: loadingState => dispatch(updateLoadingState(loadingState)),
   updateListData: listData=> dispatch(updateListData(listData)),
   resetState:()=>dispatch(resetState()),
-  updatePageConfig:(activeTabConfig)=>{dispatch(updatePageConfig(activeTabConfig))}
+  updatePageConfig:(pageConfig)=>{dispatch(updatePageConfig(pageConfig))}
 
 })
 

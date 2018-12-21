@@ -3,15 +3,13 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Icon } from 'antd-mobile';
 import './NoData.scss'
-import { updateLoadingState, resetState } from '@/actions/list'
+import { updateLoadingState } from '../../actions/list'
+import { updatePageConfig } from '../../actions/index'
+
 export class NoData extends Component {
   refreshList() {
     // 没有数据时，不用scrollElement的
-    if(this.props.refreshLoading) return
-    this.props.resetState()
-    this.props.updateLoadingState({
-      refreshLoading: true
-    })
+    this.props.updatePageConfig({ updateRefreshLoading: !this.props.updateRefreshLoading })
   }
   render() {
     const { whichLoadedFail, tabType, isNoData, whichLoading, refreshLoading } = this.props
@@ -48,7 +46,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps =  dispatch => {
   return {
     updateLoadingState: loadingState => dispatch(updateLoadingState(loadingState)),
-    resetState:()=>dispatch(resetState())
+    updatePageConfig:(pageConfig)=>{dispatch(updatePageConfig(pageConfig))},
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(NoData)

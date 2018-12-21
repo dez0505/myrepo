@@ -25,17 +25,21 @@ class BetterScroll extends Component {
     this._initScroll()
   }
   componentWillReceiveProps(nextProps) {
-    const { initLoading, loadLoading, whichLoading, refreshLoading } = this.props
+    const { initLoading, loadLoading, refreshLoading, whichLoading } = this.props
     if (!nextProps.initLoading && (nextProps.initLoading !==initLoading)) {
+      console.log(22222)
         this._pullingDownUpComplete()
     }
     if(!nextProps.loadLoading && (nextProps.loadLoading !== loadLoading)) {
+      console.log(1111)
       this._pullingDownUpComplete()
     }
-    if(nextProps.tabIsFixed && (nextProps.whichLoading !== whichLoading)) {
+    if((nextProps.updateRefreshLoading !== this.props.updateRefreshLoading || whichLoading !== nextProps.whichLoading) && nextProps.tabIsFixed ) {
+      console.log(33333)
       this.scrollToElement('#listContent')
     }
     if(!nextProps.refreshLoading && (nextProps.refreshLoading !== refreshLoading)) {
+      console.log(4444)
       this._pullingDownUpComplete()
     }
   }
@@ -107,8 +111,9 @@ class BetterScroll extends Component {
         }) 
       }
     })
-    // this.scroll.on('refresh', () => {
-    // })
+    this.scroll.on('refresh', () => {
+      console.log(1111)
+    })
   }
   _pullingDownUpComplete () {
     console.log('接口请求完毕,正在重新布置scroll')
@@ -201,7 +206,8 @@ const mapStateToProps = (state,store) => {
     whichLoading: state.list.interfaceState.whichLoading,
     whichLoadedFail: state.list.interfaceState.whichLoadedFail,
     titleheight: state.pageConfig.titleheight,
-    tabIsFixed: state.pageConfig.tabIsFixed
+    tabIsFixed: state.pageConfig.tabIsFixed,
+    updateRefreshLoading: state.pageConfig.updateRefreshLoading
   }
 }
 const mapDispatchToProps = dispatch => {

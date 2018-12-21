@@ -19,7 +19,6 @@ import './styles/common.scss'
 // action
 import { updatePageConfig } from './actions/index'
 import { updateNativeData } from './actions/nativeData'
-import { updateLoadingState, resetState } from './actions/list'
 
 let store = createStore(rootReducer, applyMiddleware(thunk))
 
@@ -60,9 +59,7 @@ window.updateShortTermElves = function (optionalChange) {
 }
 // 刷新tab资讯
 window.refreshInfo = function () {
-  if(store.getState().list.loadingState.refreshLoading) return
-  store.dispatch(resetState())
-  store.dispatch(updateLoadingState({refreshLoading: true}))
+  store.dispatch(updatePageConfig({updateRefreshLoading:!store.getState().pageConfig.updateRefreshLoading}))
 }
 const themeColor = getQueryString('theme') === 'night' ? '#202528' : '#FFF'
 document.body.style.backgroundColor = themeColor;
