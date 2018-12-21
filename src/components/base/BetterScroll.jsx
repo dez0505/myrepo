@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import BScroll from 'better-scroll'
 import { Icon } from 'antd-mobile';
 import Arrow from './Arrow.jsx'
@@ -178,6 +179,17 @@ class BetterScroll extends Component {
       </div>
     );
   }
+}
+BetterScroll.propTypes = {
+  loadLoading: PropTypes.bool,
+  initLoading: PropTypes.bool,
+  refreshLoading: PropTypes.bool,
+  isNoData: PropTypes.bool,
+  isNoMoreData: PropTypes.bool,
+  whichLoading: PropTypes.string,
+  whichLoadedFail: PropTypes.string,
+  titleheight: PropTypes.number,
+  tabIsFixed: PropTypes.bool,
 }
 const mapStateToProps = (state,store) => {
   return {

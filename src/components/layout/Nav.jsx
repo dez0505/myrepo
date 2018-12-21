@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import './Nav.scss'
 import { goToFunction } from '@/utils/common.js'
 
@@ -41,5 +42,8 @@ class Nav extends Component {
       </div>
     ) 
   }
+}
+Nav.propTypes = {
+  navMenus: PropTypes.array,
 }
 export default Nav

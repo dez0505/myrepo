@@ -6,9 +6,6 @@ import  { targetStock } from './_utils.js'
 import { parseTime } from '../../utils/common'
 
 export class Event extends Component {
-  static propTypes = {
-    list: PropTypes.array
-  }
   constructor(props) {
     super(); //可以不给props
     this.state = {
@@ -91,7 +88,10 @@ export class Event extends Component {
     )
   }
 }
-
+Event.propTypes = {
+  list: PropTypes.array,
+  theme: PropTypes.string,
+}
 const mapStateToProps = (state) => ({
   theme: state.pageConfig.theme
 })

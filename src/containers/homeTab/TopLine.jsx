@@ -4,9 +4,6 @@ import PropTypes from 'prop-types'
 import './TopLine.scss'
 
 class TopLine extends Component {
-  static propTypes = {
-    topLineList: PropTypes.array
-  }
   constructor(props) {
     super()
   }
@@ -81,5 +78,8 @@ class TopLine extends Component {
       </div>
     )
   }
+}
+TopLine.propTypes = {
+  topLineList: PropTypes.array
 }
 export default TopLine

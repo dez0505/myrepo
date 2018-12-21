@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/homeTheme.scss'
+import PropTypes from 'prop-types'
 import { Icon } from 'antd-mobile';
 // redux
 import { connect } from 'react-redux'
@@ -45,12 +46,11 @@ class Home extends Component {
   componentWillMount(){
     this.updatePageConfig()
   }
-  
   // 重置页面路由参数  若没获取到window.innerHeight 反复调用
   updatePageConfig() {
     if(window.innerHeight) {
       this.setState({innerHeight:window.innerHeight})
-      const titleheight = getQueryString('titleheight')
+      const titleheight = Number(getQueryString('titleheight'))
       const version = getQueryString('appversion')
       const htid = getQueryString('htid')
       const platform = getQueryString('platform')
@@ -212,7 +212,15 @@ class Home extends Component {
     ) 
   }
 }
-
+Home.propTypes = {
+  theme: PropTypes.string,
+  version: PropTypes.string,
+  htid: PropTypes.string,
+  platform: PropTypes.string,
+  account: PropTypes.string,
+  tabIsFixed: PropTypes.bool,
+  activeHomeTabIndex: PropTypes.number,
+}
 const mapStateToProps = (state) => {
   return {
     theme: state.pageConfig.theme,            // 主题
@@ -220,7 +228,7 @@ const mapStateToProps = (state) => {
     htid: state.pageConfig.htid,              // 用户id
     platform: state.pageConfig.platform,      // 安卓或ios
     account: state.pageConfig.account,        // account 没用到
-    tabIsFixed: state.pageConfig.tabIsFixed,  // 控制是否显示固定头
+    tabIsFixed: state.pageConfig.tabIsFixed,  // 控制是否固定头
     activeHomeTabIndex: state.tab.tabIndexData.activeHomeTabIndex, // 控制是否显示固定optional头
   }
 }

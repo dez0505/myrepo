@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './AdsSwiper.scss'
+import PropTypes from 'prop-types'
 import Swiper from 'swiper'
 // utils
 import { goToAPP } from '../../utils/common'
@@ -65,5 +66,9 @@ class AdsSwiper extends Component {
       </div>
     ) 
   }
+}
+
+AdsSwiper.propTypes = {
+  adsList: PropTypes.array
 }
 export default AdsSwiper

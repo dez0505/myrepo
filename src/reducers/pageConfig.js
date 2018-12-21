@@ -8,7 +8,7 @@ const initialState = {
   htid: '',                                             //页面路由入参  userid 应该是某些接口的入参
   platform: '',                                         //页面路由入参  app类型 应该是某些接口的入参
   account: '',                                          //页面路由入参  未知 应该是某些接口的入参
-  titleheight: '',                                      //页面路由入参  头部高度
+  titleheight: 0,                                      //页面路由入参  头部高度
   scrollHeight: '',                                     //当前页面scroll的大小
   liveTabTime: '',                                      //直播接口返回的时间
   tabIsFixed: false,                                    //列表与顶部的距离  用来判断tab菜单是否置顶

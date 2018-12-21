@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import './Header.scss'
 import { goToFunction } from '@/utils/common.js'
@@ -24,6 +25,9 @@ class Header extends Component {
       </div>
     ) 
   }
+}
+Header.propTypes = {
+  titleheight: PropTypes.number,
 }
 const mapStateToProps = (state) => ({
   titleheight: state.pageConfig.titleheight

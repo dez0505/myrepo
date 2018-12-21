@@ -6,9 +6,6 @@ import './Report.scss'
 import { parseTime} from '../../utils/common'
 import goToApp, { targetStock } from './_utils.js'
 export class Report extends Component {
-  static propTypes = {
-    list: PropTypes.array
-  }
   goToApp(item){
     goToApp('optionResearchInfo', item.id, item.reportTitle, item.url, item.date, item.secuAbbr)
   }
@@ -69,6 +66,9 @@ export class Report extends Component {
   }
 }
 
+Report.propTypes = {
+  list: PropTypes.array
+}
 const mapStateToProps = (state) => ({
   
 })

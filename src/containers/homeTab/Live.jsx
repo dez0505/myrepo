@@ -5,10 +5,6 @@ import './Live.scss'
 // redux
 import { updateInterfaceState, resetState } from '../../actions/list'
 export class Live extends Component {
-  static propTypes = {
-    theme: PropTypes.string,
-    whichLoading: PropTypes.string
-  }
   constructor(props) {
     super(props)
     this.state = {
@@ -116,7 +112,12 @@ export class Live extends Component {
     )
   }
 }
-
+Live.propTypes = {
+  liveList: PropTypes.array,
+  theme: PropTypes.string,
+  whichLoading: PropTypes.string,
+  liveTabTime: PropTypes.string,
+}
 const mapStateToProps = (state) => ({
   liveTabTime: state.pageConfig.liveTabTime,
   theme: state.pageConfig.theme,

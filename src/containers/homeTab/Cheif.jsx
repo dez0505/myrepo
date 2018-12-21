@@ -5,9 +5,6 @@ import './Cheif.scss'
 import { goToAPP } from '../../utils/common';
 
 class Cheif extends Component {
-  static propTypes = {
-    cheifList: PropTypes.array
-  }
   constructor(props) {
     super()
   }
@@ -49,5 +46,8 @@ class Cheif extends Component {
       </div>
     )
   }
+}
+Cheif.propTypes = {
+  cheifList: PropTypes.array
 }
 export default Cheif

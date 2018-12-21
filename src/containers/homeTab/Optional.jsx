@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Swiper from 'swiper'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 // redux
 import { connect } from 'react-redux'
 import { updateTabIndex } from '../../actions/tab'
@@ -16,9 +16,7 @@ import Notice from '../optionalTab/Notice'
 import Report from '../optionalTab/Report'
 
 export class Optional extends Component {
-  static propTypes = {
-    // prop: PropTypes
-  }
+ 
   constructor(props) {
     super(); //可以不给props
     this.state = {
@@ -92,6 +90,14 @@ export class Optional extends Component {
   }
 }
 
+Optional.propTypes = {
+  scrollHeight: PropTypes.number,
+  listData: PropTypes.array,
+  whichLoading: PropTypes.string,
+  activeOptionalTabIndex: PropTypes.number,
+  activeHomeTabIndex: PropTypes.number,
+  callBackHome: PropTypes.bool,
+}
 const mapStateToProps = (state) => ({
   scrollHeight: state.pageConfig.scrollHeight,                              //设置最小列表的高度，来避免清空数据时，列表抖动
   listData: state.list.listData,                                            //判断listData是否为空数组来加载状态组件或列表组件

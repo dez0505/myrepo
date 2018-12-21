@@ -6,9 +6,6 @@ import './News.scss'
 import { parseTime} from '../../utils/common'
 import goToApp, { targetStock } from './_utils.js'
 export class News extends Component {
-  static propTypes = {
-    list: PropTypes.array
-  }
   goToApp(item){
     goToApp('optionNewsInfo', item.id, item.title, item.url, item.time, item.secuAbbr)
   }
@@ -56,7 +53,9 @@ export class News extends Component {
     )
   }
 }
-
+News.propTypes = {
+  list: PropTypes.array,
+}
 const mapStateToProps = (state) => ({
   
 })

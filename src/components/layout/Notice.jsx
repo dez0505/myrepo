@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 // css
 import './Notice.scss'
 import { goToFunction, goToAPP } from '../../utils/common';
@@ -49,5 +50,8 @@ class Notice extends Component {
       </div> 
     )
   }
+}
+Notice.propTypes = {
+  noticeList: PropTypes.array,
 }
 export default Notice;

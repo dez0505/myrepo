@@ -5,9 +5,6 @@ import './Qus.scss'
 // utils
 import  { targetStock } from './_utils.js'
 export class Qus extends Component {
-  static propTypes = {
-    list: PropTypes.array
-  }
   handleTime (time) {
     if(!time) return
     const index = time.indexOf('年')
@@ -57,7 +54,9 @@ export class Qus extends Component {
     )
   }
 }
-
+Qus.propTypes = {
+  list: PropTypes.array
+}
 const mapStateToProps = (state) => ({
   theme: state.pageConfig.theme
 })

@@ -7,10 +7,6 @@ import { getDateData, getMd5Data, getSelectStockData, getHardenData } from '../.
 // utils
 import { goToFunction, sendIOSMessage, encryptByDES } from '../../utils/common.js'
 class MarketMachine extends Component {
-	static propTypes = {
-		optionalChange:PropTypes.object
-	}
-	
 	constructor(props) {
 		super(); //可以不给props
 		this.state = {
@@ -172,6 +168,10 @@ class MarketMachine extends Component {
 		</div>
 		)
 	}
+}
+
+MarketMachine.propTypes = {
+	optionalChange:PropTypes.object
 }
 const mapStateToProps = (state) => ({
 	optionalChange: state.nativeData.optionalChange

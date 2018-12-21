@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import './TopicSwiper.scss';
 import Swiper from 'swiper';
 // utils
@@ -64,5 +65,8 @@ class TopicSwiper extends Component {
       </div>
     );
   }
+}
+TopicSwiper.propTypes = {
+  topicList: PropTypes.array
 }
 export default TopicSwiper;

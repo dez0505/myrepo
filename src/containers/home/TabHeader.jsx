@@ -10,13 +10,6 @@ import { updatePageConfig } from '../../actions/index'
 import { updateInterfaceState, resetState } from '../../actions/list'
 
 class TabHeader extends Component {
-  static propTypes = {
-    HomeTabMenuList: PropTypes.array,
-    optionalTabMenuList: PropTypes.array,
-    activeHomeTabIndex: PropTypes.number,
-    activeOptionalTabIndex: PropTypes.number,
-    type: PropTypes.string
-  };
   componentDidMount() {
     if(this.props.watch && this.props.type ==='home') {
       this.handleSwitchHomeIndex(0,false)
@@ -163,6 +156,18 @@ class TabHeader extends Component {
     );
   }
 }
+
+TabHeader.propTypes = {
+  HomeTabMenuList: PropTypes.array,
+  optionalTabMenuList: PropTypes.array,
+  activeHomeTabIndex: PropTypes.number,
+  activeOptionalTabIndex: PropTypes.number,
+  type: PropTypes.string,
+  theme: PropTypes.string,
+  optionalTeam: PropTypes.string,
+  activeTabConfig: PropTypes.object
+};
+
 const mapStateToProps = (state,store) => {
   return {
     HomeTabMenuList: state.tab.tabMenuData.HomeTabMenuList,

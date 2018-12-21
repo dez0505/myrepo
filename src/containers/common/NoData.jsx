@@ -5,12 +5,6 @@ import { Icon } from 'antd-mobile';
 import './NoData.scss'
 import { updateLoadingState, resetState } from '@/actions/list'
 export class NoData extends Component {
-  static propTypes = {
-    whichLoadedFail: PropTypes.string,
-    whichLoading: PropTypes.string,
-    isNoData: PropTypes.bool,
-    refreshLoading: PropTypes.bool,
-  }
   componentDidMount() {
   }
   refreshList() {
@@ -40,7 +34,12 @@ export class NoData extends Component {
     )
   }
 }
-
+NoData.propTypes = {
+  whichLoadedFail: PropTypes.string,
+  whichLoading: PropTypes.string,
+  isNoData: PropTypes.bool,
+  refreshLoading: PropTypes.bool,
+}
 const mapStateToProps = (state) => ({
   whichLoadedFail: state.list.interfaceState.whichLoadedFail,
   whichLoading: state.list.interfaceState.whichLoading,

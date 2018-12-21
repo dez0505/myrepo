@@ -3,15 +3,11 @@ import PropTypes from 'prop-types'
 import './LiveFM.scss'
 // utils
 import { goToFunction } from '../../utils/common'
-export default class LiveFM extends Component {
+
+class LiveFM extends Component {
   constructor(props) {
     super();
   }
-  static propTypes = {
-    liveFmList:PropTypes.array,
-    theme: PropTypes.string,
-  }
-  
   componentDidMount() {
   }
   render() {
@@ -46,3 +42,8 @@ export default class LiveFM extends Component {
     )
   }
 }
+LiveFM.propTypes = {
+  liveFmList:PropTypes.array,
+  theme: PropTypes.string,
+}
+export default LiveFM

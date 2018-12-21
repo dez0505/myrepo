@@ -5,9 +5,6 @@ import { connect } from 'react-redux'
 import { goToFunction } from '../../utils/common';
 import './More.scss'
 export class More extends Component {
-  static propTypes = {
-    theme: PropTypes.string
-  }
   constructor(props) {
     super()
     this.state = {
@@ -60,7 +57,9 @@ export class More extends Component {
     )
   }
 }
-
+More.propTypes = {
+  theme: PropTypes.string
+}
 const mapStateToProps = (state) => ({
   theme: state.pageConfig.theme
 })

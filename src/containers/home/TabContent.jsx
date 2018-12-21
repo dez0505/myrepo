@@ -23,9 +23,6 @@ import Swiper from 'swiper'
 import { deepClone } from '../../utils/common'
 
 class TabContent extends Component {
-  static propTypes = {
-    activeHomeTabIndex: PropTypes.number
-  }
   constructor(props) {
     super(); //可以不给props
     this.state = {
@@ -327,6 +324,20 @@ class TabContent extends Component {
     )
   }
 }
+
+TabContent.propTypes = {
+  activeHomeTabIndex: PropTypes.number,
+  listData: PropTypes.array,
+  whichLoading: PropTypes.string,
+  scrollHeight: PropTypes.number,
+  refreshLoading: PropTypes.bool,
+  loadLoading: PropTypes.bool,
+  market: PropTypes.object,
+  optionalCode: PropTypes.string,
+  updateMarket: PropTypes.bool,
+  callBackHome: PropTypes.bool,
+}
+
 const mapStateToProps = (state) => ({
   activeHomeTabIndex: state.tab.tabIndexData.activeHomeTabIndex,            //当点击时，swiper要根据index进行滚动
   listData: state.list.listData,                                            //判断listData是否为空数组来加载状态组件或列表组件
