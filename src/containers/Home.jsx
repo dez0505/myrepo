@@ -141,11 +141,17 @@ class Home extends Component {
     })
   }
   // 上拉刷新首页内容
-  updateHomeContent() {
+  updateHomeContent(isRefresh = true) {
     this.initHomeApi(this.props,() => {
-      this.props.updateLoadingState({
-        refreshLoading: true
-      })
+      if(isRefresh) {
+        this.props.updateLoadingState({
+          refreshLoading: true
+        })
+      } else {
+        this.props.updateLoadingState({
+          initLoading: false
+        })
+      }
     })//更新首页接口
   }
   // render 固定tab栏
@@ -187,7 +193,7 @@ class Home extends Component {
           {
             this.renderFixTab()
           }
-          <BetterScroll ref='betterScroll' refreshTime = {refreshTime} updateHomeContent={() =>this.updateHomeContent()}>
+          <BetterScroll ref='betterScroll' refreshTime = {refreshTime} updateHomeContent={(isRefresh) =>this.updateHomeContent(isRefresh)}>
             <div className={ 'home-warpper'}>
               <Nav navMenus={navMenusData} theme={theme}/>
               { adsListData.length>0 ? <AdsSwiper  adsList = {adsListData}/> : null }

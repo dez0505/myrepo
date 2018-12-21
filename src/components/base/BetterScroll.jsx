@@ -54,10 +54,15 @@ class BetterScroll extends Component {
     // 下拉刷新
     this.scroll.on('pullingDown', () => {
       // 刷新状态不加载
-      if(!this.props.initLoading) { 
-        this.props.resetState()
-        this.props.updateLoadingState({initLoading: true}) // 头部加载状态
-        this.props.updateHomeContent() // 
+      const { initLoading, whichLoading, resetState, updateLoadingState ,updateHomeContent } = this.props
+      if(!initLoading) { 
+        resetState()
+        updateLoadingState({initLoading: true}) // 头部加载状态
+        if(whichLoading!=='more') { // 为more  不执行列表渲染， 所以用updateHomeContent(false) 传入到首页进行是否更新refreshloading
+          updateHomeContent() // 
+        } else {
+          updateHomeContent(false) // 
+        }
       } else {
         this.scroll.finishPullDown()
       }
