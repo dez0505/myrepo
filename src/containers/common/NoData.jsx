@@ -5,9 +5,8 @@ import { Icon } from 'antd-mobile';
 import './NoData.scss'
 import { updateLoadingState, resetState } from '@/actions/list'
 export class NoData extends Component {
-  componentDidMount() {
-  }
   refreshList() {
+    // 没有数据时，不用scrollElement的
     if(this.props.refreshLoading) return
     this.props.resetState()
     this.props.updateLoadingState({

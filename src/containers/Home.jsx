@@ -215,9 +215,7 @@ class Home extends Component {
 Home.propTypes = {
   theme: PropTypes.string,
   version: PropTypes.string,
-  htid: PropTypes.string,
   platform: PropTypes.string,
-  account: PropTypes.string,
   tabIsFixed: PropTypes.bool,
   activeHomeTabIndex: PropTypes.number,
 }
@@ -225,9 +223,7 @@ const mapStateToProps = (state) => {
   return {
     theme: state.pageConfig.theme,            // 主题
     version: state.pageConfig.version,        // 版本
-    htid: state.pageConfig.htid,              // 用户id
     platform: state.pageConfig.platform,      // 安卓或ios
-    account: state.pageConfig.account,        // account 没用到
     tabIsFixed: state.pageConfig.tabIsFixed,  // 控制是否固定头
     activeHomeTabIndex: state.tab.tabIndexData.activeHomeTabIndex, // 控制是否显示固定optional头
   }
