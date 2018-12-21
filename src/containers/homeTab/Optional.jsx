@@ -22,8 +22,8 @@ export class Optional extends Component {
   constructor(props) {
     super(); //可以不给props
     this.state = {
-      mySwiper: null,
     }
+    this.mySwiper = null
   }
   componentDidMount() {
     const that = this
@@ -40,15 +40,22 @@ export class Optional extends Component {
           }})
       }
     })
-    this.setState({ mySwiper: mySwiper })
+    this.mySwiper = mySwiper
   }
   componentWillUpdate(props,state) {
     this.watchActiveHomeIndex(props,state)
   }
+  componentDidUpdate(props, state) {
+    if(this.props.callBackHome!==props.callBackHome) {
+      if(this.mySwiper){
+        this.mySwiper.update({ updateTranslate:false })
+      }
+    }
+  }
   watchActiveHomeIndex(props,state) {
     if(props.activeOptionalTabIndex !== this.props.activeOptionalTabIndex) {
-      if(state.mySwiper) {
-        state.mySwiper.slideTo(props.activeOptionalTabIndex, 100, false)
+      if(this.mySwiper) {
+        this.mySwiper.slideTo(props.activeOptionalTabIndex, 100, false)
       }
     }
   }
@@ -91,6 +98,7 @@ const mapStateToProps = (state) => ({
   whichLoading: state.list.interfaceState.whichLoading,                     //监听tab已切换，来刷新当前列表数据 使刷新状态为true
   activeOptionalTabIndex: state.tab.tabIndexData.activeOptionalTabIndex,            //当点击时，swiper要根据index进行滚动
   activeHomeTabIndex: state.tab.tabIndexData.activeHomeTabIndex,            //当点击时，swiper要根据index进行滚动
+  callBackHome: state.pageConfig.callBackHome
 })
 
 const mapDispatchToProps = dispatch => {

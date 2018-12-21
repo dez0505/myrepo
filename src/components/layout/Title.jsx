@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Title.scss'
-const topicPic = require('../../images/home/title.png')
+const topicPic = require('../../images/title-images/title.png')
 // const topicPic = require('../../images/home/title-red.png')
 class Title extends Component {
     constructor(props) {

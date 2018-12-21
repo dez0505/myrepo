@@ -69,13 +69,11 @@ class BetterScroll extends Component {
     })
     // 上拉加载
     this.scroll.on('pullingUp', () => {
-      const {isNoMoreData, isNoData, whichLoading, whichLoadedFail, refreshLoading, loadLoading } = this.props
-      if(!isNoMoreData && !isNoData && whichLoading!=='more' && !whichLoadedFail && !refreshLoading && !loadLoading) {
+      if(this.hasLoadMore('model') && !this.props.loadLoading) {
         this.props.updateLoadingState({loadLoading: true}) // 更新refreshLoading 表示要home一些数据要重新请求了
       } else {
          this.scroll.finishPullUp()
       }
-     
     })
     // 监听scroll事件
     this.scroll.on('scroll', (pos) => {
@@ -137,6 +135,15 @@ class BetterScroll extends Component {
     // 代理better-scroll的scrollToElement方法
     this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
   }
+  hasLoadMore(type='view') {
+    // 没有更多、没有数据、more、加载失败、refreshLoading、loadLoading 都得为false
+    const {isNoMoreData, isNoData, whichLoading, whichLoadedFail, refreshLoading, loadLoading } = this.props
+    if (type==='view') {
+      return !isNoData && whichLoading!=='more' && !whichLoadedFail && !refreshLoading 
+    } else {
+      return !isNoMoreData && !isNoData && whichLoading!=='more' && !whichLoadedFail && !refreshLoading && !loadLoading
+    }
+  }
   render() {
     const arrowClassName = 'arrow ' + this.state.topIconDirection 
     const botText = this.props.loadLoading ? '疯狂加载中...' : this.props.isNoMoreData ? '没有更多的记录了...' : '上拉加载更多...'
@@ -159,7 +166,7 @@ class BetterScroll extends Component {
           </div>
         </div>
         {this.props.children}
-        <div className="load-box" style={{ display: this.props.isNoData || this.props.whichLoadedFail || this.props.whichLoading==='more' || this.props.refreshLoading? 'none' : null }}>
+        <div className="load-box" style={{ display : this.hasLoadMore('view') ? null : 'none' }}>
           <div className="scroll-load">
             <div className="bottom-icon">
               <Icon style={{ display: this.props.isNoMoreData || this.props.isNoData ? 'none' : null }} type='loading' text='loading' />

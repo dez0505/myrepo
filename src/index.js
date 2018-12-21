@@ -38,6 +38,7 @@ window.updateLinster = function (market = market1) {
 }
 // 主题
 window.changeTheme = function (theme) {
+  store.dispatch(updatePageConfig({callBackHome:!store.getState().pageConfig.callBackHome}))
   store.dispatch(updatePageConfig({theme}))
 }
 // 改变url路由

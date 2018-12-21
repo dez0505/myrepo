@@ -1,5 +1,5 @@
 @import '../../styles/base.scss';
-// tab列表
+// tab-images列表
 .tab-list {
   margin: 0 Px(24);
   .list-item {
@@ -39,28 +39,27 @@
         margin-left: Px(10);
       }
       .stock-box{
-        display: flex;
-        align-items: center;
+        // display: flex;
+        // align-items: center;
       }
       .key-word {
         color: #ea3e34;
-        display: flex;
-        align-items: center;
+        // display: flex;
+        // align-items: center;
         .up-icon {
-          background: url('../../images/tabMenu-images/arrow-circle-up.png') no-repeat center;
+          background: url('../../images/tab-images/arrow-circle-up.png') no-repeat center;
           display: inline-block;
-          width: 14px;
-          height: 14px;
+          width: 13px;
+          height: 13px;
+          vertical-align:-2px;
           margin-right:Px(10);
-          margin-bottom:Px(5);
-          line-height: 1.2;
           background-size: 100% 100%;
         }
       }
       .key-word.down {
         color: #16700d;
         .up-icon {
-          background: url('../../images/tabMenu-images/arrow-circle-down.png') no-repeat center;
+          background: url('../../images/tab-images/arrow-circle-down.png') no-repeat center;
           background-size: 100% 100%;
         }
       }

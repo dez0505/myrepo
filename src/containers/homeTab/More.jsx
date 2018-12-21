@@ -13,19 +13,19 @@ export class More extends Component {
     this.state = {
       moreList: [
       {
-        url: require('../../images/tabMenu-images/more_caihong.png'),
+        url: require('../../images/tab-images/more_caihong.png'),
         title: '彩虹内参',
         code: '10006',
         content: ['早安谍报、事件驱动、涨停榜单', '海通为您提供专业的决策内参']
       },
       {
-        url: require('../../images/tabMenu-images/more_methods.png'),
+        url: require('../../images/tab-images/more_methods.png'),
         title: '港股策略',
         code: '10038',
         content: ['大事直播、港股淘金', '把最新最全的港股通资讯']
       },
       {
-        url: require('../../images/tabMenu-images/more_autor.png'),
+        url: require('../../images/tab-images/more_autor.png'),
         title: '主编精选',
         code: '10114',
         content: ['一流国际化财经媒体', '为您提供全球市场专业级资讯']

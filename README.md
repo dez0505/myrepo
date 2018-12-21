@@ -42,3 +42,19 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+刷新状态的控制：
+# 下拉刷新首页
+1、条件 initLoading 
+2、true  ==》 finishPullDown       逻辑   
+2、false      
+3、重置列表 reset              
+4、开始改变initLoading initLoading=false  
+5、条件   whichLoading  
+6、!=more ==》 initHomeApi ==》 refreshLoading = true      
+6、== more ==》 initHomeApi   如果more 不刷新列表
+# 列表刷新
+2、refreshLoading
+# 加载更多
+1、loadLoading

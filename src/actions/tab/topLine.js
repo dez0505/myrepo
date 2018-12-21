@@ -66,11 +66,11 @@ export default function getTopLineList(type) {
         setStore('topLineHistory.stickData', [])
         if (stickData.Status === 200) {
           setStore('topLineHistory.stickData', stickData.TopNews)
-          stockParams = {
-            ...stockParams, ...{
-              lastHashId: stickData.HashId
-            }
-          }
+          // stockParams = {
+          //   ...stockParams, ...{
+          //     lastHashId: stickData.HashId
+          //   }
+          // }
         }
         // 合并头条与置顶
         const topList = getStore('topLineHistory.data')

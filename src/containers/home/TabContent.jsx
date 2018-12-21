@@ -29,8 +29,8 @@ class TabContent extends Component {
   constructor(props) {
     super(); //可以不给props
     this.state = {
-      mySwiper: null,
     }
+    this.mySwiper = null
   }
   componentDidMount() {
     const that = this
@@ -45,7 +45,7 @@ class TabContent extends Component {
         }})
       }
     })
-    this.setState({ mySwiper: mySwiper })
+    this.mySwiper = mySwiper
   }
   componentWillReceiveProps(props) {
     this.watchWhichLoading(props)
@@ -269,14 +269,16 @@ class TabContent extends Component {
   // 监听index让swiper滑动
   watchActiveHomeIndex(props,state) {
     if(props.activeHomeTabIndex !== this.props.activeHomeTabIndex) {
-      if(state.mySwiper) {
-        state.mySwiper.slideTo(props.activeHomeTabIndex, 100, false)
+      if(this.mySwiper) {
+        this.mySwiper.slideTo(props.activeHomeTabIndex, 100, false)
       }
     }
   }
-  componentDidUpdate() {
-    if(this.state.mySwiper){
-      this.state.mySwiper.update()
+  componentDidUpdate(props) {
+    if(this.props.callBackHome!==props.callBackHome) {
+      if(this.mySwiper){
+        this.mySwiper.update({ updateTranslate:false })
+      }
     }
   }
   renderLive(whichLoading,listData) {
@@ -334,7 +336,8 @@ const mapStateToProps = (state) => ({
   loadLoading: state.list.loadingState.loadLoading,                         //根据loadLoading为true再根据whichLoading来加载更多哪个接口
   market: state.nativeData.market,                         //根据loadLoading为true再根据whichLoading来加载更多哪个接口
   optionalCode: state.nativeData.optionalCode,              //根据optionalCode改变来进行重新请求数据
-  updateMarket: state.pageConfig.updateMarket
+  updateMarket: state.pageConfig.updateMarket,
+  callBackHome: state.pageConfig.callBackHome
 })
 
 const mapDispatchToProps = dispatch => ({

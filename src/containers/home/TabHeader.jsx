@@ -67,7 +67,6 @@ class TabHeader extends Component {
         this.handleSwitchOptionalIndex(0,false)
         break;
       case 4:
-        console.log(1111)
         this.props.updateInterfaceState('more')
         break;
       default:
