@@ -5,8 +5,4 @@ export function updateNativeData(data) {
     payload: data
   };
 }
-// export const addTodo = text => ({
-//   type: 'ADD_TODO',
-//   id: nextTodoId++,
-//   text
-// })
+

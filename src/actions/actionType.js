@@ -13,6 +13,5 @@ export const UPDATE_TAB_INDEX = "UPDATE_TAB_INDEX";
 
 //native
 export const UPDATE_NATIVE_DATA = "UPDATE_NATIVE_DATA";
-export const REFRESH_LIST_DATA = "REFRESH_LIST_DATA";
 
 

@@ -6,8 +6,3 @@ export function updatePageConfig(pageConfig) {
     pageConfig
   };
 }
-// export const addTodo = text => ({
-//   type: 'ADD_TODO',
-//   id: nextTodoId++,
-//   text
-// })
