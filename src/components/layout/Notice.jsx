@@ -13,10 +13,12 @@ class Notice extends Component {
     };
   }
   componentDidMount() {
-    this.setState({list: this.props.noticeList.map(item => item)},()=>{
-      setInterval(()=>{
+    const noticeList = this.props.noticeList
+    const list = noticeList.length !== 1 ? noticeList.map(item => item) : [...noticeList, ...noticeList]
+    this.setState({ list },()=>{
+      setTimeout(()=>{
         this.handleNoticeList()
-      },3000) 
+      }, 4800) 
     })
   }
   handleNoticeList() {
@@ -30,7 +32,10 @@ class Notice extends Component {
           list: newList
         })
         this.setState({isAnimate: false})
-      },1000)
+        setTimeout(()=>{
+          this.handleNoticeList()
+        }, 4800) 
+      }, 500)
     }
 
   }

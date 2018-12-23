@@ -151,6 +151,10 @@ export function getOptionalList (type, style) {
       }
       // 数据渲染
       if (type === 'init') {
+        // 切换时间过快时 ，由于列表的切换早已执行，所以listData早已清空，但接口访问到时，就未清空全局的数据了，所以数据可能与上次保持一致
+        dispatch(updateListData({
+          listData: []
+        }))
         dispatch(updateListData({
           listData: [...objData.dataReord]
         }))

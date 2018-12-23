@@ -15,7 +15,8 @@ export class Event extends Component {
   componentDidMount(props) {
     this.handleList(this.props)
   }
-  componentWillUpdate(props, state) {
+  componentWillReceiveProps(props) {
+    console.log(666666, props, this.props.list)
     if(props.list!==this.props.list){
       this.handleList(props)
     }
@@ -27,7 +28,6 @@ export class Event extends Component {
     const noRepeatDateArray = dateArray.filter((x, index, self) => self.indexOf(x) === index)
     const eventList = []
     for (let val of noRepeatDateArray) {
-      console.log(val)
       const array = list.filter(item => {
         return val === item.date
       })

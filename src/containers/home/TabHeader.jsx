@@ -42,7 +42,6 @@ class TabHeader extends Component {
   }
   // 改变当前Hometab的类型
   updateHomeWhichLoading (index) {
-    console.log(index)
     if(index!==3) {
       this.props.updateOptionalTabIndex(-1) // 归一
     }

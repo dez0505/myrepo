@@ -14,4 +14,7 @@ export const UPDATE_TAB_INDEX = "UPDATE_TAB_INDEX";
 //native
 export const UPDATE_NATIVE_DATA = "UPDATE_NATIVE_DATA";
 
+// fetch
+export const UPDATE_LOADED_STATE = "UPDATE_LOADED_STATE";
+
 

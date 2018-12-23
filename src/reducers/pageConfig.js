@@ -21,10 +21,8 @@ const initialState = {
   callBackHome: false                                   //控制是否切换了并重新回到当前页面  与changeTheem绑定
 }
 export default function pageConfig(state = initialState, action) {
-  console.log(action.type)
   switch (action.type) {
     case UPDATE_PAGECONFIG:
-      console.log(action.pageConfig)
       return  { ...state, ...action.pageConfig } // ===> Object.assign({theme: ''},{theme: 'whitle'}) 
     default:
       return state

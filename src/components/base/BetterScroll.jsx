@@ -27,19 +27,15 @@ class BetterScroll extends Component {
   componentWillReceiveProps(nextProps) {
     const { initLoading, loadLoading, refreshLoading, whichLoading } = this.props
     if (!nextProps.initLoading && (nextProps.initLoading !==initLoading)) {
-      console.log(22222)
         this._pullingDownUpComplete()
     }
     if(!nextProps.loadLoading && (nextProps.loadLoading !== loadLoading)) {
-      console.log(1111)
       this._pullingDownUpComplete()
     }
     if((nextProps.updateRefreshLoading !== this.props.updateRefreshLoading || whichLoading !== nextProps.whichLoading) && nextProps.tabIsFixed ) {
-      console.log(33333)
       this.scrollToElement('#listContent')
     }
     if(!nextProps.refreshLoading && (nextProps.refreshLoading !== refreshLoading)) {
-      console.log(4444)
       this._pullingDownUpComplete()
     }
   }
@@ -112,7 +108,6 @@ class BetterScroll extends Component {
       }
     })
     this.scroll.on('refresh', () => {
-      console.log(1111)
     })
   }
   _pullingDownUpComplete () {

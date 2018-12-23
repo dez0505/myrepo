@@ -66,7 +66,7 @@ class TabContent extends Component {
   }
   // 监听optionCode是否改变执行相关逻辑 刷新自选列表
   watchOptionalCode(props) {
-    if(props.activeHomeTabIndex!==3) return
+    if(props.activeHomeTabIndex !== 3) return
     if(props.optionalCode!==this.props.optionalCode) {
       // alert(props.optionalCode+'____'+this.props.optionalCode)
       this.props.updatePageConfig({ updateRefreshLoading: !this.props.updateRefreshLoading })
@@ -118,8 +118,14 @@ class TabContent extends Component {
     const isTrue = array.some((item) => {
         return item === whichLoading
     })
+    if(listData.length === this.props.listData.length) {
+     const listIsTrue = listData.every((item,index,array) => {
+        return item.Id === listData[index].Id
+       });
+    }
     if( !listData.length || !isTrue ) return
     if(listData.length !== this.props.listData.length || whichLoading !== this.props.whichLoading) {
+      // if(listData.length !== this.props.listData.length || whichLoading !== this.props.whichLoading) {
       switch (whichLoading) {
         case 'topLine':
           const hasStocksArray = listData.filter(
@@ -128,6 +134,8 @@ class TabContent extends Component {
           const scoketCodeArray = hasStocksArray.map(
             item => item.Stocks[0].Symbol
           )
+          window.updateLinster()
+          console.log('sendIos', whichLoading, listData)
           if (window && window.quote && window.quote.requestQuote) {
             window.quote.requestQuote(scoketCodeArray)
           } else if (
@@ -145,6 +153,8 @@ class TabContent extends Component {
             item => item.tradingCode
           )
           const filterArray = stockCodeArray.filter((x, index, self) => self.indexOf(x) === index)
+          window.updateLinster()
+          console.log('sendIos', whichLoading, filterArray)
           if (window && window.quote && window.quote.requestQuote) {
             window.quote.requestQuote(filterArray)
           } else if (
@@ -172,6 +182,7 @@ class TabContent extends Component {
     })
     if (!listData.length || !isTrue) return
     if (updateMarket !== this.props.updateMarket) {
+      console.log('request')
       const newArray = deepClone(listData) 
       const array = market.map(item=>item)
       switch(whichLoading) {
@@ -193,6 +204,7 @@ class TabContent extends Component {
             }
           }
       }
+      console.log(8888, listData, newArray)
       this.props.updateListData({listData: newArray})
     }
   }
@@ -276,7 +288,7 @@ TabContent.propTypes = {
   scrollHeight: PropTypes.number,
   refreshLoading: PropTypes.bool,
   loadLoading: PropTypes.bool,
-  market: PropTypes.object,
+  market: PropTypes.any,
   optionalCode: PropTypes.string,
   updateMarket: PropTypes.bool,
   callBackHome: PropTypes.bool,
