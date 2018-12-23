@@ -7,6 +7,9 @@ import {
   updateListData,
   updateInterfaceParams
 } from '../list'
+import {
+  updateLoadedState
+} from '../index'
 import { handleData } from '@/utils/common'
 
 export function getNewsList (type) {
@@ -14,6 +17,11 @@ export function getNewsList (type) {
     const listData = getState().list.listData
     const interfaceParams = getState().list.interfaceParams
     const TradingCode = getState().nativeData.optionalCode
+    const newsLoadedState = getState().fetch.news
+    if(newsLoadedState) return
+    dispatch(updateLoadedState({
+      news: true
+    }))
     try {
       // 入参
       const {
@@ -29,6 +37,9 @@ export function getNewsList (type) {
       const {
         data
       } = await getOptionalNews(optionalParams)
+      dispatch(updateLoadedState({
+        news: false
+      }))
       // 判断是空或没有更多
       const whichLoading = getState().list.interfaceState.whichLoading
       if (whichLoading !== 'news') return
@@ -79,6 +90,9 @@ export function getNewsList (type) {
         initLoading: false,
         refreshLoading: false
       }))
+      dispatch(updateLoadedState({
+        news: false
+      }))
       dispatch(updateInterfaceState({
         whichLoadedFail: 'news'
       }))
@@ -90,6 +104,12 @@ export function getOptionalList (type, style) {
     const listData = getState().list.listData
     const interfaceParams = getState().list.interfaceParams
     const TradingCode = getState().nativeData.optionalCode
+    const loadedState = getState().fetch[style]
+    console.log(343443,style, loadedState)
+    if(loadedState) return
+    dispatch(updateLoadedState({
+      [style]: true
+    }))
     try {
       // 入参
       const {
@@ -131,6 +151,9 @@ export function getOptionalList (type, style) {
         default:
           break;
       }
+      dispatch(updateLoadedState({
+        [style]: false
+      }))
       const activeWhichLoading = getState().list.interfaceState.whichLoading
       if (activeWhichLoading !== style) return
       // 判断是空或没有更多
@@ -184,6 +207,9 @@ export function getOptionalList (type, style) {
         loadLoading: false,
         initLoading: false,
         refreshLoading: false
+      }))
+      dispatch(updateLoadedState({
+        [style]: false
       }))
       dispatch(updateInterfaceState({
         whichLoadedFail: 'qus'

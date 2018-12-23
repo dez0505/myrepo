@@ -10,7 +10,6 @@ const initialState = { // 上次请求的各个接口是否加载完成了
   notice: false,
   report: false
 }
-
 export default (state = initialState, { type, payload }) => {
   switch (type) {
   case UPDATE_LOADED_STATE:

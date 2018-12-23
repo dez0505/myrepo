@@ -118,13 +118,8 @@ class TabContent extends Component {
     const isTrue = array.some((item) => {
         return item === whichLoading
     })
-    if(listData.length === this.props.listData.length) {
-     const listIsTrue = listData.every((item,index,array) => {
-        return item.Id === listData[index].Id
-       });
-    }
     if( !listData.length || !isTrue ) return
-    if(listData.length !== this.props.listData.length || whichLoading !== this.props.whichLoading) {
+    if(listData.length !== this.props.listData.length) {
       // if(listData.length !== this.props.listData.length || whichLoading !== this.props.whichLoading) {
       switch (whichLoading) {
         case 'topLine':

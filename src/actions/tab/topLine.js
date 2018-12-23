@@ -6,6 +6,9 @@ import {
   updateListData,
   updateInterfaceParams
 } from '../list'
+import {
+  updateLoadedState
+} from '../index'
 // api
 import {
   getTopLineData,
@@ -25,6 +28,11 @@ export default function getTopLineList(type) {
     const listData = getState().list.listData
     const lastHashId = stockParams.lastHashId
     const interfaceParams = getState().list.interfaceParams
+    const loadedState = getState().fetch.topLine
+    if(loadedState) return
+    dispatch(updateLoadedState({
+      topLine: true
+    }))
     try {
       if (type === 'init') {
         // 缓存没有时，也要将其设为空数组
@@ -76,6 +84,9 @@ export default function getTopLineList(type) {
         const topList = getStore('topLineHistory.data')
         const stockList = getStore('topLineHistory.stickData')
         const stockTopList = [...stockList, ...topList]
+        dispatch(updateLoadedState({
+          topLine: false
+        }))
         // 如果之间其他接口返回了，就不执行这个接口返回的任何逻辑
         const whichLoading = getState().list.interfaceState.whichLoading
         if (whichLoading !== 'topLine') return
@@ -158,6 +169,9 @@ export default function getTopLineList(type) {
         loadLoading: false,
         initLoading: false,
         refreshLoading: false
+      }))
+      dispatch(updateLoadedState({
+        topLine: false
       }))
       dispatch(updateInterfaceState({
         whichLoadedFail: 'topLine'

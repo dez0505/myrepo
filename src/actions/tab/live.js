@@ -7,8 +7,11 @@ import {
   updateListData,
   updateInterfaceParams
 } from '../list'
+import {
+  updateLoadedState
+} from '../index'
 import { updatePageConfig } from '../index'
-import { parseTime } from '@/utils/common'
+import { parseTime } from '../../utils/common'
  
 let params= {
   timeStamp: 0,
@@ -19,6 +22,11 @@ export default  function getLiveList (type, style) {
   return async (dispatch, getState) => {
     const listData = getState().list.listData
     const interfaceParams = getState().list.interfaceParams
+    const liveLoadedState = getState().fetch.live
+    if(liveLoadedState) return
+    dispatch(updateLoadedState({
+      live: true
+    }))
     try {
       // 入参
       if(type==='init') {
@@ -45,6 +53,9 @@ export default  function getLiveList (type, style) {
         } = await getAllLiveData(liveParams)
         liveList = data
       }
+      dispatch(updateLoadedState({
+        live: false
+      }))
       const whichLoading = getState().list.interfaceState.whichLoading
       if(whichLoading !== 'live' + style) return
       // 判断是空或没有更多
@@ -107,6 +118,9 @@ export default  function getLiveList (type, style) {
         loadLoading: false,
         initLoading: false,
         refreshLoading: false
+      }))
+      dispatch(updateLoadedState({
+        live: false
       }))
       dispatch(updateInterfaceState({
         whichLoadedFail: 'live' + style

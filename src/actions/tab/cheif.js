@@ -7,6 +7,9 @@ import {
   updateListData,
   updateInterfaceParams
 } from '../list'
+import {
+  updateLoadedState
+} from '../index'
 const params = {
     typeCode: 2,
     subtypeCode: 51
@@ -15,6 +18,11 @@ export default function getCheifList (type) {
   return async (dispatch, getState) => {
     const listData = getState().list.listData
     const interfaceParams = getState().list.interfaceParams
+    const cheifLoadedState = getState().fetch.cheif
+    if(cheifLoadedState) return
+    dispatch(updateLoadedState({
+      cheif: true
+    }))
     try {
       // 入参
       const {
@@ -30,6 +38,9 @@ export default function getCheifList (type) {
       const {
         data
       } = await getCheifData(cheifParams)
+      dispatch(updateLoadedState({
+        cheif: false
+      }))
       // 判断是空或没有更多
       const whichLoading = getState().list.interfaceState.whichLoading
       if (whichLoading !== 'cheif') return
@@ -76,6 +87,9 @@ export default function getCheifList (type) {
         loadLoading: false,
         initLoading: false,
         refreshLoading: false
+      }))
+      dispatch(updateLoadedState({
+        cheif: false
       }))
       dispatch(updateInterfaceState({
         whichLoadedFail: 'cheif'

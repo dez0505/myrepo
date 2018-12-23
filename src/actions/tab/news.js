@@ -7,6 +7,9 @@ import {
   updateListData,
   updateInterfaceParams
 } from '../list'
+import {
+  updateLoadedState
+} from '../index'
 const params = {
     typeCode: 2,
     subtypeCode: 51
@@ -15,6 +18,11 @@ export default function getNewsList (type) {
   return async (dispatch, getState) => {
     const listData = getState().list.listData
     const interfaceParams = getState().list.interfaceParams
+    const newsLoadedState = getState().fetch.news
+    if(newsLoadedState) return
+    dispatch(updateLoadedState({
+      news: true
+    }))
     try {
       // 入参
       const {
@@ -30,6 +38,9 @@ export default function getNewsList (type) {
       const {
         data
       } = await getOptionalNews(cheifParams)
+      dispatch(updateLoadedState({
+        news: false
+      }))
       // 判断是空或没有更多
       const whichLoading = getState().list.interfaceState.whichLoading
       if (whichLoading !== 'cheif') return
@@ -77,6 +88,9 @@ export default function getNewsList (type) {
         loadLoading: false,
         initLoading: false,
         refreshLoading: false
+      }))
+      dispatch(updateLoadedState({
+        news: false
       }))
       dispatch(updateInterfaceState({
         whichLoadedFail: 'news'
