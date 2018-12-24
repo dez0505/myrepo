@@ -206,7 +206,7 @@ module.exports = {
           // scss配置
           { 
             test: /\.scss$/, 
-            loaders: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'], 
+            loaders: ['style-loader', 'css-loader', 'sass-loader'], 
           },
           {
             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
