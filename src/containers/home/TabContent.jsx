@@ -26,7 +26,10 @@ class TabContent extends Component {
   constructor(props) {
     super(); //可以不给props
     this.state = {
+      
     }
+    this.reveiveCount = 0
+    this.renderCount = 0
     this.mySwiper = null
   }
   componentDidMount() {
@@ -44,7 +47,15 @@ class TabContent extends Component {
     })
     this.mySwiper = mySwiper
   }
+  shouldComponentUpdate(props, state) {
+    if(props.listData !== this.props.listData || props.whichLoading !==this.props.whichLoading) {
+      return true
+    } else {
+      return false
+    }
+  }
   componentWillReceiveProps(props) {
+    this.reveiveCount++
     this.watchWhichLoading(props)
     this.watchLoading(props, 'refreshLoading', 'init')
     this.watchLoading(props, 'loadLoading', 'load')
@@ -129,8 +140,8 @@ class TabContent extends Component {
           const scoketCodeArray = hasStocksArray.map(
             item => item.Stocks[0].Symbol
           )
-          window.updateLinster()
-          console.log('sendIos', whichLoading, listData)
+          // window.updateLinster()
+          // console.log('sendIos', whichLoading, listData)
           if (window && window.quote && window.quote.requestQuote) {
             window.quote.requestQuote(scoketCodeArray)
           } else if (
@@ -148,8 +159,8 @@ class TabContent extends Component {
             item => item.tradingCode
           )
           const filterArray = stockCodeArray.filter((x, index, self) => self.indexOf(x) === index)
-          window.updateLinster()
-          console.log('sendIos', whichLoading, filterArray)
+          // window.updateLinster()
+          // console.log('sendIos', whichLoading, filterArray)
           if (window && window.quote && window.quote.requestQuote) {
             window.quote.requestQuote(filterArray)
           } else if (
@@ -247,6 +258,7 @@ class TabContent extends Component {
     }
   }
   render() {
+    this.renderCount++
     const { whichLoading, listData } = this.props
     const minHeightStyle = {
       minHeight: this.props.scrollHeight - 38
