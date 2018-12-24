@@ -94,6 +94,7 @@ module.exports = {
     // the line below with these two lines if you prefer the stock client:
     // require.resolve('webpack-dev-server/client') + '?/',
     // require.resolve('webpack/hot/dev-server'),
+    require.resolve('babel-polyfill'),
     require.resolve('react-dev-utils/webpackHotDevClient'),
     // Finally, this is your app's code:
     paths.appIndexJs,
@@ -205,7 +206,7 @@ module.exports = {
           // scss配置
           { 
             test: /\.scss$/, 
-            loaders: ['style-loader', 'css-loader', 'sass-loader'], 
+            loaders: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'], 
           },
           {
             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
