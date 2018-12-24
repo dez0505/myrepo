@@ -18,12 +18,14 @@ export default function getNewsList (type) {
   return async (dispatch, getState) => {
     const listData = getState().list.listData
     const interfaceParams = getState().list.interfaceParams
-    const newsLoadedState = getState().fetch.news
-    if(newsLoadedState) return
-    dispatch(updateLoadedState({
-      news: true
-    }))
     try {
+      if(type === 'init') {
+        const newsLoadedState = getState().fetch.news
+        if(newsLoadedState) return
+        dispatch(updateLoadedState({
+          news: true
+        }))
+      }
       // 入参
       const {
         pageSize,
@@ -38,9 +40,11 @@ export default function getNewsList (type) {
       const {
         data
       } = await getOptionalNews(cheifParams)
-      dispatch(updateLoadedState({
-        news: false
-      }))
+      if(type === 'init') {
+        dispatch(updateLoadedState({
+          news: false
+        }))
+      }
       // 判断是空或没有更多
       const whichLoading = getState().list.interfaceState.whichLoading
       if (whichLoading !== 'cheif') return

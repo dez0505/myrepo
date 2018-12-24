@@ -17,12 +17,15 @@ export function getNewsList (type) {
     const listData = getState().list.listData
     const interfaceParams = getState().list.interfaceParams
     const TradingCode = getState().nativeData.optionalCode
-    const newsLoadedState = getState().fetch.news
-    if(newsLoadedState) return
-    dispatch(updateLoadedState({
-      news: true
-    }))
+   
     try {
+      if(type === 'init') {
+        const newsLoadedState = getState().fetch.news
+        if(newsLoadedState) return
+        dispatch(updateLoadedState({
+          news: true
+        }))
+      }
       // 入参
       const {
         pageSize,
@@ -37,9 +40,11 @@ export function getNewsList (type) {
       const {
         data
       } = await getOptionalNews(optionalParams)
-      dispatch(updateLoadedState({
-        news: false
-      }))
+      if(type === 'init') {
+        dispatch(updateLoadedState({
+          news: false
+        }))
+      }
       // 判断是空或没有更多
       const whichLoading = getState().list.interfaceState.whichLoading
       if (whichLoading !== 'news') return
@@ -104,13 +109,14 @@ export function getOptionalList (type, style) {
     const listData = getState().list.listData
     const interfaceParams = getState().list.interfaceParams
     const TradingCode = getState().nativeData.optionalCode
-    const loadedState = getState().fetch[style]
-    console.log(343443,style, loadedState)
-    if(loadedState) return
-    dispatch(updateLoadedState({
-      [style]: true
-    }))
     try {
+      if(type === 'init') {
+        const loadedState = getState().fetch[style]
+        if(loadedState) return
+        dispatch(updateLoadedState({
+          [style]: true
+        }))
+      }
       // 入参
       const {
         pageSize,
@@ -151,9 +157,11 @@ export function getOptionalList (type, style) {
         default:
           break;
       }
-      dispatch(updateLoadedState({
-        [style]: false
-      }))
+      if(type === 'init') {
+        dispatch(updateLoadedState({
+          [style]: false
+        }))
+      }
       const activeWhichLoading = getState().list.interfaceState.whichLoading
       if (activeWhichLoading !== style) return
       // 判断是空或没有更多

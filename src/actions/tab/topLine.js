@@ -28,13 +28,13 @@ export default function getTopLineList(type) {
     const listData = getState().list.listData
     const lastHashId = stockParams.lastHashId
     const interfaceParams = getState().list.interfaceParams
-    const loadedState = getState().fetch.topLine
-    if(loadedState) return
-    dispatch(updateLoadedState({
-      topLine: true
-    }))
     try {
       if (type === 'init') {
+        const loadedState = getState().fetch.topLine
+        if(loadedState) return
+        dispatch(updateLoadedState({
+          topLine: true
+        }))
         // 缓存没有时，也要将其设为空数组
         if (!getStore('topLineHistory.data')) {
           setStore('topLineHistory.data', [])
@@ -118,7 +118,6 @@ export default function getTopLineList(type) {
           pageNum: interfaceParams.pageNum + 1
         }))
       } else {
-
         await new Promise((resolve, reject) => {
           setTimeout(() => {
             resolve()

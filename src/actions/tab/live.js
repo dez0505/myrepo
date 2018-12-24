@@ -22,14 +22,15 @@ export default  function getLiveList (type, style) {
   return async (dispatch, getState) => {
     const listData = getState().list.listData
     const interfaceParams = getState().list.interfaceParams
-    const liveLoadedState = getState().fetch.live
-    if(liveLoadedState) return
-    dispatch(updateLoadedState({
-      live: true
-    }))
+    
     try {
       // 入参
       if(type==='init') {
+        const liveLoadedState = getState().fetch.live
+        if(liveLoadedState) return
+        dispatch(updateLoadedState({
+          live: true
+        }))
         params ={...params, ...{
           timeStamp: 0,
           direction: 0
@@ -53,9 +54,11 @@ export default  function getLiveList (type, style) {
         } = await getAllLiveData(liveParams)
         liveList = data
       }
-      dispatch(updateLoadedState({
-        live: false
-      }))
+      if(type === 'init') {
+        dispatch(updateLoadedState({
+          live: false
+        }))
+      }
       const whichLoading = getState().list.interfaceState.whichLoading
       if(whichLoading !== 'live' + style) return
       // 判断是空或没有更多

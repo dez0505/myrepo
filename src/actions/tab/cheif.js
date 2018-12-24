@@ -18,12 +18,15 @@ export default function getCheifList (type) {
   return async (dispatch, getState) => {
     const listData = getState().list.listData
     const interfaceParams = getState().list.interfaceParams
-    const cheifLoadedState = getState().fetch.cheif
-    if(cheifLoadedState) return
-    dispatch(updateLoadedState({
-      cheif: true
-    }))
+    
     try {
+      if(type==='init') {
+        const cheifLoadedState = getState().fetch.cheif
+        if(cheifLoadedState) return
+        dispatch(updateLoadedState({
+          cheif: true
+        }))
+      }
       // 入参
       const {
         pageSize,
@@ -38,9 +41,11 @@ export default function getCheifList (type) {
       const {
         data
       } = await getCheifData(cheifParams)
-      dispatch(updateLoadedState({
-        cheif: false
-      }))
+      if(type==='init') {
+        dispatch(updateLoadedState({
+          cheif: false
+        }))
+      }
       // 判断是空或没有更多
       const whichLoading = getState().list.interfaceState.whichLoading
       if (whichLoading !== 'cheif') return
