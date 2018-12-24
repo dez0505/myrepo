@@ -51,9 +51,9 @@ class TopLine extends Component {
     return (
       <div className='tab-list'>
         {
-          this.props.topLineList.map((item, index) => {
+          this.props.topLineList.map((item) => {
             return (
-              <div className="list-item bot-border" onClick={()=>this.goToApp(item)} key={index} >
+              <div className="list-item bot-border" onClick={()=>this.goToApp(item)} key={item.Id} >
                 <div className="title">
                   {item.Title}
                 </div>

@@ -26,9 +26,9 @@ class Cheif extends Component {
     return (
       <div className='tab-list'>
         {
-          this.props.cheifList.map((item, index) => {
+          this.props.cheifList.map((item) => {
             return (
-              <div className="list-item bot-border" key={index}  onClick ={()=>goToAPP(item)}>
+              <div className="list-item bot-border" key={item.Id}  onClick ={()=>goToAPP(item)}>
                 <div className="title">
                   {item.Title}
                 </div>

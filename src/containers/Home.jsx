@@ -182,6 +182,7 @@ class Home extends Component {
     }
   }
   render() {
+    console.log('home渲染')
     const {theme} = this.props
     const {adsListData,noticeListData,liveFmList,refreshTime,navMenusData,topicListData,innerHeight} = this.state
     const liveFmListProps = {theme,liveFmList}
@@ -212,6 +213,14 @@ class Home extends Component {
     ) 
   }
 }
+// 为属性指定默认值:
+Home.defaultProps = {
+  theme: '',
+  version: '',
+  platform: '',
+  tabIsFixed: false,
+  activeHomeTabIndex: 0,
+};
 Home.propTypes = {
   theme: PropTypes.string,
   version: PropTypes.string,

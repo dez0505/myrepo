@@ -87,7 +87,7 @@ export class Live extends Component {
             </div>
           </div>
           {
-            this.props.liveList.map((item,index)=>{
+            this.props.liveList.map((item, index)=>{
               const contentClass = item.isSpread?"too-long":"no-too-long"
               return (
                 <div className="live-item" key={index}>

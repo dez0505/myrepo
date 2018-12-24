@@ -22,7 +22,7 @@ export class Notice extends Component {
     return (
       <div className='notice-tab-box'>
       {
-        this.props.list.map((item,index)=>{
+        this.props.list.map((item, index)=>{
           const stockClassName = parseFloat(item.stockNum)>=0 ? 'stock-num up' : 'stock-num down'
           return(
             <div className="notice-item bot-border" key={index} onClick={() =>{this.goToApp(item)}}>

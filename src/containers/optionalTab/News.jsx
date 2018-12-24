@@ -19,10 +19,11 @@ export class News extends Component {
     }
   }
   render() {
+    console.log('newsRender')
     return (
       <div className='news-box'>
       {
-        this.props.list.map((item,index)=>{
+        this.props.list.map((item, index)=>{
           const stockClassName = parseFloat(item.stockNum)>=0 ? 'stock-num up' : 'stock-num down'
           return(
             <div className="news-item bot-border" key={index} onClick={() =>{this.goToApp(item)}}>

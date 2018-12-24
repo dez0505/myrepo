@@ -151,15 +151,12 @@ export function parseTime (time, cFormat = '{y}-{m}-{d} {h}:{i}:{s}') {
   }
   const timestr = cFormat.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
     let value = formatObj[key]
-    console.log(3333, formatObj['a'])
     if (key === 'a') return ['日', '一', '二', '三', '四', '五', '六'][value]
     if (result.length > 0 && value < 10) {
       value = '0' + value
     }
-    console.log(value)
     return value || 0
   })
-  console.log(timestr)
   return timestr
 }
 /*

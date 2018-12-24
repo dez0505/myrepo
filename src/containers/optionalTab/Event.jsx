@@ -12,12 +12,15 @@ export class Event extends Component {
       eventList: [],
     }
   }
+  // static contextTypes = {
+  //   store: PropTypes.object,
+  // }
   componentDidMount(props) {
+    // console.log(this)
     this.handleList(this.props)
   }
   componentWillReceiveProps(props) {
-    console.log(666666, props, this.props.list)
-    if(props.list!==this.props.list){
+    if(props.list!==this.props.list && props.list.length){
       this.handleList(props)
     }
   }
@@ -48,6 +51,7 @@ export class Event extends Component {
     return parseTime(new Date(newTime), '{y}')
   }
   render() {
+    console.log(1111)
     const itemContentClassName = this.props.theme!=='night' ? 'item-content' : 'item-content night'
     const pointClassName = this.props.theme!=='night' ? 'point' : 'point night'
     const itemDateClassName = this.props.theme!=='night' ? 'item-date' : 'item-date night'
