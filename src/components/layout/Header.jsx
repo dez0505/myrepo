@@ -11,7 +11,7 @@ class Header extends Component {
   }
   render() {
     const headerStyle = {
-      height: this.props.titleheight + 'px'
+      height: this.props.titleheight || 48
     }
     return (
       <div className='header-box bot-border' style={headerStyle}>
