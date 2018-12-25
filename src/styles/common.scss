@@ -4,6 +4,7 @@ html,body,#root{
   &>div{
     height: 100%;
   }
+  font-family: Arial, Helvetica, sans-serif;
 }
 // 刚进入页面的loading
 #root .loading-icon{
@@ -31,8 +32,8 @@ html,body,#root{
 }
 // swiper 点的公共样式
 .swiper-pagination .swiper-pagination-bullet {
-  width: 5px !important;
-  height: 5px !important;
+  width: 4px !important;
+  height: 4px !important;
   border-radius: 50% !important;
   background-color: initial !important;
   border: 1px solid #fff !important;
