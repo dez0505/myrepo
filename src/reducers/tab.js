@@ -4,7 +4,7 @@ import {
 
 const initialState = {
   tabMenuData: {
-    HomeTabMenuList: [
+    homeTabMenuList: [
       '头条',
       '首席',
       '7×24',

@@ -124,7 +124,7 @@ class TabHeader extends Component {
   }
   render() {
     const tabClassName = this.props.type === 'home' ? 'tab-box home-tab bot-border' : 'tab-box optional-tab bot-border';
-    const menuList = this.props.type === 'home' ? this.props.HomeTabMenuList : this.props.optionalTabMenuList;
+    const menuList = this.props.type === 'home' ? this.props.homeTabMenuList : this.props.optionalTabMenuList;
     const activeIndex = this.props.type === 'home' ? this.props.activeHomeTabIndex : this.props.activeOptionalTabIndex;
     const selectClassName = this.props.theme === 'night' ? 'select-type night' : 'select-type'
     const optionalTeam = this.props.optionalTeam
@@ -156,7 +156,7 @@ class TabHeader extends Component {
 }
 
 TabHeader.propTypes = {
-  HomeTabMenuList: PropTypes.array,
+  homeTabMenuList: PropTypes.array,
   optionalTabMenuList: PropTypes.array,
   activeHomeTabIndex: PropTypes.number,
   activeOptionalTabIndex: PropTypes.number,
@@ -168,7 +168,7 @@ TabHeader.propTypes = {
 
 const mapStateToProps = (state,store) => {
   return {
-    HomeTabMenuList: state.tab.tabMenuData.HomeTabMenuList,
+    homeTabMenuList: state.tab.tabMenuData.homeTabMenuList,
     optionalTabMenuList: state.tab.tabMenuData.optionalTabMenuList,
     activeHomeTabIndex: state.tab.tabIndexData.activeHomeTabIndex,
     activeOptionalTabIndex: state.tab.tabIndexData.activeOptionalTabIndex,
