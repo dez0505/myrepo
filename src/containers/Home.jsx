@@ -181,6 +181,16 @@ class Home extends Component {
       )
     }
   }
+  shouldComponentUpdate(props, state) {
+    if(
+      props.version!==this.props.version
+      || props.platform!==this.props.platform
+      ) {
+        return false
+      } else {
+        return true
+      }
+  }
   render() {
     console.log('home渲染')
     const {theme} = this.props
