@@ -31,11 +31,13 @@ export class Live extends Component {
   }
   getEachItemIfTooLong (props) {
     if (props.liveList.length > 0) {
-      for (let val of props.liveList) {
-        val.isTooLongText=this.checkIfTooLong(val.title)
-        val.isSpread=this.checkIfTooLong(val.title)
-      }
-      const newLiveList = props.liveList
+      const newLiveList = [].concat(props.liveList)
+      newLiveList.forEach(element => {
+        element.isTooLongText=this.checkIfTooLong(element.title)
+        element.isSpread=this.checkIfTooLong(element.title)
+        console.log( element.isSpread, element.isTooLongText)
+      });
+      console.log(newLiveList)
       this.setState({
         newLiveList
       })
