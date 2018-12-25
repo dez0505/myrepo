@@ -97,11 +97,12 @@ class BetterScroll extends Component {
         this.props.updateTabIsFixed(false)
       }
       // 改变下拉刷新的尖头方向
-      if (pos.y >= 60) {
+      if (pos.y >= 60 && this.state.topIconDirection === 'down') {
         this.setState({
           topIconDirection: 'up'
         }) 
-      } else {
+      }  
+      if(pos.y <60 && this.state.topIconDirection === 'up'){
         this.setState({
           topIconDirection: 'down'
         }) 
