@@ -1,11 +1,13 @@
 @import '../../styles/base.scss';
 .too-long {
-  text-overflow: -o-ellipsis-lastline;
+   /* autoprefixer: off */
+   -webkit-box-orient: vertical; // 参考 https://github.com/postcss/autoprefixer/issues/776
+   /* autoprefixer: on */
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
+  text-overflow: -o-ellipsis-lastline;
   -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
 }
 .no-too-long{
   overflow: auto;
