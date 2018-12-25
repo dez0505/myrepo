@@ -41,7 +41,6 @@
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "pnp-webpack-plugin": "1.1.0",
     "postcss-flexbugs-fixes": "4.1.0",
-    "postcss-loader": "3.0.0",
     "postcss-preset-env": "6.0.6",
     "postcss-safe-parser": "4.0.1",
     "react": "^16.6.3",
@@ -78,15 +77,17 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "node-sass": "^4.10.0",
-    "sass-loader": "^7.1.0",
+    "autoprefixer": "^9.4.3",
     "babel-plugin-import": "^1.11.0",
     "css-loader": "^1.0.1",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
+    "node-sass": "^4.10.0",
+    "postcss-loader": "^3.0.0",
+    "react-app-rewired": "^1.2.9",
     "redux-devtools": "^3.4.2",
-    "style-loader": "^0.23.1",
-    "react-app-rewired": "^1.2.9"
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1"
   },
   "jest": {
     "collectCoverageFrom": [
