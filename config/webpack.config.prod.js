@@ -277,8 +277,8 @@ module.exports = {
           // assets smaller than specified size as data URLs to avoid requests.
           // scss配置
           { 
-            test: /\.scss$/, 
-            loaders: ['style-loader', 'css-loader', 'sass-loader'], 
+            test: /\.(css|scss)$/, 
+            use: ["style-loader", "css-loader", "postcss-loader", 'sass-loader']
           },
           {
             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],

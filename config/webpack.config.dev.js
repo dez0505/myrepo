@@ -205,8 +205,9 @@ module.exports = {
           // A missing `test` is equivalent to a match.
           // scss配置
           { 
-            test: /\.scss$/, 
-            loaders: ['style-loader', 'css-loader', 'sass-loader'], 
+            test: /\.(css|scss)$/, // css也要加上，因为swiper.css是css格式的，也要自动加前缀
+            // exclude: sassModuleRegex,
+            use: ["style-loader", "css-loader", "postcss-loader", 'sass-loader']
           },
           {
             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
