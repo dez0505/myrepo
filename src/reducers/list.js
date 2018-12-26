@@ -26,16 +26,6 @@ const initialState = {
     pageNum: 1,
     pageCount: 0
   },
-  // listData: {
-  //   topLineList: [],              // 头条
-  //   cheifList: [],                // 首席
-  //   liveList: [],                 // 直播
-  //   newsList: [],                 // 新闻
-  //   qusList: [],                  // 问董秘
-  //   bigEventList: [],             // 大事件
-  //   noticeList: [],               // 公告
-  //   reportList: []                // 研报
-  // }
 }
 export default function list(state = initialState, action) {
   switch (action.type) {
