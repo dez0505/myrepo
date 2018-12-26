@@ -62,8 +62,11 @@ class Home extends Component {
       const theme = getQueryString('theme')
       const scrollHeight = window.innerHeight - titleheight
       this.props.updatePageConfig({titleheight, theme, htid, platform, account, version, scrollHeight})
-      // window.getOptional('SH601801,SZ002167,SZ000001,HK00001,HH00637,HZ00330','自选股')
-      window.location.href = '@optional_and_team'
+      if(window.devMode) {
+        window.location.href = '@optional_and_team'
+      } else {
+        window.getOptional('SH601801,SZ002167,SZ000001,HK00001,HH00637,HZ00330','自选股')
+      }
     } else {
       setTimeout(() => {
         this.updatePageConfig()
