@@ -177,7 +177,7 @@ class Home extends Component {
       || props.platform!==this.props.platform 
       ) {
         return false
-      } else {
+      } else if(props.theme && state.innerHeight){
         return true
       }
   }
@@ -186,9 +186,7 @@ class Home extends Component {
     const {adsListData,noticeListData,liveFmList,refreshTime,navMenusData,topicListData,innerHeight} = this.state
     const liveFmListProps = {theme,liveFmList}
     let themeClassName
-    if(theme){
-      themeClassName = theme === 'day' ? 'white' : theme === 'night' ? 'black' : 'red'
-    }
+    themeClassName = theme === 'day' ? 'white' : theme === 'night' ? 'black' : 'red'
     return (
         innerHeight ? (
         <div className={themeClassName} style={{height:'100%'}}>
