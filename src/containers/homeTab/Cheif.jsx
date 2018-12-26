@@ -8,9 +8,6 @@ class Cheif extends Component {
   constructor(props) {
     super()
   }
-  componentDidMount() {
-    console.log(this.props)
-  }
   dealWithTime(pushTime) {
     if(!pushTime) return
     let time = pushTime

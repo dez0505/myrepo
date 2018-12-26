@@ -1,4 +1,5 @@
-export const UPDATE_LIST = "UPDATE_LIST";
+
+// pageConfig
 export const UPDATE_PAGECONFIG = "UPDATE_PAGECONFIG";
 
 // list

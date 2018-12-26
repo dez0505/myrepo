@@ -43,6 +43,9 @@ export class Live extends Component {
       })
     }
   }
+  shouldComponentUpdate(props, state) {
+   return state.newLiveList!==this.state.newLiveList ? true : false
+  }
   checkIfTooLong (text) {
     text = String(text)
     // 去掉所有的html标记

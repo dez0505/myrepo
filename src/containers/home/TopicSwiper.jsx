@@ -15,13 +15,6 @@ class TopicSwiper extends Component {
   componentDidMount() {
     this.initTopicSwiper()
   }
-  shouldComponentUpdate(props){
-    if(props.topicList!==this.props.topicList){
-      return true
-    } else {
-      return false
-    }
-  }
   initTopicSwiper() {
     const adsSwiper = new Swiper('.topic-swiper', {
       loop: true,

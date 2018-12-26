@@ -15,6 +15,9 @@ export class Event extends Component {
   componentDidMount(props) {
     this.handleList(this.props)
   }
+  shouldComponentUpdate(props, state) {
+    return state.eventList !== this.state.eventList ? true : false
+  }
   componentWillReceiveProps(props) {
     if(props.list!==this.props.list && props.list.length){
       this.handleList(props)
@@ -47,6 +50,7 @@ export class Event extends Component {
     return parseTime(new Date(newTime), '{y}')
   }
   render() {
+    console.log(121212)
     const itemContentClassName = this.props.theme!=='night' ? 'item-content' : 'item-content night'
     const pointClassName = this.props.theme!=='night' ? 'point' : 'point night'
     const itemDateClassName = this.props.theme!=='night' ? 'item-date' : 'item-date night'
