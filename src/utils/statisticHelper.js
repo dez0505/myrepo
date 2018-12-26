@@ -19,6 +19,7 @@ const statisticData = {
   '10072': { 'name': '全部（查看全部功能）', 'clickKey': '51353', 'clickType': 'CSC' },
   '10074': { 'name': '智能问答（海博士）', 'clickKey': '51356', 'clickType': 'CSC' },
   '10028': { 'name': '龙虎榜', 'clickKey': '51206', 'clickType': 'CSC' },
+  '10136': { 'name': '指数估值', 'clickKey': '51792', 'clickType': 'CSC' },
   '10036': { 'name': '股东人数', 'clickKey': '51226', 'clickType': 'CSC' },
   '21163': { 'name': '一键打新', 'clickKey': '51203', 'clickType': 'CSC' },
   '1001111': { 'name': '立即开户', 'clickKey': '50701', 'clickType': 'CSC' },
