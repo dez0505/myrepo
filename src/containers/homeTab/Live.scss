@@ -1,8 +1,8 @@
 @import '../../styles/base.scss';
 .too-long {
-   /* autoprefixer: off */
-   -webkit-box-orient: vertical; // 参考 https://github.com/postcss/autoprefixer/issues/776
-   /* autoprefixer: on */
+  /* autoprefixer: off */
+  -webkit-box-orient: vertical;
+  /* autoprefixer: on */
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;

@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Icon } from 'antd-mobile';
 import './NoData.scss'
-import { updateLoadingState } from '../../actions/list'
-import { updatePageConfig } from '../../actions/index'
+import { refreshListEvent } from '../../actions/home'
 
 export class NoData extends Component {
   refreshList() {
     // 没有数据时，不用scrollElement的
-    this.props.updatePageConfig({ updateRefreshLoading: !this.props.updateRefreshLoading })
+    // hasScrollToElement  ture 跳到顶部   false 不用跳到顶部
+    this.props.refreshListEvent(false)
   }
   render() {
     const { whichLoadedFail, tabType, isNoData, whichLoading, refreshLoading } = this.props
@@ -45,8 +45,7 @@ const mapStateToProps = (state) => ({
 })
 const mapDispatchToProps =  dispatch => {
   return {
-    updateLoadingState: loadingState => dispatch(updateLoadingState(loadingState)),
-    updatePageConfig:(pageConfig)=>{dispatch(updatePageConfig(pageConfig))},
+    refreshListEvent:()=>{dispatch(refreshListEvent())},
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(NoData)

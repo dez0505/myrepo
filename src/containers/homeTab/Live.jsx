@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import './Live.scss'
 // redux
-import { updateInterfaceState, resetState } from '../../actions/list'
+import { refreshListEvent } from '../../actions/home'
+import { updateInterfaceState } from '../../actions/list'
 export class Live extends Component {
   constructor(props) {
     super(props)
@@ -22,11 +23,12 @@ export class Live extends Component {
   // 根据下标改变nav
   handleClick (index) {
     if ((index === 0 && this.props.whichLoading === 'liveA') || (index === 1 && this.props.whichLoading === 'liveAll')) return
-    this.props.resetState()
     if (index === 0) {
       this.props.updateInterfaceState('liveA')
+      this.props.refreshListEvent();
     } else {
       this.props.updateInterfaceState('liveAll')
+      this.props.refreshListEvent();
     }
   }
   getEachItemIfTooLong (props) {
@@ -35,9 +37,7 @@ export class Live extends Component {
       newLiveList.forEach(element => {
         element.isTooLongText=this.checkIfTooLong(element.title)
         element.isSpread=this.checkIfTooLong(element.title)
-        console.log( element.isSpread, element.isTooLongText)
       });
-      console.log(newLiveList)
       this.setState({
         newLiveList
       })
@@ -124,13 +124,12 @@ const mapStateToProps = (state) => ({
   liveTabTime: state.pageConfig.liveTabTime,
   theme: state.pageConfig.theme,
   whichLoading: state.list.interfaceState.whichLoading,
-
 })
 
 const mapDispatchToProps = (dispatch) => {
   return {
     updateInterfaceState: whichLoading => dispatch(updateInterfaceState({whichLoading})),
-    resetState:()=>dispatch(resetState())
+    refreshListEvent:()=>{dispatch(refreshListEvent())},
   }
 }
 

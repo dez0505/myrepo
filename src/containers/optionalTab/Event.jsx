@@ -12,11 +12,7 @@ export class Event extends Component {
       eventList: [],
     }
   }
-  // static contextTypes = {
-  //   store: PropTypes.object,
-  // }
   componentDidMount(props) {
-    // console.log(this)
     this.handleList(this.props)
   }
   componentWillReceiveProps(props) {
@@ -25,14 +21,10 @@ export class Event extends Component {
     }
   }
   handleList(props) {
-    if(!props.list && props.list.length === 0) return
-    console.log(111)
+    if(!props.list &&  props.list.length === 0) return
     const list = props.list.map((item)=>item)
-    console.log(222,list)
     const dateArray = list.map(item => item.date)
-    console.log(333,dateArray)
     const noRepeatDateArray = dateArray.filter((x, index, self) => self.indexOf(x) === index)
-    console.log(444,noRepeatDateArray)
     const eventList = []
     noRepeatDateArray.forEach(element => {
       const array = list.filter(item => {
@@ -42,8 +34,6 @@ export class Event extends Component {
     });
     this.setState({
       eventList
-    },()=>{
-      console.log(555,this.state.eventList)
     })
   }
   handleDate (time) {
@@ -57,15 +47,12 @@ export class Event extends Component {
     return parseTime(new Date(newTime), '{y}')
   }
   render() {
-    console.log(1111)
     const itemContentClassName = this.props.theme!=='night' ? 'item-content' : 'item-content night'
     const pointClassName = this.props.theme!=='night' ? 'point' : 'point night'
     const itemDateClassName = this.props.theme!=='night' ? 'item-date' : 'item-date night'
-    console.log(8888,this.props)
     return (
       <div className='event-box'>
         {this.state.eventList.map((item,index)=>{
-         console.log(99999,item)
           return(
             <div className="event-item" key={index}>
               <div className="item-left">
@@ -77,9 +64,7 @@ export class Event extends Component {
                   <div className="inner-point"></div>
                 </div>
                 {item.content.map((oneItem,oneIndex)=>{
-                  console.log(48948394)
                   const stockClassName = parseFloat(oneItem.stockNum)>=0 ? 'stock-num up' : 'stock-num down'
-                  console.log(5545454)
                   return(
                     <div className="one-event" key={oneIndex}>
                       <div className="item-stock" onClick={(e)=>targetStock(e,oneItem.tradingCode)}>

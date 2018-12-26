@@ -8,15 +8,13 @@ import { sendIOSMessage } from '@/utils/common'
 
 import { updateInterfaceParams, updateLoadingState, resetState } from '@/actions/list'
 import { updatePageConfig } from '../../actions/index'
+import { loadListEvent, refreshHomeEvent } from '../../actions/home'
 import { connect } from 'react-redux'
 
 class BetterScroll extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      topText: '下拉刷新...',
-      refreshTime: '刷新时间',
-      botText: '上拉加载...',
       topIconDirection: 'down'
     };
     this.scroll= null
@@ -25,18 +23,15 @@ class BetterScroll extends Component {
     this._initScroll()
   }
   componentWillReceiveProps(nextProps) {
-    const { initLoading, loadLoading, refreshLoading, whichLoading } = this.props
-    if (!nextProps.initLoading && (nextProps.initLoading !==initLoading)) {
+    const { initLoading, loadLoading, refreshLoading } = this.props
+    const isInitLoading = !nextProps.initLoading && (nextProps.initLoading !==initLoading)
+    const isLoadLoading = !nextProps.loadLoading && (nextProps.loadLoading !==loadLoading)
+    const isRefreshLoading = !nextProps.refreshLoading && (nextProps.refreshLoading !==refreshLoading)
+    if (isInitLoading || isLoadLoading || isRefreshLoading) {
         this._pullingDownUpComplete()
     }
-    if(!nextProps.loadLoading && (nextProps.loadLoading !== loadLoading)) {
-      this._pullingDownUpComplete()
-    }
-    if((nextProps.updateRefreshLoading !== this.props.updateRefreshLoading || whichLoading !== nextProps.whichLoading) && nextProps.tabIsFixed ) {
+    if(nextProps.scrollToStartPosition !== this.props.scrollToStartPosition) {
       this.scrollToElement('#listContent')
-    }
-    if(!nextProps.refreshLoading && (nextProps.refreshLoading !== refreshLoading)) {
-      this._pullingDownUpComplete()
     }
   }
   _initScroll() {
@@ -54,24 +49,12 @@ class BetterScroll extends Component {
     })
     // 下拉刷新
     this.scroll.on('pullingDown', () => {
-      // 刷新状态不加载
-      const { initLoading, whichLoading, resetState, updateLoadingState ,updateHomeContent } = this.props
-      if(!initLoading) { 
-        resetState()
-        updateLoadingState({initLoading: true}) // 头部加载状态
-        if(whichLoading!=='more') { // 为more  不执行列表渲染， 所以用updateHomeContent(false) 传入到首页进行是否更新refreshloading
-          updateHomeContent() // 
-        } else {
-          updateHomeContent(false) // 
-        }
-      } else {
-        this.scroll.finishPullDown()
-      }
+      this.props.refreshHomeEvent()
     })
     // 上拉加载
     this.scroll.on('pullingUp', () => {
-      if(this.hasLoadMore('model') && !this.props.loadLoading) {
-        this.props.updateLoadingState({loadLoading: true}) // 更新refreshLoading 表示要home一些数据要重新请求了
+      if(this.hasLoadMore('model')) {//列表为loading=true时，下面这两个一个不能执行
+        this.props.loadListEvent()
       } else {
          this.scroll.finishPullUp()
       }
@@ -137,13 +120,13 @@ class BetterScroll extends Component {
     // 代理better-scroll的scrollToElement方法
     this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
   }
-  hasLoadMore(type='view') {
+  hasLoadMore(type='view') { // view 是视图上的渲染   model 是更多时数据渲染
     // 没有更多、没有数据、more、加载失败、refreshLoading、loadLoading 都得为false
-    const {isNoMoreData, isNoData, whichLoading, whichLoadedFail, refreshLoading, loadLoading } = this.props
+    const {isNoMoreData, isNoData, whichLoading, whichLoadedFail, refreshLoading } = this.props
     if (type==='view') {
       return !isNoData && whichLoading!=='more' && !whichLoadedFail && !refreshLoading 
     } else {
-      return !isNoMoreData && !isNoData && whichLoading!=='more' && !whichLoadedFail && !refreshLoading && !loadLoading
+      return !isNoMoreData && !isNoData && whichLoading!=='more' && !whichLoadedFail && !refreshLoading
     }
   }
   render() {
@@ -203,7 +186,7 @@ const mapStateToProps = (state,store) => {
     whichLoadedFail: state.list.interfaceState.whichLoadedFail,
     titleheight: state.pageConfig.titleheight,
     tabIsFixed: state.pageConfig.tabIsFixed,
-    updateRefreshLoading: state.pageConfig.updateRefreshLoading
+    scrollToStartPosition: state.pageConfig.scrollToStartPosition
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -211,6 +194,8 @@ const mapDispatchToProps = dispatch => {
     updateInterfaceParams: pageNum => dispatch(updateInterfaceParams({ pageNum })),
     updateLoadingState: loadingState => dispatch(updateLoadingState(loadingState)),
     updateTabIsFixed: tabIsFixed => dispatch(updatePageConfig({tabIsFixed})),
+    loadListEvent: () => dispatch(loadListEvent()),
+    refreshHomeEvent: () => dispatch(refreshHomeEvent()),
     resetState:()=>dispatch(resetState())
   }
 }

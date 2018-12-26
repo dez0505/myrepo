@@ -19,7 +19,8 @@ const initialState = {
     type: ''
   },                                                    //控制是否切换了当前tab
   callBackHome: false,                                  //控制是否切换了并重新回到当前页面  与changeTheem绑定
-  scrollToStartPosition: false                          //tab切换时||刷新数据时激动到开始的位置
+  scrollToStartPosition: false,                         //tab切换时||刷新数据时激动到开始的位置
+  isRefreshHomeApi: false,                              //是否刷新首页接口
 }
 export default function pageConfig(state = initialState, action) {
   switch (action.type) {

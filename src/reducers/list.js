@@ -41,7 +41,6 @@ export default function list(state = initialState, action) {
   switch (action.type) {
     case UPDATE_LOADING_STATE:    // 更新loading状态
       const loadingState = {...state.loadingState,...action.loadingState}
-      // console.log('update_loading_state', action.loadingState)
       return  { ...state, loadingState }
 
     case UPDATE_DATA_STATE:       // 更新data状态

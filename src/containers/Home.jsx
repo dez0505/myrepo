@@ -5,7 +5,7 @@ import { Icon } from 'antd-mobile';
 // redux
 import { connect } from 'react-redux'
 import { updatePageConfig } from '../actions/index'
-import { updateLoadingState } from '../actions/list'
+import { updateTabIndexCallBack } from '../actions/home'
 // subComponent
 import BetterScroll from '../components/base/BetterScroll'
 import Header from '../components/layout/Header'
@@ -46,6 +46,10 @@ class Home extends Component {
   componentWillMount(){
     this.updatePageConfig()
   }
+  componentDidMount() {
+    // 更新到homeTab为0后的回调，且不加埋点
+    this.props.updateTabIndexCallBack(0, 'home', false)
+  }
   // 重置页面路由参数  若没获取到window.innerHeight 反复调用
   updatePageConfig() {
     if(window.innerHeight) {
@@ -69,7 +73,7 @@ class Home extends Component {
   }
   // 当主题或其他参数变化时 路由发生变化时 执行接口 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.theme !== this.props.theme || nextProps.version !== this.props.version || nextProps.platform !== this.props.platform) {
+    if(nextProps.theme !== this.props.theme ||nextProps.isRefreshHomeApi!==this.props.isRefreshHomeApi || nextProps.version !== this.props.version || nextProps.platform !== this.props.platform) {
       this.initHomeApi(nextProps)
     } 
   }
@@ -140,20 +144,6 @@ class Home extends Component {
       }
     })
   }
-  // 上拉刷新首页内容
-  updateHomeContent(isRefresh = true) {
-    this.initHomeApi(this.props,() => {
-      if(isRefresh) {
-        this.props.updateLoadingState({
-          refreshLoading: true
-        })
-      } else {
-        this.props.updateLoadingState({
-          initLoading: false
-        })
-      }
-    })//更新首页接口
-  }
   // render 固定tab栏
   renderFixTab() {
     const {theme, tabIsFixed, activeHomeTabIndex} = this.props
@@ -184,7 +174,7 @@ class Home extends Component {
   shouldComponentUpdate(props, state) {
     if(
       props.version!==this.props.version
-      || props.platform!==this.props.platform
+      || props.platform!==this.props.platform 
       ) {
         return false
       } else {
@@ -192,7 +182,6 @@ class Home extends Component {
       }
   }
   render() {
-    console.log('home渲染')
     const {theme} = this.props
     const {adsListData,noticeListData,liveFmList,refreshTime,navMenusData,topicListData,innerHeight} = this.state
     const liveFmListProps = {theme,liveFmList}
@@ -229,7 +218,7 @@ Home.defaultProps = {
   version: '',
   platform: '',
   tabIsFixed: false,
-  activeHomeTabIndex: 0,
+  activeHomeTabIndex: -1,
 };
 Home.propTypes = {
   theme: PropTypes.string,
@@ -245,12 +234,13 @@ const mapStateToProps = (state) => {
     platform: state.pageConfig.platform,      // 安卓或ios
     tabIsFixed: state.pageConfig.tabIsFixed,  // 控制是否固定头
     activeHomeTabIndex: state.tab.tabIndexData.activeHomeTabIndex, // 控制是否显示固定optional头
+    isRefreshHomeApi: state.pageConfig.isRefreshHomeApi // 控制是否刷新首页的接口
   }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
     updatePageConfig: theme => dispatch(updatePageConfig(theme)),
-    updateLoadingState: loadingState => dispatch(updateLoadingState(loadingState))
+    updateTabIndexCallBack: (index,type,hasMandian)=>dispatch(updateTabIndexCallBack(index,type,hasMandian))
   }
 }
 export default connect(

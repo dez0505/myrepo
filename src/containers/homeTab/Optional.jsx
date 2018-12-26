@@ -3,7 +3,7 @@ import Swiper from 'swiper'
 import PropTypes from 'prop-types'
 // redux
 import { connect } from 'react-redux'
-import { updatePageConfig } from '../../actions/index'
+import { updateTabIndexCallBack } from '../../actions/home'
 // component
 import TabHeader from '../home/TabHeader'
 import NoData from '../common/NoData'
@@ -30,18 +30,23 @@ export class Optional extends Component {
       onSlideChangeEnd: function (swiper) {
         // 当滚动下面的tab栏时，若滚动过后tab不为3 则不执行下面的代码
         if(that.props.activeHomeTabIndex!==3)return
-          that.props.updatePageConfig({activeTabConfig: {
-            index: swiper.activeIndex,
-            type: 'optional'
-          }})
+        that.props.updateTabIndexCallBack(swiper.activeIndex, 'optional', true)
       }
     })
     this.mySwiper = mySwiper
+  }
+  shouldComponentUpdate(props, state) {
+    if(props.listData !== this.props.listData || props.whichLoading !==this.props.whichLoading) {
+      return true
+    } else {
+      return false
+    }
   }
   componentWillUpdate(props,state) {
     this.watchActiveHomeIndex(props,state)
   }
   componentDidUpdate(props, state) {
+    // 处理切横屏切回来的问题
     if(this.props.callBackHome !== props.callBackHome || this.props.listData !== props.listData) {
       if(this.mySwiper){
         this.mySwiper.update({ updateTranslate:false })
@@ -107,8 +112,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    updatePageConfig:(activeTabConfig)=>{dispatch(updatePageConfig(activeTabConfig))}
+    updateTabIndexCallBack: (index,type,hasMandian)=>dispatch(updateTabIndexCallBack(index,type,hasMandian))
   }
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(Optional)

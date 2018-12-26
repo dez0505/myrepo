@@ -6,24 +6,26 @@ import { getNewsList, getOptionalList } from './tab/optional'
 // actions
 import { updateTabIndex } from './tab'
 import { updatePageConfig } from './index'
-import { updateInterfaceState, resetState, updateLoadingState } from './list'
+import { resetState, updateLoadingState ,updateInterfaceState} from './list'
 // utils
 import { getManDianParams, getQueryString } from '../utils/common'
 
 // type : optional  home
 // index : 切换的下标 
 // hasMandian 是否执行埋点
-export default function updateTabIndexCallBack(index, type, hasMandian = true) {
+export function updateTabIndexCallBack(index, type, hasMandian = true) {
   return  (dispatch, getState) => {
     const activeType = type === 'home' ? 'activeHomeTabIndex' : 'activeOptionalTabIndex'
     const activeTabIndex = getState().tab.tabIndexData[activeType]
-    console.log('activeTabIndex', activeTabIndex)
     if(index === activeTabIndex) return
     // 1、清空所有状态
     dispatch(resetState())
     // 监听是否移到起初页
-    const scrollToStartPosition = getState().pageConfig.scrollToStartPosition
-    dispatch(updatePageConfig({scrollToStartPosition}))
+    const tabIsFixed = getState().pageConfig.tabIsFixed
+    if(tabIsFixed) {
+      const scrollToStartPosition = getState().pageConfig.scrollToStartPosition
+      dispatch(updatePageConfig({scrollToStartPosition:!scrollToStartPosition}))
+    }
     // 2、增加埋点
     if(hasMandian) {
       if(type==='home') {
@@ -56,21 +58,49 @@ export function loadListEvent() {
     _getTabList(activeWhichLoading, 'load', dispatch)
   }
 }
-// 刷新列表数据
-export function refreshListEvent() {
+// 刷新整个首页home数据
+export function refreshHomeEvent () {
+  console.log('更新首页')
   return (dispatch, getState) => {
-    // 0 如果状态正在加载中，则不刷新
+    // 1、根据initLoading判断是否执行
+    const initLoading = getState().list.loadingState.initLoading
+    if(initLoading) return
+    // 2 数据初始化
+    dispatch(resetState())
+    // 3 更新中
+    dispatch(updateLoadingState({initLoading: true})) // 头部加载状态
+    const activeWhichLoading = getState().list.interfaceState.whichLoading
+    const isRefreshHomeApi = getState().pageConfig.isRefreshHomeApi
+    // 4 通知首页进行更新
+    dispatch(updatePageConfig({isRefreshHomeApi:!isRefreshHomeApi}))
+    // 5 判断是否是more 不是more的要进行列表更新
+    if(activeWhichLoading === 'more') return
+    console.log('更新列表')
+    dispatch(updateLoadingState({refreshLoading: true}))
+    _getTabList(activeWhichLoading, 'init', dispatch)
+  }
+}
+// 刷新列表数据
+export function refreshListEvent(hasScrollToElement = true) { // hasScrollToElement true: 必顺执行scrollToElement 
+  return (dispatch, getState) => {
+    // 1、跳回list顶部  只要执行了这个都跳到首页
+    if(hasScrollToElement) {
+      const tabIsFixed = getState().pageConfig.tabIsFixed
+      if(tabIsFixed) {
+        const scrollToStartPosition = getState().pageConfig.scrollToStartPosition
+        dispatch(updatePageConfig({scrollToStartPosition:!scrollToStartPosition}))
+      }
+    }
+    // 2 如果状态正在加载中，则不刷新
     const activeWhichLoading = getState().list.interfaceState.whichLoading
     const refreshLoading = getState().list.loadingState.refreshLoading
     if(refreshLoading || activeWhichLoading === 'more') return
-    // 1、跳回list顶部
-    const scrollToStartPosition = getState().pageConfig.scrollToStartPosition
-    dispatch(updatePageConfig({scrollToStartPosition}))
-    // 2  清空状态
+    // 3  清空状态
     dispatch(resetState())
-    // 3  改变加载中状态
+    // 4  改变加载中状态
     dispatch(updateLoadingState({refreshLoading: true}))
-    // 4  根据whichLoading 调用哪个接口
+    console.log(999999)
+    // 5  根据whichLoading 调用哪个接口
     _getTabList(activeWhichLoading, 'init', dispatch)
   }
 }
@@ -79,23 +109,23 @@ export function refreshListEvent() {
 function _updateWhichLoading(index, type, dispatch, getState) {
   if(type === 'home') {
     if(index!==3) {
-      dispatch.updateTabIndex({activeOptionalTabIndex: -1}) // 归一
+      dispatch(updateTabIndex({activeOptionalTabIndex: -1})) // 归一
     }
     switch (index) {
       case 0:
-        dispatch.updateInterfaceState({whichLoading: 'topLine'})
+        dispatch(updateInterfaceState({whichLoading: 'topLine'}))
         break;
       case 1:
-        this.props.updateInterfaceState({whichLoading: 'cheif'})
+        dispatch(updateInterfaceState({whichLoading: 'cheif'}))
         break;
       case 2:
-        this.props.updateInterfaceState({whichLoading: 'liveA'})
+        dispatch(updateInterfaceState({whichLoading: 'liveA'}))
         break;
       case 3:
-        dispatch.updateTabIndexCallBack(0, 'optional', false) 
+        dispatch(updateTabIndexCallBack(0, 'optional', false)) 
         break;
       case 4:
-        this.props.updateInterfaceState({whichLoading:'more'})
+        dispatch(updateInterfaceState({whichLoading:'more'}))
         break;
       default:
         break;
@@ -103,19 +133,19 @@ function _updateWhichLoading(index, type, dispatch, getState) {
   } else {
     switch (index) {
       case 0:
-        this.props.updateInterfaceState({whichLoading:'news'})
+        dispatch(updateInterfaceState({whichLoading:'news'}))
         break;
       case 1:
-        this.props.updateInterfaceState({whichLoading:'qus'})
+        dispatch(updateInterfaceState({whichLoading:'qus'}))
         break;
       case 2:
-        this.props.updateInterfaceState({whichLoading:'event'})
+        dispatch(updateInterfaceState({whichLoading:'event'}))
         break;
       case 3:
-        this.props.updateInterfaceState({whichLoading:'notice'})
+        dispatch(updateInterfaceState({whichLoading:'notice'}))
         break;
       case 4:
-        this.props.updateInterfaceState({whichLoading:'report'})
+        dispatch(updateInterfaceState({whichLoading:'report'}))
         break;
       default:
         break;
