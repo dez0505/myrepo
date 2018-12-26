@@ -23,7 +23,7 @@ export class NoData extends Component {
             <div>点击重新加载</div>
           </div>
           <div className="loading-state" style={{display:whichLoadedFail!==tabType?null:'none'}}>
-            <Icon type='loading' text='loading'  style={{display:refreshLoading?null:'none'}} />
+            <Icon type='loading' text='loading'  style={{display:refreshLoading?null:'none',marginRight:6}} />
             <div className="text">{refreshLoading?'疯狂加载中...':(isNoData&&whichLoading===tabType)?'暂无数据':'即将加载数据...'}</div>
           </div>
         </div>

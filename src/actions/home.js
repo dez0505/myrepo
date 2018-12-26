@@ -39,9 +39,10 @@ export function updateTabIndexCallBack(index, type, hasMandian = true) {
     // 4、切换当前whichLoading
     _updateWhichLoading(index, type, dispatch, getState)
     // 5 更新刷新状态
+    const activeWhichLoading = getState().list.interfaceState.whichLoading
+    if(activeWhichLoading === 'more') return
     dispatch(updateLoadingState({refreshLoading: true}))
     // 6 根据whichLoading掉接口
-    const activeWhichLoading = getState().list.interfaceState.whichLoading
     _getTabList(activeWhichLoading, 'init', dispatch)
   }
 }
@@ -99,7 +100,6 @@ export function refreshListEvent(hasScrollToElement = true) { // hasScrollToElem
     dispatch(resetState())
     // 4  改变加载中状态
     dispatch(updateLoadingState({refreshLoading: true}))
-    console.log(999999)
     // 5  根据whichLoading 调用哪个接口
     _getTabList(activeWhichLoading, 'init', dispatch)
   }

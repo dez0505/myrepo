@@ -29,8 +29,8 @@ class LiveFM extends Component {
     return (
       <div>
         <div className='split-line'></div>  
-        <div className='live-fm-box' onClick={() => goToFunction(liveFmList[0].FunctionTypeId)}>
-          <div className="live-radio" style={liveStyle}>
+        <div className='live-fm-box'>
+          <div className="live-radio" style={liveStyle} onClick={() => goToFunction(liveFmList[0].FunctionTypeId)}>
           </div>
           {
             <div className={lineClass}></div>

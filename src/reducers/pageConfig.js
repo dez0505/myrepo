@@ -3,7 +3,7 @@ import {
 } from '../actions/actionType'
 
 const initialState = {
-  theme: '',                                            //页面路由入参  页面主题 应该是某些接口的入参
+  theme: 'day',                                            //页面路由入参  页面主题 应该是某些接口的入参
   version: '',                                          //页面路由入参  版本号 应该是某些接口的入参
   htid: '',                                             //页面路由入参  userid 应该是某些接口的入参
   platform: '',                                         //页面路由入参  app类型 应该是某些接口的入参

@@ -53,6 +53,8 @@ class TabContent extends Component {
     this.watchOptionalCode(props)
     // 根据home点击切换来切换列表
     this.watchActiveHomeIndex(props)
+    // app端刷新功能
+    this.watchUpdateRefreshLoading(props)
   }
   
   //  只有自选时才监听
@@ -61,6 +63,11 @@ class TabContent extends Component {
     if(props.activeHomeTabIndex !== 3) return
     if(props.optionalCode!==this.props.optionalCode) {
       // 刷新列表事件
+      this.props.refreshListEvent();
+    }
+  }
+  watchUpdateRefreshLoading(props) {
+    if(this.props.updateRefreshLoading!==props.updateRefreshLoading) {
       this.props.refreshListEvent();
     }
   }
@@ -205,7 +212,7 @@ class TabContent extends Component {
               { this.renderLive(whichLoading, listData) }
             </div>
             <div className="swiper-slide" style={ minHeightStyle }>
-              {isOptional ? <Optional></Optional> : null}
+              {isOptional ? <Optional></Optional> :<NoData tabType='optional'></NoData>}
             </div>
             <div className="swiper-slide" style={ minHeightStyle }>
               {/* 切换效果慢，是因为没有将scrollElement要顶部 */}
@@ -237,6 +244,7 @@ const mapStateToProps = (state) => ({
   optionalCode: state.nativeData.optionalCode,                              //根据optionalCode改变来进行重新请求数据
   updateMarket: state.pageConfig.updateMarket,                              //行情数据是否改变 3s一次
   callBackHome: state.pageConfig.callBackHome,                              //是否回到首页
+  updateRefreshLoading: state.pageConfig.updateRefreshLoading,                              //是否回到首页
 })
 
 const mapDispatchToProps = dispatch => ({

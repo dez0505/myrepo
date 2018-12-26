@@ -62,7 +62,7 @@ class Home extends Component {
       const theme = getQueryString('theme')
       const scrollHeight = window.innerHeight - titleheight
       this.props.updatePageConfig({titleheight, theme, htid, platform, account, version, scrollHeight})
-      window.getOptional('SH601801,SZ002167,SZ000001,HK00001,HH00637,HZ00330','自选股')
+      // window.getOptional('SH601801,SZ002167,SZ000001,HK00001,HH00637,HZ00330','自选股')
       // window.location.href = '@optional_and_team'
     } else {
       setTimeout(() => {
@@ -185,7 +185,10 @@ class Home extends Component {
     const {theme} = this.props
     const {adsListData,noticeListData,liveFmList,refreshTime,navMenusData,topicListData,innerHeight} = this.state
     const liveFmListProps = {theme,liveFmList}
-    const themeClassName = theme === 'day' ? 'white' : theme === 'night' ? 'black' : 'red'
+    let themeClassName
+    if(theme){
+      themeClassName = theme === 'day' ? 'white' : theme === 'night' ? 'black' : 'red'
+    }
     return (
         innerHeight ? (
         <div className={themeClassName} style={{height:'100%'}}>
@@ -214,7 +217,7 @@ class Home extends Component {
 }
 // 为属性指定默认值:
 Home.defaultProps = {
-  theme: '',
+  theme: 'day',
   version: '',
   platform: '',
   tabIsFixed: false,
