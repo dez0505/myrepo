@@ -76,7 +76,10 @@ class Home extends Component {
   }
   // 当主题或其他参数变化时 路由发生变化时 执行接口 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.theme !== this.props.theme ||nextProps.isRefreshHomeApi!==this.props.isRefreshHomeApi || nextProps.version !== this.props.version || nextProps.platform !== this.props.platform) {
+    const theme = nextProps.theme !== this.props.theme
+    const isRefreshHomeApi = nextProps.isRefreshHomeApi!==this.props.isRefreshHomeApi
+    const { version, platform } = nextProps
+    if( ( isRefreshHomeApi || theme ) && version && platform) {
       this.initHomeApi(nextProps)
     } 
   }
@@ -134,7 +137,7 @@ class Home extends Component {
    }
   }
   // 首页内容初始化
-  initHomeApi(nextProps, callback) {
+  initHomeApi(nextProps) {
     Promise.all([
       this.getIconData(nextProps),this.getHomeData(nextProps)
     ]).then(() => {
@@ -142,9 +145,6 @@ class Home extends Component {
       this.setState({
         refreshTime
       })
-      if(callback){
-        callback()
-      }
     })
   }
   // render 固定tab栏
@@ -162,14 +162,14 @@ class Home extends Component {
     if(activeHomeTabIndex === 3) {
       return (
         <div style={tabFixStyle}>
-          <TabHeader type='home' watch={false}></TabHeader> 
-          <TabHeader type='optional' watch={false}></TabHeader>
+          <TabHeader type='home'></TabHeader> 
+          <TabHeader type='optional'></TabHeader>
         </div>
       )
     } else {
       return (
         <div style={tabFixStyle}>
-          <TabHeader type='home' watch={false}></TabHeader> 
+          <TabHeader type='home'></TabHeader> 
         </div>
       )
     }
@@ -200,14 +200,14 @@ class Home extends Component {
           <BetterScroll ref='betterScroll' refreshTime = {refreshTime} updateHomeContent={(isRefresh) =>this.updateHomeContent(isRefresh)}>
             <div className={ 'home-warpper'}>
               <Nav navMenus={navMenusData} theme={theme}/>
-              { adsListData.length>0 ? <AdsSwiper  adsList = {adsListData}/> : null }
-              { noticeListData.length>0 ? <Notice theme = {theme} noticeList = {noticeListData}/> : null }
+              { adsListData.length > 0 && <AdsSwiper  adsList = {adsListData}/> }
+              { noticeListData.length > 0 && <Notice theme = {theme} noticeList = {noticeListData}/> }
               <MarketMachine />
-              {topicListData.length>0? <TopicSwiper topicList = {topicListData}/> : null}
-              { liveFmList.length>0? <LiveFM {...liveFmListProps}> </LiveFM>: null }
+              { topicListData.length > 0 && <TopicSwiper topicList = {topicListData}/> }
+              { liveFmList.length > 0 && <LiveFM {...liveFmListProps}> </LiveFM> }
               <div className='split-line'></div>
               <div id='listContent'>
-                <TabHeader type='home' watch={true}></TabHeader>
+                <TabHeader type='home'></TabHeader>
                 <TabContent></TabContent>
               </div>
             </div>
