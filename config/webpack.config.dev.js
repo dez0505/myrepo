@@ -60,6 +60,14 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
           require('postcss-preset-env')({
             autoprefixer: {
               flexbox: 'no-2009',
+              "browsers": [ // 加上这个解决ios8 上面的兼容性问题
+                "defaults",
+                "not ie < 11",
+                "last 2 versions",
+                "> 1%",
+                "last 3 iOS versions",
+                "iOS >= 8",
+              ],
             },
             stage: 3,
           }),
@@ -94,7 +102,7 @@ module.exports = {
     // the line below with these two lines if you prefer the stock client:
     // require.resolve('webpack-dev-server/client') + '?/',
     // require.resolve('webpack/hot/dev-server'),
-    require.resolve('babel-polyfill'),
+    require.resolve('babel-polyfill'),  // 测试环境下要加个这个，在低版本防止报错
     require.resolve('react-dev-utils/webpackHotDevClient'),
     // Finally, this is your app's code:
     paths.appIndexJs,
@@ -203,12 +211,6 @@ module.exports = {
           // "url" loader works like "file" loader except that it embeds assets
           // smaller than specified limit in bytes as data URLs to avoid requests.
           // A missing `test` is equivalent to a match.
-          // scss配置
-          { 
-            test: /\.(css|scss)$/, // css也要加上，因为swiper.css是css格式的，也要自动加前缀
-            // exclude: sassModuleRegex,
-            use: ["style-loader", "css-loader", "postcss-loader", 'sass-loader']
-          },
           {
             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
             loader: require.resolve('url-loader'),

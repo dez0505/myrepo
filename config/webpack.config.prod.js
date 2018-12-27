@@ -84,6 +84,14 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
           require('postcss-flexbugs-fixes'),
           require('postcss-preset-env')({
             autoprefixer: {
+              "browsers": [ // 加上这个解决ios8 上面的兼容性问题
+                "defaults",
+                "not ie < 11",
+                "last 2 versions",
+                "> 1%",
+                "last 3 iOS versions",
+                "iOS >= 8",
+              ],
               flexbox: 'no-2009',
             },
             stage: 3,
@@ -277,10 +285,6 @@ module.exports = {
           // "url" loader works just like "file" loader but it also embeds
           // assets smaller than specified size as data URLs to avoid requests.
           // scss配置
-          { 
-            test: /\.(css|scss)$/, 
-            use: ["style-loader", "css-loader", "postcss-loader", 'sass-loader']
-          },
           {
             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
             loader: require.resolve('url-loader'),
