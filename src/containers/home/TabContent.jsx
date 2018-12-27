@@ -56,7 +56,6 @@ class TabContent extends Component {
     // app端刷新功能
     this.watchUpdateRefreshLoading(props)
   }
-  
   //  只有自选时才监听
   // 监听optionCode是否改变执行相关逻辑 刷新自选列表
   watchOptionalCode(props) { 
@@ -88,7 +87,9 @@ class TabContent extends Component {
           const scoketCodeArray = hasStocksArray.map(
             item => item.Stocks[0].Symbol
           )
-          window.updateLinster()
+          if(!window.devMode) {
+           window.updateLinster()
+          }
           if (window && window.quote && window.quote.requestQuote) {
             window.quote.requestQuote(scoketCodeArray)
           } else if (
@@ -106,6 +107,9 @@ class TabContent extends Component {
             item => item.tradingCode
           )
           const filterArray = stockCodeArray.filter((x, index, self) => self.indexOf(x) === index)
+          if(!window.devMode) {
+            window.updateLinster()
+          }
           if (window && window.quote && window.quote.requestQuote) {
             window.quote.requestQuote(filterArray)
           } else if (
@@ -132,7 +136,6 @@ class TabContent extends Component {
     })
     if (!listData.length || !isTrue) return
     if (updateMarket !== this.props.updateMarket) {
-      console.log('request')
       const newArray = listData.map(item=>item)
       const array = market.map(item=>item)
       switch(whichLoading) {
@@ -215,7 +218,6 @@ class TabContent extends Component {
               {isOptional ? <Optional></Optional> :<NoData tabType='optional'></NoData>}
             </div>
             <div className="swiper-slide" style={ minHeightStyle }>
-              {/* 切换效果慢，是因为没有将scrollElement要顶部 */}
               {whichLoading === 'more' ?  <More  ></More> :  <NoData tabType='more'></NoData>}
             </div>
         </div>
@@ -244,7 +246,7 @@ const mapStateToProps = (state) => ({
   optionalCode: state.nativeData.optionalCode,                              //根据optionalCode改变来进行重新请求数据
   updateMarket: state.pageConfig.updateMarket,                              //行情数据是否改变 3s一次
   callBackHome: state.pageConfig.callBackHome,                              //是否回到首页
-  updateRefreshLoading: state.pageConfig.updateRefreshLoading,                              //是否回到首页
+  updateRefreshLoading: state.pageConfig.updateRefreshLoading,              //app通知刷新列表
 })
 
 const mapDispatchToProps = dispatch => ({

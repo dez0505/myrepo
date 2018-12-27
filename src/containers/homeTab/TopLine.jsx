@@ -7,8 +7,6 @@ class TopLine extends Component {
   constructor(props) {
     super()
   }
-  componentDidMount() {
-  }
   targetStock (e,item) {
     e.stopPropagation()
     window.location.href = '@stk=' + item
