@@ -23,25 +23,27 @@ import { updateNativeData } from './actions/nativeData'
 let store = createStore(rootReducer, applyMiddleware(thunk))
 
 // 行情
-const market1 = { dataRecord:[
-  ['SZ002167','fsdf','5','+0.292'],
-  ['SH601801','fsdf','5','+0.398'],
-  ['HK00001','fsdf','5','-0.420'],
-  ['HK00001','fsdf','5','-0.420'],
-  ['HK00001','fsdf','5','-0.420'],
-  ['HK00001','fsdf','5','-0.420'],
-  ['HK00001','fsdf','5','-0.420'],
-  ['HK00001','fsdf','5','-0.420'],
-  ['HK00001','fsdf','5','-0.420'],
-  ['HK00001','fsdf','5','-0.420'],
-  ['HK00001','fsdf','5','-0.420'],
-  ['HK00001','fsdf','5','-0.420'],
-],
-dataField:['stockName','stockId','stockPrice','stockNum']
-}
-window.updateLinster = function (market = market1) {
-  store.dispatch(updateNativeData({market:market.dataRecord}))
-  store.dispatch(updatePageConfig({updateMarket:!store.getState().pageConfig.updateMarket}))
+// const market1 = { dataRecord:[
+//   ['SZ002167','fsdf','5','+0.292'],
+//   ['SH601801','fsdf','5','+0.398'],
+//   ['HK00001','fsdf','5','-0.420'],
+//   ['HK00001','fsdf','5','-0.420'],
+//   ['HK00001','fsdf','5','-0.420'],
+//   ['HK00001','fsdf','5','-0.420'],
+//   ['HK00001','fsdf','5','-0.420'],
+//   ['HK00001','fsdf','5','-0.420'],
+//   ['HK00001','fsdf','5','-0.420'],
+//   ['HK00001','fsdf','5','-0.420'],
+//   ['HK00001','fsdf','5','-0.420'],
+//   ['HK00001','fsdf','5','-0.420'],
+// ],
+// dataField:['stockName','stockId','stockPrice','stockNum']
+// }
+window.updateLinster = function (market) {
+  if(market) {
+    store.dispatch(updateNativeData({market:market.dataRecord}))
+    store.dispatch(updatePageConfig({updateMarket:!store.getState().pageConfig.updateMarket}))
+  }
 }
 // 主题
 window.changeTheme = function (theme) {
