@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import './TopicSwiper.scss';
+import './TopicSwiper.module.scss';
 import Swiper from 'swiper';
 // utils
 import { goToAPP } from '../../utils/common'

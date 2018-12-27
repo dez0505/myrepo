@@ -6,8 +6,11 @@
     border-radius: $radiusSize;
     box-sizing: border-box;
     overflow: hidden;
-    .swiper-slide{
-      height: Px(200);
-    }
+    // .swiper-slide{
+    //   height: Px(200);
+    // }
   }
-  
+  .swiper-slide{
+    height: Px(200);
+    background: #898989;
+  }
