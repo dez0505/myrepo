@@ -60,14 +60,6 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
           require('postcss-preset-env')({
             autoprefixer: {
               flexbox: 'no-2009',
-              "browsers": [ // 加上这个解决ios8 上面的兼容性问题
-                "defaults",
-                "not ie < 11",
-                "last 2 versions",
-                "> 1%",
-                "last 3 iOS versions",
-                "iOS >= 8",
-              ],
             },
             stage: 3,
           }),
