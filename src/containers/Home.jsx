@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import '../styles/homeTheme.scss'
 import PropTypes from 'prop-types'
-import { Icon } from 'antd-mobile';
+// 局部引入antd-mobile
+import Icon from 'antd-mobile/lib/icon';
 // redux
 import { connect } from 'react-redux'
 import { updatePageConfig } from '../actions/index'

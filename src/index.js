@@ -9,9 +9,8 @@ import rootReducer from './reducers'
 // component
 import { getQueryString } from './utils/common'
 import Home from './containers/Home'
-// import TabContentCase from './containers/TabContentCase'
 // css
-import 'antd-mobile/dist/antd-mobile.css'; 
+import 'antd-mobile/lib/icon/style/css';  
 import 'lib-flexible';
 import 'swiper/dist/css/swiper.min.css'
 import './styles/common.scss'

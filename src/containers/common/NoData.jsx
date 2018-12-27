@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Icon } from 'antd-mobile';
+import Icon from 'antd-mobile/lib/icon';
 import './NoData.scss'
 import { refreshListEvent } from '../../actions/home'
 

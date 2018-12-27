@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import BScroll from 'better-scroll'
-import { Icon } from 'antd-mobile';
+import Icon from 'antd-mobile/lib/icon';
 import Arrow from './Arrow.jsx'
 import './BetterScroll.scss'
 import { sendIOSMessage } from '@/utils/common'
