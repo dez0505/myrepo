@@ -17,14 +17,14 @@ import {
 // utils
 import {
   getStore,
-  setStore
+  setStore , getQueryString
 } from '../../utils/common'
 let stockParams= {
   lastHashId: ''
  }
 export default function getTopLineList(type) {
   return async (dispatch, getState) => {
-    const htid = getState().pageConfig.htid
+    const htid = getState().pageConfig.htid || getQueryString('htid')
     const listData = getState().list.listData
     const lastHashId = stockParams.lastHashId
     const interfaceParams = getState().list.interfaceParams
