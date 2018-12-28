@@ -81,10 +81,10 @@ class Home extends Component {
   componentWillReceiveProps(nextProps) {
     const isTheme = nextProps.theme !== this.props.theme
     const isRefreshHomeApi = nextProps.isRefreshHomeApi!==this.props.isRefreshHomeApi
-    if(isRefreshHomeApi) {
-      this.initHomeApi(nextProps)
-    } 
-    if( isTheme ) {
+    const isVersion = nextProps.version!==this.props.version
+    const isPlatform = nextProps.platform!==this.props.platform
+    const {theme, version, platform} = nextProps
+    if((isRefreshHomeApi || isTheme || isVersion || isPlatform) && (theme && version && platform)) {
       this.initHomeApi(nextProps)
     } 
   }
@@ -122,9 +122,10 @@ class Home extends Component {
   // 获得首页数据
   async getHomeData (params) {
    let {theme, version, platform} = params
-   if(!version || !platform) {
-    version = getQueryString('appversion') 
-    platform = getQueryString('platform') || 'android'
+   if (!version || !platform || !theme) {
+      theme = getQueryString('theme')
+      version = getQueryString('appversion') 
+      platform = getQueryString('platform') || 'android'
    }
    const  { data } = await getHomeData({
      theme,
