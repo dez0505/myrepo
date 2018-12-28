@@ -62,7 +62,8 @@ class Home extends Component {
       const account = getQueryString('account')
       const theme = getQueryString('theme')
       const scrollHeight = window.innerHeight - titleheight
-      this.props.updatePageConfig({titleheight, theme, htid, platform, account, version, scrollHeight})
+      this.props.updatePageConfig({titleheight, htid, platform, account, version, scrollHeight})
+      if(theme)this.props.updatePageConfig({theme})
       if(window.devMode) {
         // 测试用例
         window.getOptional('SH601801,SZ002167,SZ000001,HK00001,HH00637,HZ00330','自选股')
@@ -78,16 +79,22 @@ class Home extends Component {
   }
   // 当主题或其他参数变化时 路由发生变化时 执行接口 
   componentWillReceiveProps(nextProps) {
-    const theme = nextProps.theme !== this.props.theme
+    const isTheme = nextProps.theme !== this.props.theme
     const isRefreshHomeApi = nextProps.isRefreshHomeApi!==this.props.isRefreshHomeApi
-    const { version, platform } = nextProps
-    if( ( isRefreshHomeApi || theme ) && version && platform) {
+    if(isRefreshHomeApi) {
+      this.initHomeApi(nextProps)
+    } 
+    if( isTheme ) {
       this.initHomeApi(nextProps)
     } 
   }
   // 获得菜单图标数据
   async getIconData (params) {
-   const {version, platform} = params
+   let {version, platform} = params
+   if(!version || !platform) {
+    version = getQueryString('appversion') 
+    platform = getQueryString('platform') || 'android'
+   }
    try {
       const { data } = await getIconData({
         version, platform
@@ -114,7 +121,11 @@ class Home extends Component {
   }
   // 获得首页数据
   async getHomeData (params) {
-   const {theme, version, platform} = params
+   let {theme, version, platform} = params
+   if(!version || !platform) {
+    version = getQueryString('appversion') 
+    platform = getQueryString('platform') || 'android'
+   }
    const  { data } = await getHomeData({
      theme,
      version,
@@ -214,7 +225,9 @@ class Home extends Component {
               </div>
             </div>
           </BetterScroll>
-      </div>) : <Icon className='loading-icon' type='loading' text='loading' />
+      </div>) : (<div className='loading-wrapper-box'>
+                  <Icon className='loading-icon' type='loading' text='loading' />
+                </div>)
     ) 
   }
 }
