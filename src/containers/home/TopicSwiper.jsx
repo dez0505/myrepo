@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import './TopicSwiper.module.scss';
+import './TopicSwiper.scss';
 import Swiper from 'swiper';
 // utils
 import { goToAPP } from '../../utils/common'
@@ -33,18 +33,23 @@ class TopicSwiper extends Component {
     }
     this.adsSwiper = adsSwiper
   }
-  componentDidUpdate() {
-    if(this.adsSwiper){
-      this.adsSwiper.destroy(false, false); 
-      this.initAdsSwiper()
+  componentWillReceiveProps(props) {
+    if(this.adsSwiper && this.props.topicList !== props.topicList){
+      setTimeout(()=>{
+        this.adsSwiper.destroy(false, false); 
+        this.initAdsSwiper()
+      },200)
     }
+  }
+  swiperOnClick(){
+    goToAPP(this.props.topicList[this.adsSwiper.realIndex], 'ads')
   }
   render() {
     return (
       <div>
         <div className='split-line'></div> 
         <div className='topic-box'>
-          <div className='swiper-container topic-swiper'>
+          <div className='swiper-container topic-swiper' onClick={()=>{this.swiperOnClick()}}>
             <div className='swiper-wrapper'>
               {this.props.topicList.map((item, index) => {
                 return (

@@ -20,11 +20,7 @@ class AdsSwiper extends Component {
       loop: true,
       autoplay:5000,
       pagination: '.swiper-pagination',
-      autoplayDisableOnInteraction: false,
-      onClick: (swiper) => {
-        const realIndex = swiper.realIndex
-        goToAPP(this.props.adsList[realIndex], 'ads')
-      }
+      autoplayDisableOnInteraction: false
     })
     if(adsSwiper.slides.length <= 3) {
       adsSwiper.lockSwipes()
@@ -49,12 +45,15 @@ class AdsSwiper extends Component {
       },200)
     }
   }
+  swiperOnClick(){
+    goToAPP(this.props.adsList[this.adsSwiper.realIndex], 'ads')
+  }
   render() {
     const adsList = this.props.adsList
     return (
       <div>
         <div className="ads-box">
-          <div className="swiper-container ads-swiper">
+          <div className="swiper-container ads-swiper" onClick={()=>{this.swiperOnClick()}}>
             <div className="swiper-wrapper">
               {adsList.map((item, index) => {
                 return (
