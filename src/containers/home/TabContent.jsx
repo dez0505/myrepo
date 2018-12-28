@@ -28,7 +28,8 @@ class TabContent extends Component {
     const that = this
     let mySwiper = new Swiper('.tab-swiper', {
       autoplay: false,
-      threshold: 100,
+      longSwipesRatio : 0.3,
+      touchAngle : 30,
       touchMoveStopPropagation: false,
       onSlideChangeEnd: function (swiper) {
         // params  index type hasMandian

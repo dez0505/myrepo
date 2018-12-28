@@ -25,8 +25,9 @@ export class Optional extends Component {
     const that = this
     let mySwiper = new Swiper('.optional-swiper', {
       autoplay: false,
-      threshold: 100,
+      longSwipesRatio : 0.3,
       touchMoveStopPropagation: false,
+      touchAngle : 30,
       onSlideChangeEnd: function (swiper) {
         // 当滚动下面的tab栏时，若滚动过后tab不为3 则不执行下面的代码
         if(that.props.activeHomeTabIndex!==3)return
@@ -46,8 +47,8 @@ export class Optional extends Component {
     this.watchActiveHomeIndex(props,state)
   }
   componentDidUpdate(props, state) {
-    // 处理切横屏切回来的问题
-    if(this.props.callBackHome !== props.callBackHome || this.props.listData !== props.listData) {
+    // 处理切横屏切回来的问题  || this.props.listData !== props.listData
+    if(this.props.callBackHome !== props.callBackHome) {
       if(this.mySwiper){
         this.mySwiper.update({ updateTranslate:false })
       }
