@@ -94,6 +94,7 @@ class MarketMachine extends Component {
 		this.getMarketMachineData()
 	}
 	handleMyGunChange (val) {
+		if(!val)return
 		if (val.indexOf('%') >= 0) {
 			return <span>涨幅<span className='list-key'>{val}</span></span>
 		} else if (val.indexOf('手') >= 0) {

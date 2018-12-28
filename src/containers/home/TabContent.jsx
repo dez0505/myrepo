@@ -87,7 +87,7 @@ class TabContent extends Component {
           const scoketCodeArray = hasStocksArray.map(
             item => item.Stocks[0].Symbol
           )
-          if(!window.devMode) {
+          if(window.devMode) {
            window.updateLinster()
           }
           if (window && window.quote && window.quote.requestQuote) {
@@ -107,7 +107,7 @@ class TabContent extends Component {
             item => item.tradingCode
           )
           const filterArray = stockCodeArray.filter((x, index, self) => self.indexOf(x) === index)
-          if(!window.devMode) {
+          if(window.devMode) {
             window.updateLinster()
           }
           if (window && window.quote && window.quote.requestQuote) {
