@@ -48,6 +48,8 @@ window.updateLinster = function (market) {
 window.changeTheme = function (theme) {
   store.dispatch(updatePageConfig({callBackHome:!store.getState().pageConfig.callBackHome}))
   store.dispatch(updatePageConfig({theme}))
+  const themeColor = theme === 'night' ? '#202528' : '#FFF'
+  document.body.style.backgroundColor = themeColor;
 }
 // 改变url路由
 window.changeUrlParam = function (key, value) {
