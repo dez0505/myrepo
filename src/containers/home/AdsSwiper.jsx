@@ -19,7 +19,7 @@ class AdsSwiper extends Component {
     const adsSwiper = new Swiper('.ads-swiper', {
       loop: true,
       autoplay:5000,
-      longSwipesRatio : 0.2, // 防止点击就翻页
+      threshold : 50,
       pagination: '.swiper-pagination',
       autoplayDisableOnInteraction: false
     })
@@ -39,11 +39,17 @@ class AdsSwiper extends Component {
     }
   }
   componentWillReceiveProps(props) {
-    if(this.adsSwiper && props.adsList !== this.props.adsList){
+    if(this.adsSwiper && (props.adsList !== this.props.adsList)){
       setTimeout(()=>{
         this.adsSwiper.destroy(false, false); 
         this.initAdsSwiper()
       },200)
+    }
+    if(this.adsSwiper && (props.callBackHome !== this.props.callBackHome)){
+      setTimeout(()=>{
+        this.adsSwiper.update({ updateTranslate:false })
+        this.adsSwiper.startAutoplay()
+      },100)
     }
   }
   swiperOnClick(){

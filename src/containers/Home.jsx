@@ -58,7 +58,7 @@ class Home extends Component {
       const titleheight = Number(getQueryString('titleheight'))
       const version = getQueryString('appversion')
       const htid = getQueryString('htid')
-      const platform = getQueryString('platform')
+      const platform = getQueryString('platform').toLowerCase() === 'android' ? 'Android' : 'Iphone'
       const account = getQueryString('account')
       const theme = getQueryString('theme')
       const scrollHeight = window.innerHeight - titleheight
@@ -93,7 +93,7 @@ class Home extends Component {
    let {version, platform} = params
    if(!version || !platform) {
     version = getQueryString('appversion') 
-    platform = getQueryString('platform') || 'android'
+    platform = getQueryString('platform').toLowerCase() === 'android' ? 'Android' : 'Iphone'
    }
    try {
       const { data } = await getIconData({
@@ -125,7 +125,7 @@ class Home extends Component {
    if (!version || !platform || !theme) {
       theme = getQueryString('theme')
       version = getQueryString('appversion') 
-      platform = getQueryString('platform') || 'android'
+      platform = getQueryString('platform').toLowerCase() === 'android' ? 'Android' : 'Iphone'
    }
    const  { data } = await getHomeData({
      theme,
@@ -194,7 +194,7 @@ class Home extends Component {
       }
   }
   render() {
-    const {theme} = this.props
+    const {theme, callBackHome} = this.props
     const {adsListData,noticeListData,liveFmList,refreshTime,navMenusData,topicListData,innerHeight} = this.state
     const liveFmListProps = {theme,liveFmList}
     let themeClassName
@@ -209,10 +209,10 @@ class Home extends Component {
           <BetterScroll ref='betterScroll' refreshTime = {refreshTime} updateHomeContent={(isRefresh) =>this.updateHomeContent(isRefresh)}>
             <div className={ 'home-warpper'}>
               <Nav navMenus={navMenusData} theme={theme}/>
-              { adsListData.length > 0 && <AdsSwiper  adsList = {adsListData}/> }
+              { adsListData.length > 0 && <AdsSwiper callBackHome={callBackHome} adsList = {adsListData}/> }
               { noticeListData.length > 0 && <Notice theme = {theme} noticeList = {noticeListData}/> }
               <MarketMachine />
-              { topicListData.length > 0 && <TopicSwiper topicList = {topicListData}/> }
+              { topicListData.length > 0 && <TopicSwiper callBackHome={callBackHome} topicList = {topicListData}/> }
               { liveFmList.length > 0 && <LiveFM {...liveFmListProps}> </LiveFM> }
               <div className='split-line'></div>
               <div id='listContent'>
@@ -228,19 +228,13 @@ class Home extends Component {
   }
 }
 // 为属性指定默认值:
-Home.defaultProps = {
-  theme: 'day',
-  version: '',
-  platform: '',
-  tabIsFixed: false,
-  activeHomeTabIndex: -1,
-};
 Home.propTypes = {
   theme: PropTypes.string,
   version: PropTypes.string,
   platform: PropTypes.string,
   tabIsFixed: PropTypes.bool,
   activeHomeTabIndex: PropTypes.number,
+  callBackHome: PropTypes.bool,
 }
 const mapStateToProps = (state) => {
   return {
@@ -249,7 +243,8 @@ const mapStateToProps = (state) => {
     platform: state.pageConfig.platform,      // 安卓或ios
     tabIsFixed: state.pageConfig.tabIsFixed,  // 控制是否固定头
     activeHomeTabIndex: state.tab.tabIndexData.activeHomeTabIndex, // 控制是否显示固定optional头
-    isRefreshHomeApi: state.pageConfig.isRefreshHomeApi // 控制是否刷新首页的接口
+    isRefreshHomeApi: state.pageConfig.isRefreshHomeApi, // 控制是否刷新首页的接口
+    callBackHome: state.pageConfig.callBackHome
   }
 }
 const mapDispatchToProps = (dispatch) => {

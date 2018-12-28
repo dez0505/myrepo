@@ -25,7 +25,7 @@ export class Optional extends Component {
     const that = this
     let mySwiper = new Swiper('.optional-swiper', {
       autoplay: false,
-      longSwipesRatio : 0.3,
+      threshold : 50,
       touchMoveStopPropagation: false,
       touchAngle : 30,
       onSlideChangeEnd: function (swiper) {

@@ -20,7 +20,7 @@ class TopicSwiper extends Component {
     const topicSwiper = new Swiper('.topic-swiper', {
       loop: true,
       autoplay:5000,
-      longSwipesRatio : 0.2, // 防止点击就翻页
+      threshold : 50,
       pagination: '.swiper-pagination',
       autoplayDisableOnInteraction: false
     })
@@ -32,11 +32,17 @@ class TopicSwiper extends Component {
     this.topicSwiper = topicSwiper
   }
   componentWillReceiveProps(props) {
-    if(this.topicSwiper && this.props.topicList !== props.topicList){
+    if(this.topicSwiper && (this.props.topicList !== props.topicList)){
       setTimeout(()=>{
         this.topicSwiper.destroy(false, false); 
         this.initTopicSwiper()
       },200)
+    }
+    if(this.adsSwiper && (props.callBackHome !== this.props.callBackHome)){
+      setTimeout(()=>{
+        this.adsSwiper.update({ updateTranslate:false })
+        this.adsSwiper.startAutoplay()
+      },100)
     }
   }
   swiperOnClick(){

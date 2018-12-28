@@ -28,7 +28,7 @@ class TabContent extends Component {
     const that = this
     let mySwiper = new Swiper('.tab-swiper', {
       autoplay: false,
-      longSwipesRatio : 0.3,
+      threshold : 50,
       touchAngle : 30,
       touchMoveStopPropagation: false,
       onSlideChangeEnd: function (swiper) {
