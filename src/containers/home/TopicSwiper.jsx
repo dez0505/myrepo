@@ -9,40 +9,37 @@ class TopicSwiper extends Component {
   constructor(props) {
     super(); //可以不给props
     this.state = {
-      topicSwiper: null
+     
     };
+    this.topicSwiper = null
   }
   componentDidMount() {
     this.initTopicSwiper()
   }
   initTopicSwiper() {
-    const adsSwiper = new Swiper('.topic-swiper', {
+    const topicSwiper = new Swiper('.topic-swiper', {
       loop: true,
       autoplay:5000,
       pagination: '.swiper-pagination',
-      autoplayDisableOnInteraction: false,
-      onClick: (swiper) => {
-        const realIndex = swiper.realIndex
-        goToAPP(this.props.adsList[realIndex], 'ads')
-      }
+      autoplayDisableOnInteraction: false
     })
-    if(adsSwiper.slides.length <= 3) {
-      adsSwiper.lockSwipes()
+    if(topicSwiper.slides.length <= 3) {
+      topicSwiper.lockSwipes()
     } else {
-      adsSwiper.unlockSwipes()
+      topicSwiper.unlockSwipes()
     }
-    this.adsSwiper = adsSwiper
+    this.topicSwiper = topicSwiper
   }
   componentWillReceiveProps(props) {
-    if(this.adsSwiper && this.props.topicList !== props.topicList){
+    if(this.topicSwiper && this.props.topicList !== props.topicList){
       setTimeout(()=>{
-        this.adsSwiper.destroy(false, false); 
-        this.initAdsSwiper()
+        this.topicSwiper.destroy(false, false); 
+        this.initTopicSwiper()
       },200)
     }
   }
   swiperOnClick(){
-    goToAPP(this.props.topicList[this.adsSwiper.realIndex], 'ads')
+    goToAPP(this.props.topicList[this.topicSwiper.realIndex], 'ads')
   }
   render() {
     return (
