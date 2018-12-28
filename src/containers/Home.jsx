@@ -189,12 +189,7 @@ class Home extends Component {
     }
   }
   shouldComponentUpdate(props, state) {
-    if(
-      props.version!==this.props.version
-      || props.platform!==this.props.platform 
-      ) {
-        return false
-      } else if(props.theme && state.innerHeight){
+    if(props.theme && state.innerHeight){
         return true
       }
   }
@@ -203,7 +198,7 @@ class Home extends Component {
     const {adsListData,noticeListData,liveFmList,refreshTime,navMenusData,topicListData,innerHeight} = this.state
     const liveFmListProps = {theme,liveFmList}
     let themeClassName
-    themeClassName = theme === 'day' ? 'white' : theme === 'night' ? 'black' : 'red'
+    themeClassName = theme === 'red' ? 'red' : theme === 'night' ? 'black' : 'white'
     return (
         innerHeight ? (
         <div className={themeClassName} style={{height:'100%'}}>
