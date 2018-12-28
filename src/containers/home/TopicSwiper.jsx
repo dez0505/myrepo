@@ -20,6 +20,7 @@ class TopicSwiper extends Component {
     const topicSwiper = new Swiper('.topic-swiper', {
       loop: true,
       autoplay:5000,
+      longSwipesRatio : 0.2, // 防止点击就翻页
       pagination: '.swiper-pagination',
       autoplayDisableOnInteraction: false
     })
