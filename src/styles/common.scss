@@ -1,19 +1,33 @@
 @import './base.scss';
 html,body,#root{
-  height: 100%;
-  &>div{
-    height: 100%;
-  }
   font-family: Arial, Helvetica, sans-serif;
 }
 // 刚进入页面的loading
+#root{
+  .loading-wrapper-box{
+    position: fixed;
+    overflow: hidden;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    .loading-icon{
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      left:50%;
+      top:50%;
+      margin-top:-18px;
+      margin-left:-18px;
+    }
+  }
+}
 #root .loading-icon{
-  position: fixed;
+  position: absolute;
   top:0;
   left:0;
   right:0;
   bottom:0;
-  display: flex;
   margin:auto;
   width: 36px;
   height: 36px;
