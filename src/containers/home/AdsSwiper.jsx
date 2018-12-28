@@ -41,10 +41,12 @@ class AdsSwiper extends Component {
       return false
     }
   }
-  componentDidUpdate() {
-    if(this.adsSwiper){
-      this.adsSwiper.destroy(false, false); 
-      this.initAdsSwiper()
+  componentWillReceiveProps(props) {
+    if(this.adsSwiper && props.adsList !== this.props.adsList){
+      setTimeout(()=>{
+        this.adsSwiper.destroy(false, false); 
+        this.initAdsSwiper()
+      },200)
     }
   }
   render() {
